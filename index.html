@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>비엔나 호텔 — VIC 출근 가이드</title>
+
+<!-- PWA: iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="비엔나 호텔">
+<meta name="theme-color" content="#1A1814">
+<meta name="description" content="VIC(IAEA) 출근 기준 비엔나 호텔 비교 — 경로·가격·어워드">
+
+<!-- PWA manifest (inline via JS) -->
+<link rel="manifest" id="pwa-manifest">
+
+<!-- App icon using inline SVG data URI -->
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%231A1814'/%3E%3Ctext x='90' y='115' text-anchor='middle' font-size='90' font-family='serif'%3E🏨%3C/text%3E%3C/svg%3E">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ── CSS reset + safe area ── */
+:root{
+  --bg:#F4F0E8; --bg2:#EAE5DA; --surface:#FEFCF8;
+  --ink:#1A1814; --ink2:#57534A; --ink3:#9A9288;
+  --gold:#A07820; --gold-bg:#FDF4DC;
+  --close:#1E5E3A; --close-bg:#D6F0E2;
+  --mid:#174270;  --mid-bg:#D6E8F8;
+  --far:#6E2416;  --far-bg:#F8DDD9;
+  --luxury:#5B2878; --luxury-bg:#EEE0F8;
+  --border:rgba(26,24,20,0.11); --radius:14px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bot: env(safe-area-inset-bottom, 0px);
+  --nav-h: 56px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:'DM Sans',sans-serif;font-weight:300;
+  display:flex;flex-direction:column;
+  padding-top:var(--safe-top);
+  padding-bottom:var(--safe-bot);
+}
+
+/* ── INSTALL BANNER ── */
+#installBanner{
+  display:none;
+  position:fixed;top:0;left:0;right:0;z-index:9999;
+  background:#1A1814;color:#fff;
+  padding:12px 16px 12px 16px;
+  padding-top:calc(12px + var(--safe-top));
+  flex-direction:column;gap:6px;
+  box-shadow:0 4px 20px rgba(0,0,0,.4);
+}
+#installBanner.show{display:flex;}
+.install-row{display:flex;align-items:center;gap:10px;}
+.install-icon{width:36px;height:36px;border-radius:8px;background:#F4F0E8;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.install-text{flex:1;}
+.install-title{font-size:13px;font-weight:500;line-height:1.2;}
+.install-sub{font-size:11px;color:rgba(255,255,255,.65);margin-top:2px;}
+.install-steps{font-size:11px;color:rgba(255,255,255,.75);line-height:1.6;padding:8px 12px;background:rgba(255,255,255,.08);border-radius:8px;}
+.install-steps b{color:#fff;}
+.install-close{background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;white-space:nowrap;}
+
+/* ── TOP NAV ── */
+#topNav{
+  flex-shrink:0;height:var(--nav-h);
+  background:var(--surface);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 16px;gap:10px;
+  position:relative;z-index:100;
+}
+.nav-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;letter-spacing:-.01em;}
+.nav-title em{color:var(--gold);font-style:normal;}
+.nav-sub{font-size:.7rem;color:var(--ink3);margin-top:1px;}
+.nav-spacer{flex:1;}
+.nav-stats{display:flex;gap:12px;text-align:right;}
+.nav-stat-label{font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);}
+.nav-stat-value{font-family:'Playfair Display',serif;font-size:1rem;color:var(--ink);line-height:1;}
+
+/* ── BOTTOM TAB BAR ── */
+#tabBar{
+  flex-shrink:0;
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  display:flex;
+  padding-bottom:var(--safe-bot);
+}
+.tab-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  gap:2px;padding:8px 4px;cursor:pointer;
+  font-size:.65rem;color:var(--ink3);
+  border:none;background:transparent;
+  transition:color .15s;
+}
+.tab-item.active{color:var(--ink);}
+.tab-icon{font-size:20px;line-height:1;}
+.tab-label{font-size:.6rem;letter-spacing:.03em;}
+
+/* ── SCREENS ── */
+#screens{flex:1;overflow:hidden;position:relative;}
+.screen{
+  position:absolute;inset:0;overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  display:none;
+  padding:0;
+}
+.screen.active{display:block;}
+
+/* ── SCREEN: MAP ── */
+#screenMap{padding:0;}
+.map-controls{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  padding:10px 12px;display:flex;flex-direction:column;gap:8px;
+}
+.mode-row{display:flex;gap:6px;align-items:center;}
+.mode-btn{
+  font-family:'DM Sans',sans-serif;font-size:.72rem;padding:5px 11px;
+  border-radius:8px;border:1px solid var(--border);
+  background:var(--bg);color:var(--ink2);cursor:pointer;transition:all .15s;
+}
+.mode-btn.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+.mode-clear{margin-left:auto;}
+.chips{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;}
+.chips::-webkit-scrollbar{display:none;}
+.chip{
+  font-size:.7rem;padding:4px 10px;border-radius:100px;
+  border:1px solid var(--border);background:var(--surface);
+  color:var(--ink2);cursor:pointer;white-space:nowrap;
+  display:flex;align-items:center;gap:5px;flex-shrink:0;
+  transition:all .15s;
+}
+.chip.on{font-weight:500;color:#fff;border-color:transparent;}
+.chip-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+#map{width:100%;height:calc(100vh - var(--nav-h) - var(--nav-h) - 110px);}
+.route-panel{
+  background:var(--bg);border-top:1px solid var(--border);
+  padding:10px 14px;display:none;max-height:200px;overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+.route-panel.on{display:block;}
+.route-summary{font-size:.82rem;font-weight:500;color:var(--ink);margin-bottom:6px;}
+.route-steps{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.route-step{font-size:.72rem;color:var(--ink2);display:flex;align-items:flex-start;gap:7px;line-height:1.45;}
+.step-ic{flex-shrink:0;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;margin-top:1px;}
+
+/* ── SCREEN: HOTELS ── */
+#screenHotels{padding:12px;}
+.filter-bar{display:flex;gap:6px;margin-bottom:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;}
+.filter-bar::-webkit-scrollbar{display:none;}
+.flt{font-size:.72rem;padding:5px 13px;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--ink2);cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.flt.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+.sort-bar{display:flex;gap:5px;margin-bottom:12px;}
+.srt{font-size:.68rem;padding:4px 10px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--ink2);cursor:pointer;}
+.srt.active{background:var(--bg2);color:var(--ink);font-weight:500;}
+.cards-grid{display:flex;flex-direction:column;gap:10px;}
+.card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:14px 16px;
+  position:relative;overflow:hidden;cursor:pointer;
+  transition:transform .15s, box-shadow .15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.card:active{transform:scale(.98);}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;}
+.card.close::before{background:var(--close);}
+.card.mid::before{background:var(--mid);}
+.card.far::before{background:var(--far);}
+.card.luxury::before{background:var(--luxury);}
+.card.hl{outline:2px solid var(--gold);outline-offset:-1px;}
+.card-row1{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px;}
+.card-name{font-size:.9rem;font-weight:500;color:var(--ink);line-height:1.3;}
+.dbadge{font-size:.65rem;font-weight:500;padding:2px 8px;border-radius:100px;white-space:nowrap;flex-shrink:0;margin-top:2px;}
+.b-close{background:var(--close-bg);color:var(--close);}
+.b-mid{background:var(--mid-bg);color:var(--mid);}
+.b-far{background:var(--far-bg);color:var(--far);}
+.b-luxury{background:var(--luxury-bg);color:var(--luxury);}
+.card-price{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--ink);line-height:1;}
+.card-psub{font-size:.68rem;color:var(--ink3);margin:2px 0 8px;}
+.card-meta{display:flex;flex-wrap:wrap;gap:5px;}
+.mtag{font-size:.68rem;color:var(--ink2);background:var(--bg);padding:3px 8px;border-radius:6px;display:flex;align-items:center;gap:3px;}
+.atag{font-size:.68rem;font-weight:500;padding:3px 8px;border-radius:6px;background:var(--gold-bg);color:var(--gold);}
+
+/* ── SCREEN: SUMMARY ── */
+#screenSummary{padding:16px;}
+.sum-header{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:4px;}
+.sum-header em{color:var(--gold);font-style:normal;}
+.sum-sub{font-size:.78rem;color:var(--ink3);margin-bottom:16px;}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.scard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;}
+.scard-label{font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);margin-bottom:4px;}
+.scard-value{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--ink);line-height:1;}
+.scard-sub{font-size:.65rem;color:var(--ink3);margin-top:3px;}
+.legend-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px;}
+.legend-title{font-size:.72rem;font-weight:500;color:var(--ink2);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--ink2);margin-bottom:7px;}
+.ldot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.tip-box{background:var(--gold-bg);border:1px solid rgba(160,120,32,.2);border-radius:var(--radius);padding:14px;margin-bottom:12px;}
+.tip-title{font-size:.72rem;font-weight:500;color:var(--gold);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em;}
+.tip-item{font-size:.78rem;color:var(--ink2);margin-bottom:5px;display:flex;gap:6px;}
+.tip-num{color:var(--gold);font-weight:500;flex-shrink:0;}
+.footer-note{font-size:.68rem;color:var(--ink3);padding:8px 0;border-top:1px solid var(--border);margin-top:4px;}
+</style>
+</head>
+<body>
+
+<!-- Install Banner (iOS only) -->
+<div id="installBanner">
+  <div class="install-row">
+    <div class="install-icon">🏨</div>
+    <div class="install-text">
+      <div class="install-title">홈 화면에 추가하면 앱처럼 사용할 수 있어요</div>
+      <div class="install-sub">오프라인에서도 기본 정보 이용 가능</div>
+    </div>
+    <button class="install-close" id="installClose">닫기</button>
+  </div>
+  <div class="install-steps">
+    <b>설치 방법:</b> Safari 하단 <b>공유 버튼(□↑)</b> 탭 → <b>"홈 화면에 추가"</b> 선택 → <b>추가</b>
+  </div>
+</div>
+
+<!-- Top Nav -->
+<div id="topNav">
+  <div>
+    <div class="nav-title">비엔나 호텔 <em>비교</em></div>
+    <div class="nav-sub">VIC(IAEA) 출근 기준 · 5/3–10</div>
+  </div>
+  <div class="nav-spacer"></div>
+  <div class="nav-stats">
+    <div>
+      <div class="nav-stat-label">평균 1박</div>
+      <div class="nav-stat-value" id="avgPrice">—</div>
+    </div>
+  </div>
+</div>
+
+<!-- Screens -->
+<div id="screens">
+
+  <!-- MAP SCREEN -->
+  <div class="screen active" id="screenMap">
+    <div class="map-controls">
+      <div class="mode-row">
+        <button class="mode-btn active" data-mode="WALKING">🚶 도보</button>
+        <button class="mode-btn" data-mode="TRANSIT">🚇 지하철</button>
+        <button class="mode-btn" data-mode="DRIVING">🚗 자동차</button>
+        <button class="mode-btn mode-clear" id="clearBtn">✕</button>
+      </div>
+      <div class="chips" id="chipsRow"></div>
+    </div>
+    <div id="map"></div>
+    <div class="route-panel" id="routePanel">
+      <div class="route-summary" id="routeSummary"></div>
+      <ul class="route-steps" id="routeSteps"></ul>
+    </div>
+  </div>
+
+  <!-- HOTELS SCREEN -->
+  <div class="screen" id="screenHotels">
+    <div class="filter-bar" id="filterBar">
+      <button class="flt active" data-filter="all">전체</button>
+      <button class="flt" data-filter="close">🟢 VIC 근접</button>
+      <button class="flt" data-filter="mid">🔵 중간거리</button>
+      <button class="flt" data-filter="far">🔴 원거리</button>
+    </div>
+    <div class="sort-bar">
+      <button class="srt active" data-sort="price-desc">가격↓</button>
+      <button class="srt" data-sort="price-asc">가격↑</button>
+      <button class="srt" data-sort="dist">거리순</button>
+      <button class="srt" data-sort="name">이름순</button>
+    </div>
+    <div class="cards-grid" id="cardsGrid"></div>
+  </div>
+
+  <!-- SUMMARY SCREEN -->
+  <div class="screen" id="screenSummary">
+    <div class="sum-header">비엔나 호텔 <em>요약</em></div>
+    <div class="sum-sub">5월 3일–10일 · 7박 기준</div>
+
+    <div class="stat-grid">
+      <div class="scard"><div class="scard-label">최저가 1박</div><div class="scard-value" id="minPrice">—</div><div class="scard-sub" id="minName">—</div></div>
+      <div class="scard"><div class="scard-label">최고가 1박*</div><div class="scard-value" id="maxPrice">—</div><div class="scard-sub" id="maxName">—</div></div>
+      <div class="scard"><div class="scard-label">VIC 도보권</div><div class="scard-value" id="closeCount">—</div><div class="scard-sub">15분 이내</div></div>
+      <div class="scard"><div class="scard-label">어워드 수상</div><div class="scard-value" id="awardCount">—</div><div class="scard-sub">TC · 구글최고</div></div>
+    </div>
+
+    <div class="legend-box">
+      <div class="legend-title">거리 범례</div>
+      <div class="legend-item"><span class="ldot" style="background:#1E5E3A;"></span>🟢 VIC 도보권 — 도보 8~14분</div>
+      <div class="legend-item"><span class="ldot" style="background:#174270;"></span>🔵 중간거리 — 버스·지하철 13~30분</div>
+      <div class="legend-item"><span class="ldot" style="background:#6E2416;"></span>🔴 원거리 — 30분 이상 (U-Bahn)</div>
+      <div class="legend-item"><span class="ldot" style="background:#5B2878;"></span>🟣 럭셔리 — 호텔 임페리얼</div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-title">💡 출근 팁</div>
+      <div class="tip-item"><span class="tip-num">1</span>VIC 앞 지하철역은 U1 <b>Kaisermühlen-VIC</b></div>
+      <div class="tip-item"><span class="tip-num">2</span>도나우슈타트·시타디네스는 버스 <b>20A</b>로 2~3정거장</div>
+      <div class="tip-item"><span class="tip-num">3</span>하우프트반호프 호텔군은 U1 직행 약 30분</div>
+      <div class="tip-item"><span class="tip-num">4</span>지도 탭 → 마커 클릭 → 경로 자동 안내</div>
+    </div>
+
+    <div class="footer-note">* 호텔 임페리얼 제외 · 1박 = 7박 총액 ÷ 7 · TC = Tripadvisor Travellers' Choice</div>
+  </div>
+
+</div><!-- /screens -->
+
+<!-- Bottom Tab Bar -->
+<nav id="tabBar">
+  <button class="tab-item active" data-screen="screenMap">
+    <span class="tab-icon">🗺️</span>
+    <span class="tab-label">지도</span>
+  </button>
+  <button class="tab-item" data-screen="screenHotels">
+    <span class="tab-icon">🏨</span>
+    <span class="tab-label">호텔</span>
+  </button>
+  <button class="tab-item" data-screen="screenSummary">
+    <span class="tab-icon">📊</span>
+    <span class="tab-label">요약</span>
+  </button>
+</nav>
+
+<script>
+/* ── PWA: inline manifest ── */
+const manifest = {
+  name: '비엔나 호텔 — VIC 출근 가이드',
+  short_name: '비엔나 호텔',
+  description: 'VIC(IAEA) 출근 기준 비엔나 호텔 비교',
+  start_url: '.',
+  display: 'standalone',
+  orientation: 'portrait',
+  background_color: '#F4F0E8',
+  theme_color: '#1A1814',
+  icons: [
+    { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='40' fill='%231A1814'/%3E%3Ctext x='96' y='130' text-anchor='middle' font-size='100' font-family='serif'%3E%F0%9F%8F%A8%3C/text%3E%3C/svg%3E", sizes: '192x192', type: 'image/svg+xml' },
+    { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%231A1814'/%3E%3Ctext x='256' y='340' text-anchor='middle' font-size='260' font-family='serif'%3E%F0%9F%8F%A8%3C/text%3E%3C/svg%3E", sizes: '512x512', type: 'image/svg+xml' }
+  ]
+};
+const blob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
+document.getElementById('pwa-manifest').href = URL.createObjectURL(blob);
+
+/* ── PWA: Service Worker (inline) ── */
+const swCode = `
+const CACHE = 'vienna-hotels-v1';
+const OFFLINE = [location.href];
+self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c=>c.addAll(OFFLINE))); self.skipWaiting(); });
+self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k))))); });
+self.addEventListener('fetch', e => {
+  if(e.request.method !== 'GET') return;
+  e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)));
+});
+`;
+if('serviceWorker' in navigator){
+  const swBlob = new Blob([swCode], {type:'application/javascript'});
+  navigator.serviceWorker.register(URL.createObjectURL(swBlob), {scope:'/'})
+    .catch(()=>{}); // fail silently if blob SW not supported
+}
+
+/* ── iOS Install Banner ── */
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isStandalone = window.navigator.standalone === true;
+const bannerDismissed = sessionStorage.getItem('installDismissed');
+if(isIOS && !isStandalone && !bannerDismissed){
+  document.getElementById('installBanner').classList.add('show');
+}
+document.getElementById('installClose').addEventListener('click', ()=>{
+  document.getElementById('installBanner').classList.remove('show');
+  sessionStorage.setItem('installDismissed','1');
+});
+
+/* ── DATA ── */
+const VIC_POS = { lat:48.2343, lng:16.4160 };
+const HOTELS = [
+  { name:'아르코텔 카이저바써',      total:2585852, dist:'close',  loc:'바로앞',        note:'도보 8분',               stars:4, award:'',                      lat:48.2320, lng:16.4171 },
+  { name:'A by 아디나 비엔나',       total:1964466, dist:'close',  loc:'바로앞',        note:'도보 14분',              stars:4, award:'',                      lat:48.2299, lng:16.4141 },
+  { name:'NH 다뉴브 시티',           total:2043176, dist:'close',  loc:'바로앞',        note:'도보 12분',              stars:4, award:'',                      lat:48.2353, lng:16.4223 },
+  { name:'시타디네스 다누베',         total:2034921, dist:'mid',    loc:'IAEA 위쪽',    note:'버스 14분 (도보 9분)',    stars:4, award:'2023 신규오픈',          lat:48.2441, lng:16.4331 },
+  { name:'Spark 힐튼 도나우슈타트',  total:2230376, dist:'mid',    loc:'IAEA 위쪽',    note:'버스 13분 (도보 7분)',    stars:4, award:'',                      lat:48.2438, lng:16.4329 },
+  { name:'Spark 힐튼 메세 프라터',   total:1920723, dist:'mid',    loc:'강 바로 아래', note:'U-Bahn 23분 (걷기 19분)',stars:4, award:"TC '24",                lat:48.2159, lng:16.4051 },
+  { name:'베스트웨스턴 셀러브리티',  total:2048435, dist:'mid',    loc:'강 바로 아래', note:'버스 16분 (도보 13분)',   stars:0, award:'',                      lat:48.2235, lng:16.4065 },
+  { name:'노보텔 빈 시티',           total:1993264, dist:'mid',    loc:'빈링 아래',    note:'~30분',                  stars:0, award:'',                      lat:48.2133, lng:16.3833 },
+  { name:'데어 빌헬름스호프',         total:2475662, dist:'mid',    loc:'빈링 바로위',  note:'버스 19분 (도보 13분)',   stars:4, award:"TC '25 · 구글최고평점", lat:48.2186, lng:16.3882 },
+  { name:'힐튼 비엔나 워터프론트',    total:2323570, dist:'far',    loc:'강변',         note:'33분 (환승 2회)',         stars:4, award:'',                      lat:48.2140, lng:16.4216 },
+  { name:'레오나르도 하우프트반호프', total:1622052, dist:'far',    loc:'빈링 아래쪽',  note:'U-Bahn/걷기 30분',       stars:4, award:"TC '25",                lat:48.1836, lng:16.3794 },
+  { name:'아디나 호텔 벨베데레',     total:1707678, dist:'far',    loc:'빈링 아래',    note:'U-Bahn 32분 (도보 19분)',stars:4, award:"TC '25",                lat:48.1856, lng:16.3822 },
+  { name:'이비스 하우프트반호프',     total:1802598, dist:'far',    loc:'—',            note:'52분',                   stars:0, award:"TC '25",                lat:48.1857, lng:16.3787 },
+  { name:'호텔 임페리얼 (럭셔리)',   total:7600000, dist:'luxury',  loc:'도심',         note:'—',                      stars:5, award:"TC Best of Best '24",   lat:48.2025, lng:16.3705 },
+];
+HOTELS.forEach(h => { h.price = Math.round(h.total / 7); });
+
+const DC = { close:'#1E5E3A', mid:'#174270', far:'#6E2416', luxury:'#5B2878' };
+const DL = { close:'도보권', mid:'중간거리', far:'원거리', luxury:'럭셔리' };
+const DO = { close:0, mid:1, far:2, luxury:3 };
+const BC = { close:'b-close', mid:'b-mid', far:'b-far', luxury:'b-luxury' };
+
+let curFilter='all', curSort='price-desc', travelMode='WALKING', activeIdx=null;
+let gMap=null, dirSvc=null, dirRen=null, infoWin=null, markers=[];
+
+const fmtWon  = n => '₩'+n.toLocaleString('ko-KR');
+const fmtWonK = n => '₩'+Math.round(n/10000)+'만';
+const getFiltered = () => HOTELS.filter(h => curFilter==='all' || h.dist===curFilter);
+const getSorted = list => [...list].sort((a,b)=>{
+  if(curSort==='price-desc') return b.price-a.price;
+  if(curSort==='price-asc')  return a.price-b.price;
+  if(curSort==='dist')       return DO[a.dist]-DO[b.dist];
+  if(curSort==='name')       return a.name.localeCompare(b.name,'ko');
+  return 0;
+});
+
+/* ── Summary ── */
+function updateSummary(){
+  const main=HOTELS.filter(h=>h.dist!=='luxury');
+  const avg=Math.round(main.reduce((s,h)=>s+h.price,0)/main.length);
+  const asc=[...main].sort((a,b)=>a.price-b.price);
+  document.getElementById('avgPrice').textContent=fmtWonK(avg);
+  document.getElementById('minPrice').textContent=fmtWon(asc[0].price);
+  document.getElementById('minName').textContent=asc[0].name;
+  document.getElementById('maxPrice').textContent=fmtWon(asc[asc.length-1].price);
+  document.getElementById('maxName').textContent=asc[asc.length-1].name;
+  document.getElementById('closeCount').textContent=HOTELS.filter(h=>h.dist==='close').length+'곳';
+  document.getElementById('awardCount').textContent=HOTELS.filter(h=>h.award).length+'개';
+}
+
+/* ── Google Maps ── */
+window.initMap = function(){
+  gMap = new google.maps.Map(document.getElementById('map'),{
+    center:{lat:48.221,lng:16.405}, zoom:13,
+    mapTypeControl:false, fullscreenControl:false,
+    streetViewControl:false, zoomControl:true,
+    gestureHandling:'greedy',
+    styles:[
+      {featureType:'poi',elementType:'labels',stylers:[{visibility:'off'}]},
+      {featureType:'water',stylers:[{color:'#a8cce4'}]},
+      {featureType:'landscape',stylers:[{color:'#f0ece0'}]},
+      {featureType:'road.highway',elementType:'geometry',stylers:[{color:'#d4c8a8'}]},
+      {featureType:'road.arterial',elementType:'geometry',stylers:[{color:'#e8e0cc'}]},
+    ]
+  });
+  dirSvc = new google.maps.DirectionsService();
+  dirRen = new google.maps.DirectionsRenderer({
+    suppressMarkers:true,
+    polylineOptions:{strokeColor:'#A07820',strokeWeight:5,strokeOpacity:0.85}
+  });
+  dirRen.setMap(gMap);
+  infoWin = new google.maps.InfoWindow({maxWidth:270});
+
+  const vicM = new google.maps.Marker({
+    position:VIC_POS, map:gMap, title:'VIC / IAEA', zIndex:999,
+    icon:{path:google.maps.SymbolPath.CIRCLE,scale:15,fillColor:'#1A1814',fillOpacity:1,strokeColor:'#fff',strokeWeight:3},
+    label:{text:'VIC',color:'#fff',fontSize:'9px',fontWeight:'700'}
+  });
+  vicM.addListener('click',()=>{
+    infoWin.setContent('<div style="font-family:sans-serif;padding:2px;"><b>🎯 VIC / IAEA</b><br><span style="font-size:12px;color:#666;">Vienna International Centre<br>Wagramer Str. 5, 1220 Wien</span></div>');
+    infoWin.open(gMap,vicM);
+  });
+
+  HOTELS.forEach((h,i)=>{
+    const m = new google.maps.Marker({
+      position:{lat:h.lat,lng:h.lng}, map:gMap, title:h.name, zIndex:10+i,
+      icon:{path:google.maps.SymbolPath.CIRCLE,scale:12,fillColor:DC[h.dist],fillOpacity:0.92,strokeColor:'#fff',strokeWeight:2.5},
+      label:{text:String(i+1),color:'#fff',fontSize:'9px',fontWeight:'700'}
+    });
+    m.addListener('click',()=>{ openInfoCard(i,m); selectHotel(i); });
+    markers.push(m);
+  });
+  buildChips();
+  resizeMap();
+};
+
+function resizeMap(){
+  const ctrl = document.querySelector('.map-controls');
+  const rp   = document.getElementById('routePanel');
+  const nav  = document.getElementById('topNav');
+  const tab  = document.getElementById('tabBar');
+  const ctrlH = ctrl ? ctrl.offsetHeight : 0;
+  const rpH   = rp && rp.classList.contains('on') ? rp.offsetHeight : 0;
+  const navH  = nav ? nav.offsetHeight : 0;
+  const tabH  = tab ? tab.offsetHeight : 0;
+  const mapEl = document.getElementById('map');
+  if(mapEl) mapEl.style.height = (window.innerHeight - navH - tabH - ctrlH - rpH) + 'px';
+  if(gMap) google.maps.event.trigger(gMap,'resize');
+}
+window.addEventListener('resize', resizeMap);
+
+function selectHotel(idx){
+  if(!dirSvc||!dirRen) return;
+  activeIdx=idx;
+  const h=HOTELS[idx];
+  document.querySelectorAll('.chip').forEach((c,i)=>{
+    const on=i===idx;
+    c.classList.toggle('on',on);
+    c.style.background  = on?DC[h.dist]:'';
+    c.style.borderColor = on?'transparent':'';
+    c.style.color       = on?'#fff':'';
+  });
+  document.querySelectorAll('.card').forEach(c=>c.classList.toggle('hl',c.dataset.idx===String(idx)));
+  dirSvc.route({
+    origin:{lat:h.lat,lng:h.lng}, destination:VIC_POS,
+    travelMode:google.maps.TravelMode[travelMode], region:'at'
+  },(result,status)=>{
+    if(status===google.maps.DirectionsStatus.OK){
+      dirRen.setDirections(result);
+      renderPanel(h,result.routes[0].legs[0]);
+    }
+  });
+  markers[idx].setAnimation(google.maps.Animation.BOUNCE);
+  setTimeout(()=>markers[idx].setAnimation(null),1500);
+}
+
+function renderPanel(h,leg){
+  const ml={WALKING:'🚶 도보',TRANSIT:'🚇 대중교통',DRIVING:'🚗 자동차'}[travelMode];
+  document.getElementById('routeSummary').innerHTML=
+    `<b>${h.name}</b> → VIC · ${ml} · <span style="color:var(--gold);">${leg.duration.text}</span> · ${leg.distance.text}`;
+  document.getElementById('routeSteps').innerHTML=leg.steps.map(s=>{
+    const txt=s.instructions.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+    const icon=s.travel_mode==='TRANSIT'?'🚇':s.travel_mode==='WALKING'?'🚶':'🚗';
+    return `<li class="route-step"><span class="step-ic" style="background:${DC[h.dist]}22;color:${DC[h.dist]};">${icon}</span><span>${txt} <span style="color:var(--ink3);">(${s.duration.text})</span></span></li>`;
+  }).join('');
+  document.getElementById('routePanel').classList.add('on');
+  resizeMap();
+}
+
+function clearRoute(){
+  if(dirRen) dirRen.setDirections({routes:[]});
+  document.getElementById('routePanel').classList.remove('on');
+  document.querySelectorAll('.chip').forEach(c=>{c.classList.remove('on');c.style.background=c.style.borderColor=c.style.color='';});
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('hl'));
+  if(infoWin) infoWin.close();
+  activeIdx=null;
+  resizeMap();
+}
+
+function setMode(mode){
+  travelMode=mode;
+  document.querySelectorAll('.mode-btn[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
+  if(activeIdx!==null) selectHotel(activeIdx);
+}
+
+function openInfoCard(idx,marker){
+  const h=HOTELS[idx];
+  const col=DC[h.dist];
+  const stars=h.stars?'★'.repeat(h.stars)+' '+h.stars+'성급':'';
+  const aw=h.award?`<div style="margin-top:8px;font-size:11px;padding:2px 8px;border-radius:5px;background:#FDF4DC;color:#A07820;display:inline-block;">🏆 ${h.award}</div>`:'';
+  infoWin.setContent(`
+    <div style="font-family:'DM Sans',sans-serif;min-width:210px;padding:2px 0;">
+      <div style="display:flex;align-items:center;gap:7px;margin-bottom:7px;">
+        <b style="font-size:13px;color:#1A1814;">${idx+1}. ${h.name}</b>
+        <span style="font-size:10px;padding:2px 7px;border-radius:100px;background:${col}18;color:${col};white-space:nowrap;">${DL[h.dist]}</span>
+      </div>
+      <div style="font-size:18px;font-family:'Playfair Display',serif;color:#1A1814;">${fmtWon(h.price)}</div>
+      <div style="font-size:11px;color:#9A9288;margin:2px 0 8px;">1박 기준 · 7박 ${fmtWon(h.total)}</div>
+      <div style="font-size:11px;color:#57534A;line-height:1.8;">
+        🚶 ${h.note}${h.loc!=='—'?'<br>📍 '+h.loc:''}${stars?'<br>⭐ '+stars:''}
+      </div>
+      ${aw}
+    </div>`);
+  infoWin.open(gMap,marker);
+}
+
+function buildChips(){
+  const row=document.getElementById('chipsRow');
+  row.innerHTML='';
+  HOTELS.forEach((h,i)=>{
+    const btn=document.createElement('button');
+    btn.className='chip';
+    btn.innerHTML=`<span class="chip-dot" style="background:${DC[h.dist]};"></span>${i+1}. ${h.name}`;
+    btn.addEventListener('click',()=>{
+      if(!gMap) return;
+      selectHotel(i); openInfoCard(i,markers[i]);
+      gMap.panTo({lat:h.lat,lng:h.lng}); gMap.setZoom(14);
+    });
+    row.appendChild(btn);
+  });
+}
+
+function buildCards(){
+  const data=getFiltered();
+  const grid=document.getElementById('cardsGrid');
+  grid.innerHTML='';
+  getSorted(data).forEach((h,i)=>{
+    const idx=HOTELS.indexOf(h);
+    const div=document.createElement('div');
+    div.className='card '+h.dist;
+    div.dataset.idx=idx;
+    div.innerHTML=`
+      <div class="card-row1">
+        <div class="card-name">${idx+1}. ${h.name}</div>
+        <span class="dbadge ${BC[h.dist]}">${DL[h.dist]}</span>
+      </div>
+      <div class="card-price">${fmtWon(h.price)}</div>
+      <div class="card-psub">1박 기준 · 7박 총액 ${fmtWon(h.total)}</div>
+      <div class="card-meta">
+        <span class="mtag">🚶 ${h.note}</span>
+        ${h.loc!=='—'?`<span class="mtag">📍 ${h.loc}</span>`:''}
+        ${h.stars?`<span class="mtag">★ ${h.stars}성</span>`:''}
+        ${h.award?`<span class="atag">🏆 ${h.award}</span>`:''}
+      </div>`;
+    div.addEventListener('click',()=>{
+      if(!gMap) return;
+      switchScreen('screenMap');
+      setTimeout(()=>{
+        selectHotel(idx); openInfoCard(idx,markers[idx]);
+        gMap.panTo({lat:h.lat,lng:h.lng}); gMap.setZoom(15);
+      },100);
+    });
+    grid.appendChild(div);
+  });
+}
+
+/* ── Tab / screen navigation ── */
+function switchScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab-item').forEach(t=>t.classList.toggle('active',t.dataset.screen===id));
+  if(id==='screenMap') resizeMap();
+}
+document.querySelectorAll('.tab-item').forEach(btn=>{
+  btn.addEventListener('click',()=>switchScreen(btn.dataset.screen));
+});
+
+/* filter / sort */
+document.querySelectorAll('.flt').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.flt').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active'); curFilter=btn.dataset.filter; buildCards();
+  });
+});
+document.querySelectorAll('.srt').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.srt').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active'); curSort=btn.dataset.sort; buildCards();
+  });
+});
+document.querySelectorAll('.mode-btn[data-mode]').forEach(btn=>{
+  btn.addEventListener('click',()=>setMode(btn.dataset.mode));
+});
+document.getElementById('clearBtn').addEventListener('click',clearRoute);
+
+updateSummary();
+buildCards();
+</script>
+
+<script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAI7UiCreT29nI95BVbCm_j8qCdqt0rpgk&callback=initMap&language=ko&region=AT"
+  async defer>
+</script>
+</body>
+</html>
