@@ -80,24 +80,25 @@ body{
 .nav-stat-label{font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);}
 .nav-stat-value{font-family:'Playfair Display',serif;font-size:1rem;color:var(--ink);line-height:1;}
 
-/* ── BOTTOM TAB BAR ── */
+/* ── TOP TAB BAR (under nav) ── */
 #tabBar{
   flex-shrink:0;
   background:var(--surface);
-  border-top:1px solid var(--border);
+  border-bottom:2px solid var(--border);
   display:flex;
-  padding-bottom:var(--safe-bot);
 }
 .tab-item{
-  flex:1;display:flex;flex-direction:column;align-items:center;
-  gap:2px;padding:8px 4px;cursor:pointer;
-  font-size:.65rem;color:var(--ink3);
+  flex:1;display:flex;align-items:center;justify-content:center;
+  gap:6px;padding:10px 4px;cursor:pointer;
+  font-size:.75rem;color:var(--ink3);
   border:none;background:transparent;
-  transition:color .15s;
+  transition:all .15s;
+  border-bottom:2px solid transparent;
+  margin-bottom:-2px;
 }
-.tab-item.active{color:var(--ink);}
-.tab-icon{font-size:20px;line-height:1;}
-.tab-label{font-size:.6rem;letter-spacing:.03em;}
+.tab-item.active{color:var(--ink);border-bottom-color:var(--ink);}
+.tab-icon{font-size:15px;line-height:1;}
+.tab-label{font-size:.75rem;font-weight:400;letter-spacing:.01em;}
 
 /* ── SCREENS ── */
 #screens{flex:1;overflow:hidden;position:relative;}
@@ -236,6 +237,22 @@ body{
   </div>
 </div>
 
+<!-- Top Tab Bar -->
+<nav id="tabBar">
+  <button class="tab-item active" data-screen="screenMap">
+    <span class="tab-icon">🗺️</span>
+    <span class="tab-label">지도</span>
+  </button>
+  <button class="tab-item" data-screen="screenHotels">
+    <span class="tab-icon">🏨</span>
+    <span class="tab-label">호텔</span>
+  </button>
+  <button class="tab-item" data-screen="screenSummary">
+    <span class="tab-icon">📊</span>
+    <span class="tab-label">요약</span>
+  </button>
+</nav>
+
 <!-- Screens -->
 <div id="screens">
 
@@ -307,22 +324,6 @@ body{
 
 </div><!-- /screens -->
 
-<!-- Bottom Tab Bar -->
-<nav id="tabBar">
-  <button class="tab-item active" data-screen="screenMap">
-    <span class="tab-icon">🗺️</span>
-    <span class="tab-label">지도</span>
-  </button>
-  <button class="tab-item" data-screen="screenHotels">
-    <span class="tab-icon">🏨</span>
-    <span class="tab-label">호텔</span>
-  </button>
-  <button class="tab-item" data-screen="screenSummary">
-    <span class="tab-icon">📊</span>
-    <span class="tab-label">요약</span>
-  </button>
-</nav>
-
 <script>
 /* ── PWA: inline manifest ── */
 const manifest = {
@@ -374,20 +375,34 @@ document.getElementById('installClose').addEventListener('click', ()=>{
 /* ── DATA ── */
 const VIC_POS = { lat:48.2343, lng:16.4160 };
 const HOTELS = [
-  { name:'아르코텔 카이저바써',      total:2585852, dist:'close',  loc:'바로앞',        note:'도보 8분',               stars:4, award:'',                      lat:48.2320, lng:16.4171 },
-  { name:'A by 아디나 비엔나',       total:1964466, dist:'close',  loc:'바로앞',        note:'도보 14분',              stars:4, award:'',                      lat:48.2299, lng:16.4141 },
-  { name:'NH 다뉴브 시티',           total:2043176, dist:'close',  loc:'바로앞',        note:'도보 12분',              stars:4, award:'',                      lat:48.2353, lng:16.4223 },
-  { name:'시타디네스 다누베',         total:2034921, dist:'mid',    loc:'IAEA 위쪽',    note:'버스 14분 (도보 9분)',    stars:4, award:'2023 신규오픈',          lat:48.2441, lng:16.4331 },
-  { name:'Spark 힐튼 도나우슈타트',  total:2230376, dist:'mid',    loc:'IAEA 위쪽',    note:'버스 13분 (도보 7분)',    stars:4, award:'',                      lat:48.2438, lng:16.4329 },
-  { name:'Spark 힐튼 메세 프라터',   total:1920723, dist:'mid',    loc:'강 바로 아래', note:'U-Bahn 23분 (걷기 19분)',stars:4, award:"TC '24",                lat:48.2159, lng:16.4051 },
-  { name:'베스트웨스턴 셀러브리티',  total:2048435, dist:'mid',    loc:'강 바로 아래', note:'버스 16분 (도보 13분)',   stars:0, award:'',                      lat:48.2235, lng:16.4065 },
-  { name:'노보텔 빈 시티',           total:1993264, dist:'mid',    loc:'빈링 아래',    note:'~30분',                  stars:0, award:'',                      lat:48.2133, lng:16.3833 },
-  { name:'데어 빌헬름스호프',         total:2475662, dist:'mid',    loc:'빈링 바로위',  note:'버스 19분 (도보 13분)',   stars:4, award:"TC '25 · 구글최고평점", lat:48.2186, lng:16.3882 },
-  { name:'힐튼 비엔나 워터프론트',    total:2323570, dist:'far',    loc:'강변',         note:'33분 (환승 2회)',         stars:4, award:'',                      lat:48.2140, lng:16.4216 },
-  { name:'레오나르도 하우프트반호프', total:1622052, dist:'far',    loc:'빈링 아래쪽',  note:'U-Bahn/걷기 30분',       stars:4, award:"TC '25",                lat:48.1836, lng:16.3794 },
-  { name:'아디나 호텔 벨베데레',     total:1707678, dist:'far',    loc:'빈링 아래',    note:'U-Bahn 32분 (도보 19분)',stars:4, award:"TC '25",                lat:48.1856, lng:16.3822 },
-  { name:'이비스 하우프트반호프',     total:1802598, dist:'far',    loc:'—',            note:'52분',                   stars:0, award:"TC '25",                lat:48.1857, lng:16.3787 },
-  { name:'호텔 임페리얼 (럭셔리)',   total:7600000, dist:'luxury',  loc:'도심',         note:'—',                      stars:5, award:"TC Best of Best '24",   lat:48.2025, lng:16.3705 },
+  { name:'아르코텔 카이저바써',      total:2585852, dist:'close',  loc:'바로앞',        note:'도보 8분',               stars:4, award:'',                      lat:48.2320, lng:16.4171,
+    photo:'https://lh3.googleusercontent.com/places/ANXAkqGWcZhN21WHSuYvXnVCIN6fvg6S1j5c61vlvoIBdj0gjrMX_zyMAFlqDte0htIyraBcvcNNDlQHZGvgJUL1dPmsv9Xt9uQurQo=s800-w800-h500' },
+  { name:'A by 아디나 비엔나',       total:1964466, dist:'close',  loc:'바로앞',        note:'도보 14분',              stars:4, award:'',                      lat:48.2299, lng:16.4141,
+    photo:'https://lh3.googleusercontent.com/places/ANXAkqHxQdA5ZKuPKqYqlxIo_Cv_TZk-0PqGAkQXUh47kU7_z3C9EnhhE-KeHob6ltw9nXqzeS-fKhlAqwXxineGgC3cx_zqtx_wYFU=s800-w800-h500' },
+  { name:'NH 다뉴브 시티',           total:2043176, dist:'close',  loc:'바로앞',        note:'도보 12분',              stars:4, award:'',                      lat:48.2353, lng:16.4223,
+    photo:'https://lh3.googleusercontent.com/places/ANXAkqHkTH5V36jDB41Q6bd02VNu58Mmn9vE0ovVPgsgH_4bEACSwWtd1pwdAUbj2kWHC4HPl8Iwfn2o2XPMq-xZzBoSdYbIbqlnOsY=s800-w800-h500' },
+  { name:'시타디네스 다누베',         total:2034921, dist:'mid',    loc:'IAEA 위쪽',    note:'버스 14분 (도보 9분)',    stars:4, award:'2023 신규오픈',          lat:48.2441, lng:16.4331,
+    photo:'https://lh3.googleusercontent.com/places/ANXAkqEmbXin_QnPngppdZdonavaUqnpV6Yx7pQD5xmgw2icedKZp7-OOv-kNi1k6pvgRH_1hcTgga2pHxBNKNiKBvsFenZX6-fNePI=s800-w800-h500' },
+  { name:'Spark 힐튼 도나우슈타트',  total:2230376, dist:'mid',    loc:'IAEA 위쪽',    note:'버스 13분 (도보 7분)',    stars:4, award:'',                      lat:48.2438, lng:16.4329,
+    photo:'https://lh3.googleusercontent.com/places/ANXAkqHGDVJgvF-jFKsYcUbc5gE8s-FrPS521L720yfXniCRhzoCa1yWbZjcbTTIAQlaV4i3-OviEZW6W_iRyzGz8MrpsR5Q9fZVe0s=s800-w800-h500' },
+  { name:'Spark 힐튼 메세 프라터',   total:1920723, dist:'mid',    loc:'강 바로 아래', note:'U-Bahn 23분 (걷기 19분)',stars:4, award:"TC '24",                lat:48.2159, lng:16.4051,
+    photo:'https://lh3.googleusercontent.com/places/ANXAkqE-yBNksGWEh8ltheZgPER9vGj5C4a5ND2CGwbOrvaY5hqbQnIblxIp7EWH0NZhqjou1Z4v2VnDJVhDc0cw19_CXi9yYClKXDM=s800-w800-h500' },
+  { name:'베스트웨스턴 셀러브리티',  total:2048435, dist:'mid',    loc:'강 바로 아래', note:'버스 16분 (도보 13분)',   stars:0, award:'',                      lat:48.2235, lng:16.4065,
+    photo:'https://lh3.googleusercontent.com/places/ANXAkqEB1-D_hyZ0ep4j3AfUUf_4gMPsAMiy2iHQiFjHnNtCySyQ127sNcI4pMe1SR6dsYj_Kt9fyPVxGZK4RFwbS0BkKz0BvNxcUGQ=s800-w800-h500' },
+  { name:'노보텔 빈 시티',           total:1993264, dist:'mid',    loc:'빈링 아래',    note:'~30분',                  stars:0, award:'',                      lat:48.2133, lng:16.3833,
+    photo:'https://lh3.googleusercontent.com/places/ANXAkqFeMZED5URCT--O4HIYxbqqm8cmwxcqhv5b1LMdZItbbCnU0wPibsZ3YIJk-pRoVo3u_IusWIQjPs1iQbj7Qv3w6l0wowEIaeE=s800-w800-h500' },
+  { name:'데어 빌헬름스호프',         total:2475662, dist:'mid',    loc:'빈링 바로위',  note:'버스 19분 (도보 13분)',   stars:4, award:"TC '25 · 구글최고평점", lat:48.2186, lng:16.3882,
+    photo:'https://lh3.googleusercontent.com/places/ANXAkqEsNh8KDELR6exAWC8O_7-5abxbCEUrDnQQY6s67a2JsnyYuIU9DXHTXrDhcQzRnB_E-CMExO3yd3EIn6ZjiBqLngQYSAMloeQ=s800-w800-h500' },
+  { name:'힐튼 비엔나 워터프론트',    total:2323570, dist:'far',    loc:'강변',         note:'33분 (환승 2회)',         stars:4, award:'',                      lat:48.2140, lng:16.4216,
+    photo:'https://lh3.googleusercontent.com/places/ANXAkqHZK1Ra2FPa6jF8C35pqf_i6Boo6Mz3Pr-0UByVqN04MiWj5BLI3edUOj7C_MlB8qqEsSMQwXcQHWUBP8FG-jFbMvNuHKbqqnY=s800-w800-h500' },
+  { name:'레오나르도 하우프트반호프', total:1622052, dist:'far',    loc:'빈링 아래쪽',  note:'U-Bahn/걷기 30분',       stars:4, award:"TC '25",                lat:48.1836, lng:16.3794,
+    photo:'https://lh3.googleusercontent.com/places/ANXAkqHffElf3uRW38Szn3IujOB1sKhW3V8OGaRi7EdyEfJXEWN2tEMqsfVb7TZeMPwhlWUubBqOTspnH8fTXCEkd0L8vmhTGyOaRtA=s800-w800-h500' },
+  { name:'아디나 호텔 벨베데레',     total:1707678, dist:'far',    loc:'빈링 아래',    note:'U-Bahn 32분 (도보 19분)',stars:4, award:"TC '25",                lat:48.1856, lng:16.3822,
+    photo:'https://lh3.googleusercontent.com/places/ANXAkqFsXu2h2lZe_o703GvoFNg3GTi3wxMWy-8S7E_7AQdKQe2-X8PHCvzJwn713bo2JxZ3ClpH6CeIiAjvU1hKAtIBzYlhaHJStqQ=s800-w800-h500' },
+  { name:'이비스 하우프트반호프',     total:1802598, dist:'far',    loc:'—',            note:'52분',                   stars:0, award:"TC '25",                lat:48.1857, lng:16.3787,
+    photo:'https://lh3.googleusercontent.com/places/ANXAkqHlYoaW6h49-uO-MDV1VvJyAsEgOIYH1PhVBibb513cwBgQu_slPamh4msFvEbl7WV-SrMcL8tMRy0O9U3B_FZtLI0PtXiwXYs=s800-w800-h500' },
+  { name:'호텔 임페리얼 (럭셔리)',   total:7600000, dist:'luxury',  loc:'도심',         note:'—',                      stars:5, award:"TC Best of Best '24",   lat:48.2025, lng:16.3705,
+    photo:'https://images.trvl-media.com/lodging/1000000/30000/21500/21425/21425_114_z.jpg' },
 ];
 HOTELS.forEach(h => { h.price = Math.round(h.total / 7); });
 
@@ -445,12 +460,22 @@ window.initMap = function(){
     polylineOptions:{strokeColor:'#A07820',strokeWeight:5,strokeOpacity:0.85}
   });
   dirRen.setMap(gMap);
-  infoWin = new google.maps.InfoWindow({maxWidth:270});
+  infoWin = new google.maps.InfoWindow({maxWidth:300});
 
+  /* VIC marker — large custom pin */
+  const vicSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="68" viewBox="0 0 56 68">
+    <filter id="sh"><feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="rgba(0,0,0,0.35)"/></filter>
+    <g filter="url(#sh)">
+      <path d="M28 4 C14 4 4 14 4 27 C4 42 28 60 28 60 C28 60 52 42 52 27 C52 14 42 4 28 4Z" fill="#1A1814"/>
+      <circle cx="28" cy="27" r="14" fill="white" opacity="0.95"/>
+    </g>
+    <text x="28" y="22" text-anchor="middle" font-size="7.5" font-weight="800" fill="#1A1814" font-family="Arial,sans-serif" letter-spacing="0.5">VIC</text>
+    <text x="28" y="31" text-anchor="middle" font-size="6" fill="#A07820" font-family="Arial,sans-serif" font-weight="600">IAEA</text>
+  </svg>`;
+  const vicUrl = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(vicSvg);
   const vicM = new google.maps.Marker({
     position:VIC_POS, map:gMap, title:'VIC / IAEA', zIndex:999,
-    icon:{path:google.maps.SymbolPath.CIRCLE,scale:15,fillColor:'#1A1814',fillOpacity:1,strokeColor:'#fff',strokeWeight:3},
-    label:{text:'VIC',color:'#fff',fontSize:'9px',fontWeight:'700'}
+    icon:{ url:vicUrl, scaledSize:new google.maps.Size(56,68), anchor:new google.maps.Point(28,60) }
   });
   vicM.addListener('click',()=>{
     infoWin.setContent('<div style="font-family:sans-serif;padding:2px;"><b>🎯 VIC / IAEA</b><br><span style="font-size:12px;color:#666;">Vienna International Centre<br>Wagramer Str. 5, 1220 Wien</span></div>');
@@ -477,10 +502,10 @@ function resizeMap(){
   const tab  = document.getElementById('tabBar');
   const ctrlH = ctrl ? ctrl.offsetHeight : 0;
   const rpH   = rp && rp.classList.contains('on') ? rp.offsetHeight : 0;
-  const navH  = nav ? nav.offsetHeight : 0;
-  const tabH  = tab ? tab.offsetHeight : 0;
+  const navH  = (nav ? nav.offsetHeight : 0) + (tab ? tab.offsetHeight : 0);
+  const safeBot = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--safe-bot')) || 0;
   const mapEl = document.getElementById('map');
-  if(mapEl) mapEl.style.height = (window.innerHeight - navH - tabH - ctrlH - rpH) + 'px';
+  if(mapEl) mapEl.style.height = (window.innerHeight - navH - ctrlH - rpH - safeBot) + 'px';
   if(gMap) google.maps.event.trigger(gMap,'resize');
 }
 window.addEventListener('resize', resizeMap);
@@ -544,18 +569,27 @@ function openInfoCard(idx,marker){
   const col=DC[h.dist];
   const stars=h.stars?'★'.repeat(h.stars)+' '+h.stars+'성급':'';
   const aw=h.award?`<div style="margin-top:8px;font-size:11px;padding:2px 8px;border-radius:5px;background:#FDF4DC;color:#A07820;display:inline-block;">🏆 ${h.award}</div>`:'';
+  const photoHtml = h.photo
+    ? `<div style="margin:-2px -2px 10px -2px;border-radius:8px 8px 0 0;overflow:hidden;height:130px;">
+         <img src="${h.photo}" alt="${h.name}" style="width:100%;height:100%;object-fit:cover;display:block;"
+              onerror="this.parentElement.style.display='none'">
+       </div>`
+    : '';
   infoWin.setContent(`
-    <div style="font-family:'DM Sans',sans-serif;min-width:210px;padding:2px 0;">
-      <div style="display:flex;align-items:center;gap:7px;margin-bottom:7px;">
-        <b style="font-size:13px;color:#1A1814;">${idx+1}. ${h.name}</b>
-        <span style="font-size:10px;padding:2px 7px;border-radius:100px;background:${col}18;color:${col};white-space:nowrap;">${DL[h.dist]}</span>
+    <div style="font-family:'DM Sans',sans-serif;min-width:260px;max-width:290px;margin:-12px -12px -12px -12px;padding:0;">
+      ${photoHtml}
+      <div style="padding:${h.photo?'0':'2px'} 12px 12px 12px;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:7px;margin-top:${h.photo?'10px':'0'};">
+          <b style="font-size:13px;color:#1A1814;line-height:1.3;">${idx+1}. ${h.name}</b>
+          <span style="font-size:10px;padding:2px 7px;border-radius:100px;background:${col}18;color:${col};white-space:nowrap;flex-shrink:0;">${DL[h.dist]}</span>
+        </div>
+        <div style="font-size:19px;font-family:'Playfair Display',serif;color:#1A1814;line-height:1;">${fmtWon(h.price)}</div>
+        <div style="font-size:11px;color:#9A9288;margin:2px 0 8px;">1박 기준 · 7박 ${fmtWon(h.total)}</div>
+        <div style="font-size:11px;color:#57534A;line-height:1.9;">
+          🚶 ${h.note}${h.loc!=='—'?'<br>📍 '+h.loc:''}${stars?'<br>⭐ '+stars:''}
+        </div>
+        ${aw}
       </div>
-      <div style="font-size:18px;font-family:'Playfair Display',serif;color:#1A1814;">${fmtWon(h.price)}</div>
-      <div style="font-size:11px;color:#9A9288;margin:2px 0 8px;">1박 기준 · 7박 ${fmtWon(h.total)}</div>
-      <div style="font-size:11px;color:#57534A;line-height:1.8;">
-        🚶 ${h.note}${h.loc!=='—'?'<br>📍 '+h.loc:''}${stars?'<br>⭐ '+stars:''}
-      </div>
-      ${aw}
     </div>`);
   infoWin.open(gMap,marker);
 }
