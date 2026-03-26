@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="비엔나 여행">
+<title>🇦🇹 비엔나 여행 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f7f4ef; --bg2:#f0ece4; --surface:#fff; --surface2:#f7f4ef;
+  --border:rgba(0,0,0,.08); --border2:rgba(0,0,0,.14);
+  --text:#1a1814; --text2:#4a453e; --muted:#8a8278; --dim:#b8b2aa;
+  --gold:#b8862a; --gold2:#d4a340; --goldbg:#fdf3e0;
+  --rose:#b54060; --rosebg:#fdeef3;
+  --teal:#1f8a80; --tealbg:#e6f6f4;
+  --blue:#2c6dbf; --bluebg:#e8f0fb;
+  --sage:#3d7a50; --sagebg:#ebf5ef;
+  --purple:#5b3fa0; --purplebg:#eeebfb;
+  --safe:env(safe-area-inset-bottom,0px); --top:env(safe-area-inset-top,0px);
+  --tab-h:56px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;padding-bottom:24px}
+
+/* ── HEADER + TABS ── */
+.hdr{padding:calc(var(--top)+18px) 20px 0;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200}
+.hdr-top{padding-bottom:12px}
+.hdr-lbl{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:4px}
+.hdr-title{font-family:'DM Serif Display',serif;font-size:26px;line-height:1.15;color:var(--text)}
+.hdr-title em{font-style:italic;color:var(--gold2)}
+.hdr-sub{font-size:12px;color:var(--muted);font-weight:300;margin-top:2px}
+
+.tabnav{display:flex;border-top:1px solid var(--border);background:var(--surface)}
+.tnav{flex:1;position:relative;padding:0;background:none;border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;height:var(--tab-h);justify-content:center;transition:color .2s}
+.tnav .ticon{font-size:18px;line-height:1}
+.tnav::after{content:'';position:absolute;bottom:0;left:12%;right:12%;height:3px;border-radius:2px 2px 0 0;background:var(--gold);transform:scaleX(0);transition:transform .25s cubic-bezier(.4,0,.2,1)}
+.tnav.active{color:var(--gold);font-weight:600}
+.tnav.active::after{transform:scaleX(1)}
+.tbdg{display:inline-block;font-size:9px;font-weight:600;padding:1px 5px;border-radius:10px;background:var(--goldbg);color:var(--gold);margin-left:3px;vertical-align:middle;border:1px solid rgba(184,134,42,.2)}
+.tbdg-t{background:var(--tealbg);color:var(--teal);border-color:rgba(31,138,128,.2)}
+
+/* ── PANELS ── */
+.panel{display:none;padding:12px 14px 40px}
+.panel.active{display:block}
+
+/* ══ SCHEDULE ══ */
+.day-group{margin-bottom:4px}
+.day-hdr{padding:16px 2px 8px;display:flex;flex-direction:column;gap:4px}
+.day-date{font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;color:var(--text);line-height:1.1}
+.day-name{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.day-travel{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px}
+.travel-chip{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;background:var(--bg2);color:var(--muted);border:1px solid var(--border)}
+.day-divider{height:1px;background:var(--border);margin-bottom:8px}
+
+/* Hotel chip */
+.hotel-chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:4px 10px;border-radius:8px;background:var(--goldbg);color:var(--gold);border:1px solid rgba(184,134,42,.25);margin-bottom:8px}
+
+.sc-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04);transition:box-shadow .2s}
+.sc-card.open{box-shadow:0 3px 12px rgba(0,0,0,.08)}
+.sc-head{display:flex;align-items:stretch;cursor:pointer;user-select:none}
+.sc-stripe{width:4px;flex-shrink:0}
+.sc-main{flex:1;padding:12px 12px 12px;min-width:0}
+.sc-time{font-size:11px;color:var(--muted);margin-bottom:3px;font-weight:500;letter-spacing:.03em}
+.sc-title{font-size:14px;font-weight:600;color:var(--text);line-height:1.3;margin-bottom:6px}
+.sc-badges{display:flex;gap:4px;flex-wrap:wrap}
+.sc-arr{width:36px;display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:18px;transition:transform .25s;flex-shrink:0}
+.sc-card.open .sc-arr{transform:rotate(90deg)}
+.sc-body{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1)}
+.sc-card.open .sc-body{max-height:900px}
+.sc-inner{padding:0 12px 14px;border-top:1px solid var(--border)}
+
+/* Hotel start indicator */
+.hotel-start{display:flex;align-items:center;gap:6px;padding:7px 10px;background:var(--goldbg);border:1px solid rgba(184,134,42,.2);border-radius:8px;margin-top:10px;font-size:12px;color:var(--gold)}
+.hotel-start strong{font-weight:600}
+
+/* Travel time summary */
+.route-summary{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 4px}
+.route-chip{font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px;background:var(--bg2);color:var(--text2);border:1px solid var(--border)}
+
+.map-embed{width:100%;height:200px;border-radius:10px;overflow:hidden;margin:10px 0 8px;background:var(--bg2);position:relative;border:1px solid var(--border)}
+.map-embed iframe{width:100%;height:100%;border:none;display:block}
+.map-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted)}
+
+.confirmed-box{display:flex;align-items:center;gap:8px;background:var(--sagebg);border:1px solid rgba(61,122,80,.2);border-radius:8px;padding:8px 12px;margin:8px 0}
+.confirmed-text{font-size:12px;color:var(--sage);font-weight:500}
+.confirmed-sub{font-size:11px;color:var(--sage);opacity:.7}
+
+.map-btns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.mb{display:flex;align-items:center;gap:4px;padding:7px 11px;border-radius:8px;border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:transform .15s;white-space:nowrap}
+.mb:active{transform:scale(.96)}
+.mb-map{background:var(--tealbg);color:var(--teal);border:1px solid rgba(31,138,128,.25)}
+.mb-dir{background:var(--bluebg);color:var(--blue);border:1px solid rgba(44,109,191,.25)}
+.mb-route{background:var(--goldbg);color:var(--gold);border:1px solid rgba(184,134,42,.25)}
+
+.sc-details{margin:8px 0}
+.sc-details li{font-size:13px;color:var(--text2);padding:3px 0;list-style:none;display:flex;gap:8px;line-height:1.55}
+.sc-details li::before{content:'·';color:var(--dim);flex-shrink:0}
+.sc-details li strong{color:var(--text);font-weight:600}
+.sc-note{padding:8px 10px;background:var(--goldbg);border:1px solid rgba(184,134,42,.2);border-radius:8px;font-size:12px;color:var(--gold);line-height:1.5;margin-top:8px}
+
+/* Badges */
+.b{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px}
+.b-fl{background:var(--purplebg);color:var(--purple);border:1px solid rgba(91,63,160,.2)}
+.b-ro{background:#fdeee8;color:#a03a18;border:1px solid rgba(160,58,24,.2)}
+.b-na{background:var(--sagebg);color:var(--sage);border:1px solid rgba(61,122,80,.2)}
+.b-vi{background:var(--bluebg);color:var(--blue);border:1px solid rgba(44,109,191,.2)}
+.b-op{background:var(--rosebg);color:var(--rose);border:1px solid rgba(181,64,96,.2)}
+.b-mt{background:var(--tealbg);color:var(--teal);border:1px solid rgba(31,138,128,.2)}
+.b-go{background:var(--goldbg);color:var(--gold);border:1px solid rgba(184,134,42,.2)}
+.b-wr{background:#fdeef0;color:#b54060;border:1px solid rgba(181,64,96,.2)}
+.b-ok{background:var(--sagebg);color:var(--sage);border:1px solid rgba(61,122,80,.3)}
+.b-ht{background:var(--goldbg);color:var(--gold);border:1px solid rgba(184,134,42,.3)}
+
+/* ══ TODO / CHECK ══ */
+.prog-wrap{padding:6px 2px 0}
+.prog-row{display:flex;justify-content:space-between;margin-bottom:4px}
+.prog-lbl{font-size:10px;color:var(--muted)}
+.prog-num{font-size:10px;color:var(--gold);font-weight:600}
+.prog-track{height:4px;background:var(--bg2);border-radius:2px;overflow:hidden;margin-bottom:10px;border:1px solid var(--border)}
+.prog-fill{height:100%;border-radius:2px;transition:width .4s cubic-bezier(.4,0,.2,1)}
+.pf-t{background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.pf-c{background:linear-gradient(90deg,var(--teal),var(--sage))}
+
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin:18px 0 8px}
+.sec-hdr:first-of-type{margin-top:6px}
+.sec-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.sec-cnt{font-size:10px;color:var(--dim)}
+
+.ilist{display:flex;flex-direction:column;gap:5px}
+.item{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;background:var(--surface);border:1px solid var(--border);border-radius:11px;cursor:pointer;user-select:none;position:relative;overflow:hidden;transition:box-shadow .15s,border-color .15s;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.item:active{transform:scale(.98)}
+.item.done{background:var(--bg2);border-color:var(--border);box-shadow:none}
+.item.done::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(31,138,128,.04),transparent);pointer-events:none}
+.ichk{width:20px;height:20px;flex-shrink:0;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;transition:all .25s;margin-top:1px}
+.item.done .ichk{background:var(--teal);border-color:var(--teal)}
+.ichk svg{opacity:0;transition:opacity .2s}
+.item.done .ichk svg{opacity:1}
+.ibody{flex:1;min-width:0}
+.itxt{font-size:13px;font-weight:400;color:var(--text);line-height:1.4}
+.item.done .itxt{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--dim)}
+.isub{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.4;font-weight:300}
+.item.done .isub{color:var(--dim)}
+.itag{font-size:9px;font-weight:600;padding:2px 6px;border-radius:20px;flex-shrink:0;align-self:flex-start;margin-top:2px;letter-spacing:.03em}
+.t-ur{background:var(--rosebg);color:var(--rose);border:1px solid rgba(181,64,96,.25)}
+.t-bk{background:var(--goldbg);color:var(--gold);border:1px solid rgba(184,134,42,.25)}
+.t-in{background:var(--bluebg);color:var(--blue);border:1px solid rgba(44,109,191,.25)}
+.t-pk{background:var(--sagebg);color:var(--sage);border:1px solid rgba(61,122,80,.25)}
+.t-wn{background:#fdeef0;color:var(--rose);border:1px solid rgba(181,64,96,.2)}
+.idel{width:18px;height:18px;flex-shrink:0;border-radius:50%;border:none;background:var(--bg2);color:var(--dim);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;align-self:flex-start;margin-top:1px}
+.item:hover .idel,.item:active .idel{opacity:1}
+.idel:hover{background:var(--rosebg);color:var(--rose)}
+
+.notice{background:var(--rosebg);border:1px solid rgba(181,64,96,.2);border-radius:10px;padding:10px 12px;margin-bottom:8px}
+.notice-t{font-size:11px;font-weight:600;color:var(--rose);margin-bottom:3px}
+.notice-b{font-size:11px;color:var(--text2);line-height:1.6}
+
+/* ── ADD ITEM with category ── */
+.add-wrap{margin-top:10px}
+.add-row{display:flex;gap:7px;flex-direction:column}
+.add-inputs{display:flex;gap:7px}
+.add-in{flex:1;background:var(--surface);border:1px solid var(--border2);border-radius:9px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color .2s}
+.add-in::placeholder{color:var(--dim)}
+.add-in:focus{border-color:var(--gold)}
+.add-cat{background:var(--surface);border:1px solid var(--border2);border-radius:9px;padding:10px 10px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text2);outline:none;cursor:pointer;min-width:90px;flex-shrink:0}
+.add-cat:focus{border-color:var(--gold)}
+.add-btn{width:40px;height:40px;border:none;border-radius:9px;font-size:22px;font-weight:300;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .15s}
+.add-btn:active{transform:scale(.94)}
+.abt{background:var(--gold);color:#fff}
+.abc{background:var(--teal);color:#fff}
+
+@keyframes popIn{0%{transform:scale(1)}40%{transform:scale(1.07)}100%{transform:scale(1)}}
+.just-done{animation:popIn .3s ease}
+::-webkit-scrollbar{width:0}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="hdr-lbl">Vienna Trip 2026</div>
+    <div class="hdr-title">4.30 — 5.10 <em>여행 플래너</em></div>
+    <div class="hdr-sub">로마 · 나폴리 · 비엔나 · 할슈타트</div>
+  </div>
+  <div class="tabnav">
+    <button class="tnav active" id="bt-sched" onclick="switchTab('sched')"><span class="ticon">🗓️</span>일정</button>
+    <button class="tnav" id="bt-todo" onclick="switchTab('todo')"><span class="ticon">📋</span>To Do<span class="tbdg" id="tbdg">0</span></button>
+    <button class="tnav" id="bt-check" onclick="switchTab('check')"><span class="ticon">✅</span>체크리스트<span class="tbdg tbdg-t" id="cbdg">0</span></button>
+  </div>
+</div>
+
+<div class="panel active" id="panel-sched"><div id="sched-root"></div></div>
+
+<div class="panel" id="panel-todo">
+  <div class="prog-wrap">
+    <div class="prog-row"><span class="prog-lbl">완료율</span><span class="prog-num" id="tp-n">0/0</span></div>
+    <div class="prog-track"><div class="prog-fill pf-t" id="tp-f" style="width:0%"></div></div>
+  </div>
+  <div class="sec-hdr"><span class="sec-title">🚨 긴급 예약</span><span class="sec-cnt" id="c-ur"></span></div><div class="ilist" id="l-ur"></div>
+  <div class="sec-hdr"><span class="sec-title">🏨 숙소·교통</span><span class="sec-cnt" id="c-tt"></span></div><div class="ilist" id="l-tt"></div>
+  <div class="sec-hdr"><span class="sec-title">🎭 현지 예약</span><span class="sec-cnt" id="c-tl"></span></div><div class="ilist" id="l-tl"></div>
+  <div class="sec-hdr"><span class="sec-title">📝 기타 준비</span><span class="sec-cnt" id="c-tm"></span></div><div class="ilist" id="l-tm"></div>
+  <div class="sec-hdr" style="margin-top:20px"><span class="sec-title">+ 항목 추가</span></div>
+  <div class="add-wrap">
+    <div class="add-row">
+      <div class="add-inputs">
+        <select class="add-cat" id="todo-cat">
+          <option value="ur">🚨 긴급 예약</option>
+          <option value="tt">🏨 숙소·교통</option>
+          <option value="tl">🎭 현지 예약</option>
+          <option value="tm" selected>📝 기타 준비</option>
+        </select>
+        <select class="add-cat" id="todo-tag" style="min-width:80px">
+          <option value="ur">긴급</option>
+          <option value="bk">예약</option>
+          <option value="in">정보</option>
+          <option value="pk" selected>챙기기</option>
+        </select>
+      </div>
+      <div class="add-inputs">
+        <input class="add-in" id="ti" placeholder="할 일 입력..." maxlength="80">
+        <button class="add-btn abt" onclick="addIt('t')">+</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel" id="panel-check">
+  <div class="prog-wrap">
+    <div class="prog-row"><span class="prog-lbl">완료율</span><span class="prog-num" id="cp-n">0/0</span></div>
+    <div class="prog-track"><div class="prog-fill pf-c" id="cp-f" style="width:0%"></div></div>
+  </div>
+  <div class="notice"><div class="notice-t">⚠️ 출발 3일 전부터 순서대로 체크</div><div class="notice-b">여권 유효기간: 귀국일 기준 6개월 이상 필수</div></div>
+  <div class="sec-hdr"><span class="sec-title">🪪 필수 서류</span><span class="sec-cnt" id="c-cd"></span></div><div class="ilist" id="l-cd"></div>
+  <div class="sec-hdr"><span class="sec-title">💊 건강·의약품</span><span class="sec-cnt" id="c-ch"></span></div><div class="ilist" id="l-ch"></div>
+  <div class="sec-hdr"><span class="sec-title">👗 의류·용품</span><span class="sec-cnt" id="c-cc"></span></div><div class="ilist" id="l-cc"></div>
+  <div class="sec-hdr"><span class="sec-title">📱 전자기기</span><span class="sec-cnt" id="c-ct"></span></div><div class="ilist" id="l-ct"></div>
+  <div class="sec-hdr"><span class="sec-title">🚨 여행 중 주의사항</span><span class="sec-cnt" id="c-cw"></span></div><div class="ilist" id="l-cw"></div>
+  <div class="sec-hdr" style="margin-top:20px"><span class="sec-title">+ 항목 추가</span></div>
+  <div class="add-wrap">
+    <div class="add-row">
+      <div class="add-inputs">
+        <select class="add-cat" id="check-cat">
+          <option value="cd">🪪 필수 서류</option>
+          <option value="ch">💊 건강·의약품</option>
+          <option value="cc">👗 의류·용품</option>
+          <option value="ct">📱 전자기기</option>
+          <option value="cw" selected>🚨 주의사항</option>
+        </select>
+        <select class="add-cat" id="check-tag" style="min-width:80px">
+          <option value="ur">긴급</option>
+          <option value="bk">예약</option>
+          <option value="in">정보</option>
+          <option value="pk" selected>챙기기</option>
+          <option value="wn">주의</option>
+        </select>
+      </div>
+      <div class="add-inputs">
+        <input class="add-in" id="ci" placeholder="체크 항목 입력..." maxlength="80">
+        <button class="add-btn abc" onclick="addIt('c')">+</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const GMAP_KEY = 'AIzaSyAI7UiCreT29nI95BVbCm_j8qCdqt0rpgk';
+
+/* ══════════════════════════
+   HOTELS
+══════════════════════════ */
+const HOTELS = {
+  rome: {
+    name: 'Sina Bernini Bristol, Autograph Collection',
+    addr: 'Piazza Barberini 23, Roma',
+    lat: 41.9010, lng: 12.4883,
+    q: 'Sina Bernini Bristol Autograph Collection Rome'
+  },
+  vienna: {
+    name: 'A by Adina Vienna Danube',
+    addr: 'Wagramer Strasse 2, 1220 Wien',
+    lat: 48.2320, lng: 16.4090,
+    q: 'A by Adina Vienna Danube Hotel'
+  }
+};
+
+/* ══════════════════════════
+   SCHEDULE DATA
+   start: hotel key ('rome'|'vienna'|null)
+   Each day begins from the hotel, so first map includes hotel→first stop
+══════════════════════════ */
+const DAYS = [
+  {
+    date:'4월 30일 목요일', flag:'🇮🇹', label:'인천 출발 → 로마 도착',
+    hotel: null,
+    travel:{ total:'약 12시간', km:'약 9,200 km', walk:'도보 약 1 km' },
+    events:[
+      { time:'12:15', title:'인천국제공항 T1 출발 ✈️', color:'#5b3fa0',
+        badges:[{t:'ICN→FCO',c:'b-fl'},{t:'직항 약 12h',c:'b-go'}],
+        route:{ time:'비행 12시간', km:'9,200 km', mode:'✈️' },
+        details:['항공: 인천 → 로마 피우미치노 직항 약 12시간','3시간 전 공항 도착·수속 권장','기내 최대한 수면 → 시차 적응 (한국 -7시간)'],
+        note:'기내식 후 수면 우선! 도착 다다음날부터 관광이므로 체력 비축.',
+        places:[{name:'인천국제공항 T1',lat:37.4492,lng:126.4506,q:'인천국제공항 제1여객터미널'}]
+      },
+      { time:'19:15', title:'로마 피우미치노 공항 도착 (FCO)', color:'#a03a18',
+        badges:[{t:'🇮🇹 로마 도착',c:'b-ro'}],
+        route:{ time:'32분', km:'32 km', mode:'🚆 Leonardo Express' },
+        details:['<strong>Leonardo Express</strong>: FCO → Roma Termini (32분, €14) — 플랫폼 31번','<strong>Sina Bernini Bristol 호텔</strong> 도보 15분 or 택시 (Termini→Barberini)','간단한 저녁 식사 후 이른 취침'],
+        note:'당일은 이동만. 피자 한 조각으로 가볍게! 🍕',
+        places:[{name:'FCO 공항',lat:41.8003,lng:12.2388,q:'Rome Fiumicino Airport'},{name:'Roma Termini',lat:41.9009,lng:12.5009,q:'Roma Termini Station'},{name:'Sina Bernini Bristol Hotel',lat:41.9010,lng:12.4883,q:'Sina Bernini Bristol Autograph Collection Rome'}]
+      }
+    ]
+  },
+  {
+    date:'5월 1일 금요일', flag:'🇮🇹', label:'나폴리 당일치기 🍕',
+    hotel: 'rome',
+    travel:{ total:'약 4시간 (열차 왕복)', km:'약 440 km', walk:'도보 약 6 km' },
+    events:[
+      { time:'08:00', title:'나폴리 고속열차 출발', color:'#3d7a50',
+        badges:[{t:'🚄 Italo/Frecciarossa',c:'b-fl'},{t:'⚠️ 노동절',c:'b-wr'}],
+        route:{ time:'55분~1h 10m', km:'220 km', mode:'🚄 고속열차' },
+        details:['호텔(Barberini) → Roma Termini 도보 15분 or 지하철 A선 2정거장','<strong>Roma Termini → Napoli Centrale</strong> 55분~1시간10분, €14.90~','탑승 전 <strong>개찰(Validate) 필수</strong> — 노란 박스에 삽입 (미이행 벌금 €50)'],
+        note:'노동절 — 일부 박물관 휴무 가능. 맛집·거리는 활기참!',
+        places:[{name:'Sina Bernini Bristol',lat:41.9010,lng:12.4883,q:'Sina Bernini Bristol Rome'},{name:'Roma Termini',lat:41.9009,lng:12.5009,q:'Roma Termini'},{name:'Napoli Centrale',lat:40.8531,lng:14.2727,q:'Napoli Centrale Station'}]
+      },
+      { time:'10:00', title:'나폴리 탐방 — 원조 피자 & 구시가지', color:'#3d7a50',
+        badges:[{t:'🍕 나폴리',c:'b-na'}],
+        route:{ time:'약 30분', km:'약 4 km', mode:'🚶 도보' },
+        details:['<strong>Pizzeria Da Michele</strong> or <strong>Sorbillo</strong> — 마르게리타 원조 (오전 11시 전 도착 권장)','스파카나폴리 골목 & 나폴리 대성당','카스텔 누오보 외관 · 산타루치아 항구 산책','소매치기 주의 — 가방은 앞으로, 귀중품 최소'],
+        note:'오전에 인기 스팟 먼저! 오후에 인파 폭발.',
+        places:[{name:'Pizzeria Da Michele',lat:40.8513,lng:14.2618,q:'Pizzeria Da Michele Napoli'},{name:'스파카나폴리',lat:40.8496,lng:14.2571,q:'Spaccanapoli Naples'},{name:'산타루치아 항구',lat:40.8333,lng:14.2500,q:'Via Santa Lucia Naples'}]
+      },
+      { time:'17:30', title:'로마 복귀 열차 → 호텔', color:'#3d7a50',
+        badges:[{t:'🚄 귀환',c:'b-fl'}],
+        route:{ time:'55분~', km:'220 km', mode:'🚄 고속열차' },
+        details:['Napoli Centrale → Roma Termini (55분~)','Termini → 호텔(Barberini) 도보 15분 or 지하철','저녁은 호텔 주변 레스토랑에서'],
+        places:[{name:'Napoli Centrale',lat:40.8531,lng:14.2727,q:'Napoli Centrale Station'},{name:'Sina Bernini Bristol',lat:41.9010,lng:12.4883,q:'Sina Bernini Bristol Rome'}]
+      }
+    ]
+  },
+  {
+    date:'5월 2일 토요일', flag:'🇮🇹', label:'로마 핵심 관광',
+    hotel: 'rome',
+    travel:{ total:'약 3시간 이동', km:'약 8 km', walk:'도보 약 7 km' },
+    events:[
+      { time:'09:00', title:'콜로세움 + 포로 로마노', color:'#a03a18',
+        badges:[{t:'🏛️ 로마',c:'b-ro'}],
+        route:{ time:'약 25분', km:'약 2.5 km', mode:'🚌 버스 or 🚶 도보' },
+        details:['호텔(Barberini) → 콜로세움 도보 약 25분 또는 버스 40호 이용','<strong>사전 온라인 예약 필수</strong> — coopculture.it','콜로세움 → 포로 로마노 → 팔라티노 언덕 통합권, 약 2~3시간'],
+        note:'꼭 사전 예약! 당일 현장 구매는 매진 위험.',
+        places:[{name:'Sina Bernini Bristol',lat:41.9010,lng:12.4883,q:'Sina Bernini Bristol Rome'},{name:'콜로세움',lat:41.8902,lng:12.4922,q:'Colosseum Rome'},{name:'포로 로마노',lat:41.8925,lng:12.4853,q:'Roman Forum Rome'}]
+      },
+      { time:'14:00', title:'트레비 분수 → 판테온 → 나보나 광장', color:'#a03a18',
+        badges:[{t:'🏛️ 로마',c:'b-ro'}],
+        route:{ time:'도보 40분 코스', km:'약 2 km', mode:'🚶 도보' },
+        details:['<strong>트레비 분수</strong> (호텔에서 도보 5분!) — 동전 던지기 🪙','<strong>판테온</strong> 내부 입장 €5 (예약 권장)','<strong>나보나 광장</strong>에서 젤라토 🍦'],
+        note:'트레비 분수는 호텔 바로 근처 — 아침 산책으로도 추천!',
+        places:[{name:'트레비 분수',lat:41.9009,lng:12.4833,q:'Trevi Fountain Rome'},{name:'판테온',lat:41.8986,lng:12.4769,q:'Pantheon Rome'},{name:'나보나 광장',lat:41.8992,lng:12.4731,q:'Piazza Navona Rome'}]
+      },
+      { time:'19:00', title:'트라스테베레 석식 → 호텔', color:'#a03a18',
+        badges:[{t:'🍷 저녁',c:'b-ro'}],
+        route:{ time:'약 20분', km:'약 2 km', mode:'🚌 트램' },
+        details:['트라스테베레(Trastevere) 골목 식당가 — 파스타·와인','Trastevere → 호텔 택시 or 버스 23 이용','짐 정리 및 내일 비엔나 이동 준비'],
+        places:[{name:'트라스테베레',lat:41.8895,lng:12.4692,q:'Trastevere Rome'},{name:'Sina Bernini Bristol',lat:41.9010,lng:12.4883,q:'Sina Bernini Bristol Rome'}]
+      }
+    ]
+  },
+  {
+    date:'5월 3일 일요일', flag:'✈️', label:'로마 → 비엔나 이동',
+    hotel: 'rome',
+    travel:{ total:'약 3시간', km:'약 1,100 km', walk:'도보 약 1 km' },
+    events:[
+      { time:'09:00', title:'호텔 체크아웃 + FCO 공항 이동', color:'#5b3fa0',
+        badges:[{t:'✈️ FCO→VIE',c:'b-fl'},{t:'1h 55m',c:'b-go'}],
+        route:{ time:'약 1시간', km:'32 km', mode:'🚆 Leonardo Express' },
+        details:['호텔(Barberini) 체크아웃 → Roma Termini (지하철 A선 또는 택시)','<strong>Leonardo Express</strong> FCO 도착 (32분)','Austrian Airlines <strong>OS556</strong> (FCO 13:40 → VIE 15:25) 또는 오전편','FCO T1 출발 — 체크인 3시간 전 도착 권장'],
+        note:'지금 바로 예매! €50~120 수준.',
+        places:[{name:'Sina Bernini Bristol',lat:41.9010,lng:12.4883,q:'Sina Bernini Bristol Rome'},{name:'Roma Termini',lat:41.9009,lng:12.5009,q:'Roma Termini Station'},{name:'FCO 공항',lat:41.8003,lng:12.2388,q:'Rome Fiumicino Airport'}]
+      },
+      { time:'15:30', title:'비엔나 도착 + A by Adina 체크인', color:'#2c6dbf',
+        badges:[{t:'🇦🇹 비엔나',c:'b-vi'}],
+        route:{ time:'16분', km:'19 km', mode:'🚆 CAT 열차' },
+        details:['VIE T3 → <strong>CAT 열차</strong> Wien Mitte (16분, €14.90)','또는 U3/S7 (25분, 더 저렴)','<strong>A by Adina Vienna Danube</strong> 체크인 — VIC(IAEA) 도보 약 10분','근처 SPAR/BILLA 마트 들러 장보기'],
+        places:[{name:'VIE 비엔나 공항',lat:48.1103,lng:16.5697,q:'Vienna International Airport'},{name:'Wien Mitte',lat:48.2048,lng:16.3822,q:'Wien Mitte Bahnhof'},{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'}]
+      }
+    ]
+  },
+  {
+    date:'5월 4일 월요일', flag:'🇦🇹', label:'비엔나 관광 시작',
+    hotel: 'vienna',
+    travel:{ total:'약 3시간 이동', km:'약 15 km', walk:'도보 약 5 km' },
+    events:[
+      { time:'09:00', title:'쇤브룬 궁전', color:'#2c6dbf',
+        badges:[{t:'🏰 쇤브룬',c:'b-vi'}],
+        route:{ time:'약 30분', km:'약 8 km', mode:'🚇 U1→U4' },
+        details:['호텔 → Kagran U1 → Schwedenplatz → U4 Schönbrunn (약 30분)','Grand Tour (50분) 권장 — 궁전 정원·글로리에테 전망대','예매: schoenbrunn.at'],
+        places:[{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'},{name:'쇤브룬 궁전',lat:48.1845,lng:16.3122,q:'Schönbrunn Palace Vienna'}]
+      },
+      { time:'13:00', title:'나슈마르크트 점심', color:'#2c6dbf',
+        badges:[{t:'🥨 시장',c:'b-vi'}],
+        route:{ time:'약 10분', km:'약 1 km', mode:'🚇 U4' },
+        details:['쇤브룬 → Kettenbrückengasse (U4 1정거장)','비엔나 최대 야외 시장 — 케밥·팔라펠·현지 치즈'],
+        places:[{name:'쇤브룬 궁전',lat:48.1845,lng:16.3122,q:'Schönbrunn Palace Vienna'},{name:'나슈마르크트',lat:48.1984,lng:16.3664,q:'Naschmarkt Vienna'}]
+      },
+      { time:'15:00', title:'슈테판 대성당 → 카페 자허', color:'#2c6dbf',
+        badges:[{t:'🏛️ 구시가지',c:'b-vi'}],
+        route:{ time:'약 15분', km:'약 3 km', mode:'🚇 U1' },
+        details:['Kettenbrückengasse → Stephansplatz (U1)','슈테판 대성당 내부 무료 입장 · 그라벤 거리 산책','<strong>카페 자허</strong> — 자허 토르테 + 아인슈패너 ☕'],
+        places:[{name:'나슈마르크트',lat:48.1984,lng:16.3664,q:'Naschmarkt Vienna'},{name:'슈테판 대성당',lat:48.2085,lng:16.3726,q:'Stephansdom Vienna'},{name:'카페 자허',lat:48.2031,lng:16.3694,q:'Café Sacher Vienna'}]
+      },
+      { time:'19:00', title:'호텔 복귀', color:'#2c6dbf',
+        badges:[{t:'🏠 복귀',c:'b-ht'}],
+        route:{ time:'약 25분', km:'약 7 km', mode:'🚇 U1' },
+        details:['Stephansplatz U1 → Kagran (약 20분)','호텔 A by Adina 도착'],
+        places:[{name:'슈테판 대성당',lat:48.2085,lng:16.3726,q:'Stephansdom Vienna'},{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'}]
+      }
+    ]
+  },
+  {
+    date:'5월 5일 화요일', flag:'🇦🇹', label:'벨베데레 & 링슈트라세',
+    hotel: 'vienna',
+    travel:{ total:'약 2.5시간 이동', km:'약 12 km', walk:'도보 약 4 km' },
+    events:[
+      { time:'10:00', title:'벨베데레 궁전 & 클림트 《키스》', color:'#2c6dbf',
+        badges:[{t:'🎨 미술관',c:'b-vi'}],
+        route:{ time:'약 30분', km:'약 8 km', mode:'🚇 U1→U4' },
+        details:['호텔 → U1 Südtiroler Platz 또는 트램 D','<strong>상궁(Oberes Belvedere)</strong> — 클림트 《키스》 원본','예매: belvedere.at (€16.50)'],
+        places:[{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'},{name:'벨베데레 궁전',lat:48.1916,lng:16.3804,q:'Belvedere Palace Vienna'}]
+      },
+      { time:'15:00', title:'카페 란트만 & 링슈트라세 산책', color:'#2c6dbf',
+        badges:[{t:'☕ 산책',c:'b-vi'}],
+        route:{ time:'약 15분', km:'약 2 km', mode:'🚶 도보 or 🚋 트램' },
+        details:['벨베데레 → 트램 D → 링슈트라세','<strong>카페 란트만</strong> — 아인슈패너 커피','링슈트라세 — 시청·국회·부르크극장 외관'],
+        places:[{name:'벨베데레 궁전',lat:48.1916,lng:16.3804,q:'Belvedere Palace Vienna'},{name:'카페 란트만',lat:48.2104,lng:16.3613,q:'Café Landtmann Vienna'}]
+      }
+    ]
+  },
+  {
+    date:'5월 6일 수요일', flag:'🇦🇹', label:'Salome 오페라의 밤 🎭',
+    hotel: 'vienna',
+    travel:{ total:'약 1시간 이동', km:'약 8 km', walk:'도보 약 1 km' },
+    events:[
+      { time:'10:00', title:'미술사 박물관 (KHM)', color:'#2c6dbf',
+        badges:[{t:'🖼️ KHM',c:'b-vi'}],
+        route:{ time:'약 30분', km:'약 8 km', mode:'🚇 U1→U3' },
+        details:['호텔 → U1 → Schwedenplatz → U4 또는 U2/U3 Volkstheater역','<strong>Kunsthistorisches Museum</strong> — 라파엘·루벤스 소장 / 입장 €21'],
+        places:[{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'},{name:'미술사 박물관',lat:48.2033,lng:16.3614,q:'Kunsthistorisches Museum Vienna'}]
+      },
+      { time:'18:10', title:'빈 국립오페라극장 — Salome 19:30 🎭', color:'#b54060',
+        badges:[{t:'✅ 예약완료',c:'b-ok'},{t:'Salome 19:30',c:'b-op'}],
+        confirmed:{ no:'4844046', time:'19:30' },
+        route:{ time:'약 5분', km:'약 0.5 km', mode:'🚶 도보' },
+        details:['KHM → 오페라극장 도보 5분','<strong>18:10 Operngasse 입구</strong> 도착 — 입석 줄서기','입장 후 스카프/손수건으로 난간에 자리 표시','바에서 음료 선주문 (비엔나 오페라 문화)','<strong>약 1시간 40분</strong> — 인터미션 없음'],
+        note:'공연 중 사진·영상 금지. 핸드폰 무음. 코트는 클락룸에.',
+        places:[{name:'미술사 박물관',lat:48.2033,lng:16.3614,q:'Kunsthistorisches Museum Vienna'},{name:'빈 국립오페라극장',lat:48.2031,lng:16.3693,q:'Wiener Staatsoper Vienna'}]
+      }
+    ]
+  },
+  {
+    date:'5월 7일 목요일', flag:'🇦🇹', label:'비엔나 자유일',
+    hotel: 'vienna',
+    travel:{ total:'약 2시간 이동', km:'약 10 km', walk:'도보 약 4 km' },
+    events:[
+      { time:'10:00', title:'프라터 공원 & 대관람차', color:'#2c6dbf',
+        badges:[{t:'🎡 프라터',c:'b-vi'}],
+        route:{ time:'약 15분', km:'약 5 km', mode:'🚇 U1/U2' },
+        details:['호텔 → Praterstern (U1 2정거장, 약 5분)','<strong>Prater 공원</strong> 무료 입장','<strong>Riesenrad 대관람차</strong> €15 — 비엔나 전경 360°'],
+        places:[{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'},{name:'프라터 공원',lat:48.2167,lng:16.3961,q:'Prater Park Vienna'},{name:'대관람차',lat:48.2168,lng:16.3976,q:'Wiener Riesenrad'}]
+      },
+      { time:'14:00', title:'자유 탐방 — 훈데르트바서 & 카를스교회', color:'#2c6dbf',
+        badges:[{t:'🚶 자유',c:'b-vi'}],
+        route:{ time:'약 30분', km:'약 5 km', mode:'🚇 U1 or 트램' },
+        details:['<strong>훈데르트바서 하우스</strong> (Rasumofskygasse역 근처)','<strong>카를스교회</strong> (Karlsplatz역 하차)','마리아힐퍼 거리 쇼핑 예비 탐방'],
+        places:[{name:'훈데르트바서 하우스',lat:48.2071,lng:16.3929,q:'Hundertwasserhaus Vienna'},{name:'카를스교회',lat:48.1977,lng:16.3724,q:'Karlskirche Vienna'}]
+      }
+    ]
+  },
+  {
+    date:'5월 8일 금요일', flag:'🇦🇹', label:'할슈타트 당일치기 🏔️',
+    hotel: 'vienna',
+    travel:{ total:'약 7시간 왕복', km:'약 580 km', walk:'도보 약 5 km' },
+    events:[
+      { time:'07:00', title:'호텔 출발 → Wien Westbahnhof', color:'#1f8a80',
+        badges:[{t:'🚂 ÖBB',c:'b-mt'},{t:'평일 추천',c:'b-go'}],
+        route:{ time:'약 25분', km:'약 10 km', mode:'🚇 U1→U3' },
+        details:['호텔 → Kagran U1 → Westbahnhof (U3 환승 약 25분)','<strong>07:53 열차</strong> 탑승 목표','ÖBB 예매: oebb.at (€25~35 왕복)'],
+        note:'늦으면 종일 인파 속에서 고생. 소금광산 투어는 사전 예약 필수!',
+        places:[{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'},{name:'Wien Westbahnhof',lat:48.1962,lng:16.3380,q:'Wien Westbahnhof'}]
+      },
+      { time:'07:53', title:'Westbahnhof 출발 → 할슈타트', color:'#1f8a80',
+        badges:[{t:'🚂 ÖBB 열차',c:'b-mt'}],
+        route:{ time:'약 3시간 30분', km:'290 km', mode:'🚂 + ⛴️ 페리' },
+        details:['Wien Westbahnhof → Attnang-Puchheim 환승 → Hallstatt Bahnhof','역에서 <strong>페리(Fähre) €4</strong> 타고 마을 진입 (5분)'],
+        places:[{name:'Wien Westbahnhof',lat:48.1962,lng:16.3380,q:'Wien Westbahnhof'},{name:'할슈타트',lat:47.5622,lng:13.6493,q:'Hallstatt Austria'}]
+      },
+      { time:'11:00', title:'할슈타트 탐방', color:'#1f8a80',
+        badges:[{t:'🏔️ 할슈타트',c:'b-mt'}],
+        route:{ time:'도보 약 30분 코스', km:'약 3 km', mode:'🚶 도보' },
+        details:['<strong>소금광산(Salzwelten)</strong> 투어 — hallstatt.net 사전 예약','<strong>스카이워크 전망대</strong> — 360° 절경 포토스팟','호수·마을 골목 산책 · 호숫가 레스토랑 점심'],
+        places:[{name:'할슈타트 마을',lat:47.5622,lng:13.6493,q:'Hallstatt village Austria'},{name:'소금광산',lat:47.5578,lng:13.6456,q:'Hallstatt Salt Mine'},{name:'스카이워크',lat:47.5578,lng:13.6423,q:'Hallstatt Skywalk'}]
+      },
+      { time:'17:00', title:'할슈타트 → 비엔나 복귀', color:'#1f8a80',
+        badges:[{t:'🚂 귀환',c:'b-mt'}],
+        route:{ time:'약 3시간 30분', km:'290 km', mode:'⛴️ + 🚂' },
+        details:['페리 → 기차역 → Wien Westbahnhof 도착 약 20:30','Westbahnhof → 호텔 약 25분 (U3→U1)','저녁은 호텔 근처 간단히'],
+        places:[{name:'할슈타트 선착장',lat:47.5614,lng:13.6500,q:'Hallstatt ferry pier Austria'},{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'}]
+      }
+    ]
+  },
+  {
+    date:'5월 9일 토요일', flag:'🇦🇹', label:'비엔나 마지막 날',
+    hotel: 'vienna',
+    travel:{ total:'약 1시간 이동', km:'약 7 km', walk:'도보 약 3 km' },
+    events:[
+      { time:'10:00', title:'마리아힐퍼 거리 쇼핑', color:'#2c6dbf',
+        badges:[{t:'🛍️ 쇼핑',c:'b-vi'}],
+        route:{ time:'약 25분', km:'약 7 km', mode:'🚇 U1→U3' },
+        details:['호텔 → Kagran U1 → Zieglergasse (U3, 약 25분)','기념품: 모차르트 초콜릿 · 봄봉 · 비엔나 커피'],
+        places:[{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'},{name:'마리아힐퍼 거리',lat:48.1963,lng:16.3460,q:'Mariahilfer Strasse Vienna'}]
+      },
+      { time:'15:00', title:'카페 자허 — 마지막 자허 토르테 🎂', color:'#2c6dbf',
+        badges:[{t:'☕ 작별 커피',c:'b-vi'}],
+        route:{ time:'약 10분', km:'약 1 km', mode:'🚶 도보' },
+        details:['마리아힐퍼 거리 → 카페 자허 도보 10분','오리지널 자허 토르테 + 아인슈패너','짐 최종 점검 및 이른 취침'],
+        places:[{name:'마리아힐퍼 거리',lat:48.1963,lng:16.3460,q:'Mariahilfer Strasse Vienna'},{name:'카페 자허',lat:48.2031,lng:16.3694,q:'Café Sacher Vienna'}]
+      }
+    ]
+  },
+  {
+    date:'5월 10일 일요일', flag:'🇰🇷', label:'귀국 ✈️',
+    hotel: 'vienna',
+    travel:{ total:'약 12시간', km:'약 9,200 km', walk:'도보 약 1 km' },
+    events:[
+      { time:'14:30', title:'호텔 체크아웃 → VIE 공항 이동', color:'#5b3fa0',
+        badges:[{t:'VIE→ICN 18:30',c:'b-fl'},{t:'T3 출발',c:'b-go'}],
+        route:{ time:'16분', km:'19 km', mode:'🚆 CAT 열차' },
+        details:['짐 오전에 프런트 맡기고 12시 이후 체크아웃','<strong>Wien Mitte → CAT 열차</strong> → VIE T3 (16분, €14.90)','또는 U3 Erdberg → S7 (25분, 더 저렴)','<strong>15:30 공항 도착</strong> 권장 (출발 3시간 전)'],
+        note:'탑승 전 면세 쇼핑 1시간 여유. T3 출발 확인 필수!',
+        places:[{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'},{name:'Wien Mitte',lat:48.2048,lng:16.3822,q:'Wien Mitte Bahnhof'},{name:'비엔나 국제공항 VIE',lat:48.1103,lng:16.5697,q:'Vienna International Airport'}]
+      }
+    ]
+  }
+];
+
+/* ══════════════════════════
+   TODO DATA
+══════════════════════════ */
+const TODO = {
+  ur:[
+    {text:'로마 → 비엔나 항공권 예약 (FCO→VIE, 5.3)',sub:'Austrian OS556 / Ryanair — Google Flights',tag:'ur'},
+    {text:'콜로세움 + 포로 로마노 사전 예약',sub:'coopculture.it — 당일 예약 불가',tag:'ur'},
+    {text:'여행자 보험 가입',sub:'질병·상해·휴행손 포함',tag:'ur'},
+  ],
+  tt:[
+    {text:'Sina Bernini Bristol 호텔 예약 확인 (4.30~5.3)',sub:'Piazza Barberini 23, Roma — Autograph Collection',tag:'bk'},
+    {text:'Roma Termini → Napoli 기차 예약 (5.1)',sub:'italotreno.com / trenitalia.com',tag:'bk'},
+    {text:'할슈타트 ÖBB 기차표 예약 (5.8)',sub:'Wien Westbahnhof 07:53 출발 — oebb.at',tag:'bk'},
+    {text:'비엔나 Vienna City Card 구입',sub:'24/48/72h 대중교통 무제한',tag:'in'},
+    {text:'VIE → A by Adina 호텔 루트 확인',sub:'CAT 열차 Wien Mitte → Kagran U1 (총 약 40분)',tag:'in'},
+  ],
+  tl:[
+    {text:'피글뮐러 (Figlmüller) 슈니첼 예약',sub:'Wollzeile점 — 온라인 예약',tag:'bk'},
+    {text:'할슈타트 소금광산 투어 예약',sub:'hallstatt.net — 성수기 필수',tag:'bk'},
+    {text:'쇤브룬 궁전 입장권 예약',sub:'schoenbrunn.at',tag:'bk'},
+    {text:'벨베데레 궁전 사전 예매',sub:'belvedere.at — €16.50',tag:'bk'},
+  ],
+  tm:[
+    {text:'유로 환전 €200~300 현금',sub:'소액권 포함',tag:'in'},
+    {text:'해외 결제 수수료 없는 카드 확인',sub:'트래블월렛 / 신한 SOL / 토스',tag:'in'},
+    {text:'Type C 유럽 어댑터 준비',sub:'이탈리아·오스트리아 공통 2핀',tag:'pk'},
+    {text:'유럽 eSIM 준비',sub:'airalo.com — 출발 전 개통 테스트',tag:'pk'},
+    {text:'구글맵 오프라인 지도 다운로드',sub:'로마·나폴리·비엔나·할슈타트 (Wi-Fi에서)',tag:'in'},
+    {text:'넷플릭스 다운로드',sub:'기내 시청용 — 여행 전 Wi-Fi에서 다운로드',tag:'pk'},
+  ]
+};
+
+const CHECK = {
+  cd:[
+    {text:'여권',sub:'귀국일 기준 6개월 이상 유효기간',tag:'ur'},
+    {text:'여권 사본 + 사진 2장',sub:'분실 대비 — 숙소 체크인용',tag:'ur'},
+    {text:'항공권 e-ticket',sub:'ICN, FCO→VIE 각각 저장·출력',tag:'ur'},
+    {text:'호텔 바우처',sub:'Sina Bernini Bristol (로마) + A by Adina (비엔나)',tag:'bk'},
+    {text:'여행자 보험 증명서',sub:'긴급 연락처 별도 메모',tag:'ur'},
+    {text:'신용카드 2장 이상',sub:'마스터+비자 다른 카드사',tag:'pk'},
+    {text:'유로 현금 €200~300',sub:'소액권 포함',tag:'pk'},
+    {text:'인천 출발 48시간 전 온라인 체크인',sub:'항공사 앱 or 웹사이트에서 사전 체크인',tag:'ur'},
+    {text:'비엔나 출발 48시간 전 온라인 체크인 (귀국편)',sub:'항공사 앱 or 웹사이트에서 사전 체크인 (5.8)',tag:'ur'},
+  ],
+  ch:[
+    {text:'상비약 (진통제·소화제·지사제)',sub:'타이레놀·판크레아틴·스멕타',tag:'pk'},
+    {text:'멀미약',sub:'할슈타트 페리·버스 대비',tag:'pk'},
+    {text:'안경 + 여분 렌즈',sub:'렌즈 분실 대비 안경 필수',tag:'pk'},
+    {text:'렌즈 세척액 (100ml 이하)',sub:'기내 반입 가능',tag:'pk'},
+    {text:'선크림 SPF50+',sub:'5월 유럽 자외선 강함',tag:'pk'},
+    {text:'개인 처방약',sub:'영문 처방전 + 충분한 수량',tag:'ur'},
+  ],
+  cc:[
+    {text:'스마트 캐주얼 상의 (오페라용)',sub:'5.6 Salome — 셔츠/블라우스 이상',tag:'pk'},
+    {text:'가벼운 재킷 또는 가디건',sub:'5월 유럽 저녁 15°C 이하',tag:'pk'},
+    {text:'편한 워킹화',sub:'로마 돌바닥 + 할슈타트 언덕',tag:'pk'},
+    {text:'신발 여분 1켤레',sub:'장거리 도보 교체용',tag:'pk'},
+    {text:'우산 or 접이식 우비',sub:'5월 비엔나 소나기 가능',tag:'pk'},
+    {text:'작은 배낭 or 크로스백',sub:'당일치기용 — 앞으로 메기',tag:'pk'},
+    {text:'수면 안대 + 목베개',sub:'장거리 비행 대비',tag:'pk'},
+  ],
+  ct:[
+    {text:'스마트폰 충전기 + 보조배터리',sub:'보조배터리 기내 반입 (위탁 금지)',tag:'pk'},
+    {text:'유럽형 어댑터 (Type C 2핀)',sub:'이탈리아·오스트리아 공통',tag:'pk'},
+    {text:'이어폰',sub:'기내 + 오페라 자막 청취용',tag:'pk'},
+    {text:'카메라 + 여분 배터리·메모리',sub:'할슈타트 절경 대비',tag:'pk'},
+    {text:'유럽 eSIM 활성화 확인',sub:'출발 전 데이터 개통 테스트',tag:'ur'},
+    {text:'Google Translate 오프라인 다운로드',sub:'이탈리아어·독일어',tag:'in'},
+    {text:'넷플릭스 다운로드 완료 확인',sub:'기내 시청용 콘텐츠 — Wi-Fi 있는 곳에서',tag:'pk'},
+  ],
+  cw:[
+    {text:'소매치기 주의 — 나폴리·로마',sub:'가방 앞으로, 귀중품 분산 보관',tag:'wn'},
+    {text:'이탈리아 열차 탑승 전 개찰 필수',sub:'노란 박스 삽입 — 미이행 벌금 €50',tag:'wn'},
+    {text:'노동절(5.1) 박물관 휴무 가능',sub:'사전 확인 필수',tag:'wn'},
+    {text:'오페라 공연 중 사진 촬영 금지',sub:'핸드폰 무음 / 코트는 클락룸',tag:'wn'},
+    {text:'비엔나 대중교통 무임승차 단속',sub:'불시 검표 — 벌금 €105',tag:'wn'},
+    {text:'해외 카드 해외사용 허용 설정',sub:'은행 앱에서 미리 활성화',tag:'wn'},
+    {text:'한국 대사관 긴급 연락처 메모',sub:'로마 +39 06 802461 / 비엔나 +43 1 478 1991',tag:'wn'},
+  ]
+};
+
+/* ══ STATE ══ */
+let ST={};
+function ldST(){try{const s=localStorage.getItem('vt26c');if(s)ST=JSON.parse(s);}catch(e){}}
+function svST(){try{localStorage.setItem('vt26c',JSON.stringify(ST));}catch(e){}}
+
+/* ══ MAP ══ */
+function buildMapUrl(places){
+  if(!places||!places.length)return null;
+  if(places.length===1)return `https://www.google.com/maps/embed/v1/place?key=${GMAP_KEY}&q=${encodeURIComponent(places[0].q)}&zoom=15&language=ko`;
+  const o=encodeURIComponent(places[0].q),d=encodeURIComponent(places[places.length-1].q);
+  let url=`https://www.google.com/maps/embed/v1/directions?key=${GMAP_KEY}&origin=${o}&destination=${d}&language=ko&mode=transit`;
+  if(places.length>2){url+=`&waypoints=${places.slice(1,-1).map(p=>encodeURIComponent(p.q)).join('|')}`;}
+  return url;
+}
+function openGMap(places){
+  if(!places||!places.length)return;
+  if(places.length===1){window.open(`https://www.google.com/maps/search/${encodeURIComponent(places[0].q)}`,'_blank');return;}
+  window.open(`https://www.google.com/maps/dir/${places.map(p=>encodeURIComponent(p.q)).join('/')}`,'_blank');
+}
+function openNav(place){window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(place.q)}&travelmode=transit`,'_blank');}
+
+/* ══ SCHEDULE RENDER ══ */
+function buildSched(){
+  const root=document.getElementById('sched-root');
+  root.innerHTML='';
+  DAYS.forEach((day,di)=>{
+    const grp=document.createElement('div');
+    grp.className='day-group';
+
+    // Day header
+    const hdr=document.createElement('div');
+    hdr.className='day-hdr';
+    const dateEl=document.createElement('div');
+    dateEl.className='day-date';
+    dateEl.textContent=day.flag+' '+day.date;
+    const nameEl=document.createElement('div');
+    nameEl.className='day-name';
+    nameEl.textContent=day.label;
+    const trvEl=document.createElement('div');
+    trvEl.className='day-travel';
+    if(day.travel){
+      [{icon:'⏱️',val:day.travel.total},{icon:'📍',val:day.travel.km},{icon:'🚶',val:day.travel.walk}].forEach(c=>{
+        const chip=document.createElement('span');
+        chip.className='travel-chip';
+        chip.textContent=c.icon+' '+c.val;
+        trvEl.appendChild(chip);
+      });
+    }
+    hdr.appendChild(dateEl); hdr.appendChild(nameEl); hdr.appendChild(trvEl);
+    grp.appendChild(hdr);
+
+    // Hotel start chip
+    if(day.hotel && HOTELS[day.hotel]){
+      const h=HOTELS[day.hotel];
+      const hotelDiv=document.createElement('div');
+      hotelDiv.className='hotel-chip';
+      hotelDiv.innerHTML=`🏨 출발: <strong>${h.name}</strong>`;
+      hotelDiv.style.cursor='pointer';
+      hotelDiv.onclick=()=>window.open(`https://www.google.com/maps/search/${encodeURIComponent(h.q)}`,'_blank');
+      grp.appendChild(hotelDiv);
+    }
+
+    const divider=document.createElement('div');
+    divider.className='day-divider';
+    grp.appendChild(divider);
+
+    day.events.forEach((ev,ei)=>grp.appendChild(buildCard(ev,di,ei)));
+    root.appendChild(grp);
+  });
+}
+
+function buildCard(ev,di,ei){
+  const id=`c${di}_${ei}`;
+  const el=document.createElement('div');
+  el.className='sc-card'; el.id=id;
+
+  const bHtml=(ev.badges||[]).map(b=>`<span class="b ${b.c}">${b.t}</span>`).join('');
+  const dHtml=(ev.details||[]).map(d=>`<li>${d}</li>`).join('');
+  const mapUrl=buildMapUrl(ev.places);
+
+  // Route summary
+  let routeHtml='';
+  if(ev.route){
+    routeHtml=`<div class="route-summary">
+      <span class="route-chip">${ev.route.mode}</span>
+      <span class="route-chip">⏱️ ${ev.route.time}</span>
+      <span class="route-chip">📍 ${ev.route.km}</span>
+    </div>`;
+  }
+
+  let mapHtml='';
+  if(mapUrl){
+    mapHtml=`<div class="map-embed"><div class="map-loading">지도 로딩 중...</div>
+      <iframe src="${mapUrl}" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        onload="this.previousElementSibling.style.display='none'"
+        onerror="this.parentElement.innerHTML='<div class=map-loading style=text-align:center;padding:1rem>지도를 불러올 수 없습니다</div>'">
+      </iframe></div>`;
+  }
+
+  let confHtml='';
+  if(ev.confirmed){
+    confHtml=`<div class="confirmed-box"><span style="font-size:16px">🎟️</span>
+      <div><div class="confirmed-text">예약 완료 — 예약번호 ${ev.confirmed.no}</div>
+      <div class="confirmed-sub">공연 시간: ${ev.confirmed.time} · 빈 국립오페라극장</div></div></div>`;
+  }
+
+  let btnHtml='';
+  if(ev.places&&ev.places.length){
+    const pj=JSON.stringify(ev.places).replace(/"/g,'&quot;');
+    const fj=JSON.stringify(ev.places[0]).replace(/"/g,'&quot;');
+    btnHtml=`<div class="map-btns">
+      <button class="mb mb-map" onclick='openGMap(${pj})'>📍 구글맵 열기</button>
+      <button class="mb mb-dir" onclick='openNav(${fj})'>🧭 길찾기</button>
+      ${ev.places.length>1?`<button class="mb mb-route" onclick='openGMap(${pj})'>🗺️ 경로 보기</button>`:''}
+    </div>`;
+  }
+
+  el.innerHTML=`
+    <div class="sc-head" onclick="toggleCard('${id}')">
+      <div class="sc-stripe" style="background:${ev.color}"></div>
+      <div class="sc-main">
+        <div class="sc-time">${ev.time}</div>
+        <div class="sc-title">${ev.title}</div>
+        <div class="sc-badges">${bHtml}</div>
+      </div>
+      <div class="sc-arr">›</div>
+    </div>
+    <div class="sc-body"><div class="sc-inner">
+      ${routeHtml}
+      ${mapHtml}
+      ${confHtml}
+      ${btnHtml}
+      <div class="sc-details"><ul>${dHtml}</ul></div>
+      ${ev.note?`<div class="sc-note">💡 ${ev.note}</div>`:''}
+    </div></div>`;
+  return el;
+}
+
+function toggleCard(id){document.getElementById(id).classList.toggle('open');}
+
+/* ══ LIST RENDER ══ */
+const TCLS={ur:'t-ur',bk:'t-bk',in:'t-in',pk:'t-pk',wn:'t-wn'};
+const TLBL={ur:'긴급',bk:'예약',in:'정보',pk:'챙기기',wn:'주의'};
+function chkSvg(){return`<svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 3.5L4 6.5L10 1" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`;}
+
+function renderList(lid,items,sk){
+  const el=document.getElementById('l-'+lid);
+  if(!el)return;
+  if(!ST[sk])ST[sk]={};
+  el.innerHTML='';
+  let done=0;
+  items.forEach((item,i)=>{
+    const isDone=ST[sk][i]??false;
+    if(isDone)done++;
+    const d=document.createElement('div');
+    d.className='item'+(isDone?' done':'');
+    const tc=TCLS[item.tag]||'t-in',tl=TLBL[item.tag]||'정보';
+    d.innerHTML=`<div class="ichk">${chkSvg()}</div><div class="ibody"><div class="itxt">${esc(item.text)}</div>${item.sub?`<div class="isub">${esc(item.sub)}</div>`:''}</div><span class="itag ${tc}">${tl}</span>`;
+    d.addEventListener('click',()=>{ST[sk][i]=!isDone;svST();renderAll();});
+    el.appendChild(d);
+  });
+  const cnt=document.getElementById('c-'+lid);
+  if(cnt)cnt.textContent=done+'/'+items.length;
+  return{done,total:items.length};
+}
+
+// Custom items map: listId → array of items
+function getCxList(listId){return ST['cxl_'+listId]||[];}
+function renderCxList(listId){
+  const el=document.getElementById('l-'+listId);
+  if(!el)return;
+  getCxList(listId).forEach((item,i)=>{
+    const d=document.createElement('div');
+    d.className='item'+(item.done?' done':'');
+    const tc=TCLS[item.tag||'pk']||'t-pk',tl=TLBL[item.tag||'pk']||'챙기기';
+    d.innerHTML=`<div class="ichk">${chkSvg()}</div><div class="ibody"><div class="itxt">${esc(item.text)}</div></div><span class="itag ${tc}">${tl}</span><button class="idel" onclick="delCxList('${listId}',${i},event)">×</button>`;
+    d.addEventListener('click',e=>{if(e.target.classList.contains('idel'))return;ST['cxl_'+listId][i].done=!item.done;svST();renderAll();});
+    el.appendChild(d);
+  });
+}
+function delCxList(listId,i,e){e.stopPropagation();ST['cxl_'+listId].splice(i,1);svST();renderAll();}
+
+// Category map for add-item
+const TODO_CAT_TO_LIST={ur:'ur',tt:'tt',tl:'tl',tm:'tm'};
+const CHECK_CAT_TO_LIST={cd:'cd',ch:'ch',cc:'cc',ct:'ct',cw:'cw'};
+
+function renderAll(){
+  renderList('ur',TODO.ur,'ur'); renderList('tt',TODO.tt,'tt');
+  renderList('tl',TODO.tl,'tl'); renderList('tm',TODO.tm,'tm');
+  ['ur','tt','tl','tm'].forEach(l=>renderCxList(l));
+
+  renderList('cd',CHECK.cd,'cd'); renderList('ch',CHECK.ch,'ch');
+  renderList('cc',CHECK.cc,'cc'); renderList('ct',CHECK.ct,'ct');
+  renderList('cw',CHECK.cw,'cw');
+  ['cd','ch','cc','ct','cw'].forEach(l=>renderCxList(l));
+
+  updateProg();
+}
+
+function updateProg(){
+  let td=0,tt=0,cd=0,ct=0;
+  [['ur',TODO.ur],['tt',TODO.tt],['tl',TODO.tl],['tm',TODO.tm]].forEach(([sk,arr])=>arr.forEach((_,i)=>{tt++;if(ST[sk]&&ST[sk][i])td++;}));
+  ['ur','tt','tl','tm'].forEach(l=>getCxList(l).forEach(it=>{tt++;if(it.done)td++;}));
+
+  [['cd',CHECK.cd],['ch',CHECK.ch],['cc',CHECK.cc],['ct',CHECK.ct],['cw',CHECK.cw]].forEach(([sk,arr])=>arr.forEach((_,i)=>{ct++;if(ST[sk]&&ST[sk][i])cd++;}));
+  ['cd','ch','cc','ct','cw'].forEach(l=>getCxList(l).forEach(it=>{ct++;if(it.done)cd++;}));
+
+  const tp=tt?Math.round(td/tt*100):0,cp=ct?Math.round(cd/ct*100):0;
+  document.getElementById('tp-f').style.width=tp+'%';
+  document.getElementById('tp-n').textContent=td+'/'+tt;
+  document.getElementById('cp-f').style.width=cp+'%';
+  document.getElementById('cp-n').textContent=cd+'/'+ct;
+  document.getElementById('tbdg').textContent=tt-td;
+  document.getElementById('cbdg').textContent=ct-cd;
+}
+
+/* ══ ADD ITEM ══ */
+function addIt(mode){
+  if(mode==='t'){
+    const txt=document.getElementById('ti').value.trim();
+    if(!txt)return;
+    const cat=document.getElementById('todo-cat').value;
+    const tag=document.getElementById('todo-tag').value;
+    const listId=TODO_CAT_TO_LIST[cat]||'tm';
+    if(!ST['cxl_'+listId])ST['cxl_'+listId]=[];
+    ST['cxl_'+listId].push({text:txt,tag,done:false});
+    svST(); document.getElementById('ti').value=''; renderAll();
+  } else {
+    const txt=document.getElementById('ci').value.trim();
+    if(!txt)return;
+    const cat=document.getElementById('check-cat').value;
+    const tag=document.getElementById('check-tag').value;
+    const listId=CHECK_CAT_TO_LIST[cat]||'cw';
+    if(!ST['cxl_'+listId])ST['cxl_'+listId]=[];
+    ST['cxl_'+listId].push({text:txt,tag,done:false});
+    svST(); document.getElementById('ci').value=''; renderAll();
+  }
+}
+document.getElementById('ti').addEventListener('keydown',e=>{if(e.key==='Enter')addIt('t');});
+document.getElementById('ci').addEventListener('keydown',e=>{if(e.key==='Enter')addIt('c');});
+
+/* ══ TAB ══ */
+function switchTab(tab){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+tab).classList.add('active');
+  document.querySelectorAll('.tnav').forEach(b=>b.classList.remove('active'));
+  document.getElementById('bt-'+tab).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ══ UTIL ══ */
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+/* ══ INIT ══ */
+ldST(); buildSched(); renderAll();
+</script>
+</body>
+</html>

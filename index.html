@@ -183,7 +183,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="hdr-top">
     <div class="hdr-lbl">Vienna Trip 2026</div>
     <div class="hdr-title">4.30 — 5.10 <em>여행 플래너</em></div>
-    <div class="hdr-sub">로마 · 나폴리 · 비엔나 · 할슈타트</div>
+    <div class="hdr-sub">로마 · 비엔나 · 할슈타트</div>
   </div>
   <div class="tabnav">
     <button class="tnav active" id="bt-sched" onclick="switchTab('sched')"><span class="ticon">🗓️</span>일정</button>
@@ -296,7 +296,7 @@ const DAYS = [
   {
     date:'4월 30일 목요일', flag:'🇮🇹', label:'인천 출발 → 로마 도착',
     hotel: null,
-    travel:{ total:'약 12시간', km:'약 9,200 km', walk:'도보 약 1 km' },
+    travel:{ total:'약 12시간', km:'약 9,200 km', walk:'도보 약 3 km' },
     events:[
       { time:'12:15', title:'인천국제공항 T1 출발 ✈️', color:'#5b3fa0',
         badges:[{t:'ICN→FCO',c:'b-fl'},{t:'직항 약 12h',c:'b-go'}],
@@ -308,173 +308,511 @@ const DAYS = [
       { time:'19:15', title:'로마 피우미치노 공항 도착 (FCO)', color:'#a03a18',
         badges:[{t:'🇮🇹 로마 도착',c:'b-ro'}],
         route:{ time:'32분', km:'32 km', mode:'🚆 Leonardo Express' },
-        details:['<strong>Leonardo Express</strong>: FCO → Roma Termini (32분, €14) — 플랫폼 31번','<strong>Sina Bernini Bristol 호텔</strong> 도보 15분 or 택시 (Termini→Barberini)','간단한 저녁 식사 후 이른 취침'],
-        note:'당일은 이동만. 피자 한 조각으로 가볍게! 🍕',
+        details:['<strong>Leonardo Express</strong>: FCO → Roma Termini (32분, €14) — 플랫폼 31번','<strong>Sina Bernini Bristol 호텔</strong> 도보 15분 or 택시 (Termini→Barberini)','간단한 저녁 식사 후 야경 산책 준비'],
+        note:'도착 후 짐 풀고 간단히 식사! 피자 한 조각으로 가볍게. 🍕',
         places:[{name:'FCO 공항',lat:41.8003,lng:12.2388,q:'Rome Fiumicino Airport'},{name:'Roma Termini',lat:41.9009,lng:12.5009,q:'Roma Termini Station'},{name:'Sina Bernini Bristol Hotel',lat:41.9010,lng:12.4883,q:'Sina Bernini Bristol Autograph Collection Rome'}]
+      },
+      { time:'21:30', title:'로마 야경 산책 🌙 (도보 왕복 1시간)', color:'#a03a18',
+        badges:[{t:'🌙 야경',c:'b-ro'},{t:'도보 왕복',c:'b-go'}],
+        route:{ time:'왕복 약 1시간', km:'약 2 km', mode:'🚶 도보' },
+        details:['<strong>호텔(Barberini)</strong> 출발 → 도보 5분','🪙 <strong>트레비 분수</strong> — 야간 조명 최고, 동전 던지기','→ 도보 10분 → <strong>퀴리날레 광장(Piazza del Quirinale)</strong> — 로마 시내 전경 야경 포인트','→ 도보로 호텔 복귀 (총 왕복 약 1시간)','도착 첫날 몸 풀기용 가벼운 코스'],
+        note:'야간에도 트레비 분수 주변은 사람이 많아 소매치기 주의! 귀중품은 최소화.',
+        places:[{name:'Sina Bernini Bristol',lat:41.9010,lng:12.4883,q:'Sina Bernini Bristol Rome'},{name:'트레비 분수',lat:41.9009,lng:12.4833,q:'Trevi Fountain Rome'},{name:'퀴리날레 광장',lat:41.8994,lng:12.4871,q:'Piazza del Quirinale Rome'}]
       }
     ]
   },
   {
-    date:'5월 1일 금요일', flag:'🇮🇹', label:'나폴리 당일치기 🍕',
+    date:'5월 1일 금요일', flag:'🏖️', label:'Santa Severa + Santa Marinella 해변',
     hotel: 'rome',
-    travel:{ total:'약 4시간 (열차 왕복)', km:'약 440 km', walk:'도보 약 6 km' },
+    travel:{ total:'약 3시간 이동', km:'약 140 km', walk:'도보 약 5 km' },
     events:[
-      { time:'08:00', title:'나폴리 고속열차 출발', color:'#3d7a50',
-        badges:[{t:'🚄 Italo/Frecciarossa',c:'b-fl'},{t:'⚠️ 노동절',c:'b-wr'}],
-        route:{ time:'55분~1h 10m', km:'220 km', mode:'🚄 고속열차' },
-        details:['호텔(Barberini) → Roma Termini 도보 15분 or 지하철 A선 2정거장','<strong>Roma Termini → Napoli Centrale</strong> 55분~1시간10분, €14.90~','탑승 전 <strong>개찰(Validate) 필수</strong> — 노란 박스에 삽입 (미이행 벌금 €50)'],
-        note:'노동절 — 일부 박물관 휴무 가능. 맛집·거리는 활기참!',
-        places:[{name:'Sina Bernini Bristol',lat:41.9010,lng:12.4883,q:'Sina Bernini Bristol Rome'},{name:'Roma Termini',lat:41.9009,lng:12.5009,q:'Roma Termini'},{name:'Napoli Centrale',lat:40.8531,lng:14.2727,q:'Napoli Centrale Station'}]
+      { time:'08:30', title:'숙소 출발 → Roma Termini', color:'#1f8a80',
+        badges:[{t:'⚠️ 노동절',c:'b-wr'},{t:'🏖️ 해변의 날',c:'b-mt'}],
+        route:{ time:'약 10분', km:'약 1.5 km', mode:'🚇 지하철 A선' },
+        details:['Barberini → Termini 지하철 A선 약 10분','<strong>노동절 주의</strong> — 박물관·관광지 다수 휴무, 해변은 현지인들로 활기찬 날!'],
+        note:'노동절이라 오히려 해변 당일치기가 최고의 선택!',
+        places:[{name:'Sina Bernini Bristol',lat:41.9010,lng:12.4883,q:'Sina Bernini Bristol Rome'},{name:'Roma Termini',lat:41.9009,lng:12.5009,q:'Roma Termini Station'}]
       },
-      { time:'10:00', title:'나폴리 탐방 — 원조 피자 & 구시가지', color:'#3d7a50',
-        badges:[{t:'🍕 나폴리',c:'b-na'}],
-        route:{ time:'약 30분', km:'약 4 km', mode:'🚶 도보' },
-        details:['<strong>Pizzeria Da Michele</strong> or <strong>Sorbillo</strong> — 마르게리타 원조 (오전 11시 전 도착 권장)','스파카나폴리 골목 & 나폴리 대성당','카스텔 누오보 외관 · 산타루치아 항구 산책','소매치기 주의 — 가방은 앞으로, 귀중품 최소'],
-        note:'오전에 인기 스팟 먼저! 오후에 인파 폭발.',
-        places:[{name:'Pizzeria Da Michele',lat:40.8513,lng:14.2618,q:'Pizzeria Da Michele Napoli'},{name:'스파카나폴리',lat:40.8496,lng:14.2571,q:'Spaccanapoli Naples'},{name:'산타루치아 항구',lat:40.8333,lng:14.2500,q:'Via Santa Lucia Naples'}]
+      { time:'09:00', title:'Termini → Santa Severa FL5 직행열차', color:'#1f8a80',
+        badges:[{t:'🚆 FL5 직행',c:'b-mt'},{t:'환승 없음',c:'b-go'}],
+        route:{ time:'약 50분', km:'약 55 km', mode:'🚆 FL5 리저널' },
+        details:['Roma Termini → Santa Severa역 직행 약 50분 · €5','역에서 해변까지 도보 약 20분 or 버스'],
+        places:[{name:'Roma Termini',lat:41.9009,lng:12.5009,q:'Roma Termini Station'},{name:'Santa Severa',lat:42.0267,lng:11.9367,q:'Santa Severa beach castle Rome'}]
       },
-      { time:'17:30', title:'로마 복귀 열차 → 호텔', color:'#3d7a50',
-        badges:[{t:'🚄 귀환',c:'b-fl'}],
-        route:{ time:'55분~', km:'220 km', mode:'🚄 고속열차' },
-        details:['Napoli Centrale → Roma Termini (55분~)','Termini → 호텔(Barberini) 도보 15분 or 지하철','저녁은 호텔 주변 레스토랑에서'],
-        places:[{name:'Napoli Centrale',lat:40.8531,lng:14.2727,q:'Napoli Centrale Station'},{name:'Sina Bernini Bristol',lat:41.9010,lng:12.4883,q:'Sina Bernini Bristol Rome'}]
-      }
-    ]
-  },
-  {
-    date:'5월 2일 토요일', flag:'🇮🇹', label:'로마 핵심 관광',
-    hotel: 'rome',
-    travel:{ total:'약 3시간 이동', km:'약 8 km', walk:'도보 약 7 km' },
-    events:[
-      { time:'09:00', title:'콜로세움 + 포로 로마노', color:'#a03a18',
-        badges:[{t:'🏛️ 로마',c:'b-ro'}],
-        route:{ time:'약 25분', km:'약 2.5 km', mode:'🚌 버스 or 🚶 도보' },
-        details:['호텔(Barberini) → 콜로세움 도보 약 25분 또는 버스 40호 이용','<strong>사전 온라인 예약 필수</strong> — coopculture.it','콜로세움 → 포로 로마노 → 팔라티노 언덕 통합권, 약 2~3시간'],
-        note:'꼭 사전 예약! 당일 현장 구매는 매진 위험.',
-        places:[{name:'Sina Bernini Bristol',lat:41.9010,lng:12.4883,q:'Sina Bernini Bristol Rome'},{name:'콜로세움',lat:41.8902,lng:12.4922,q:'Colosseum Rome'},{name:'포로 로마노',lat:41.8925,lng:12.4853,q:'Roman Forum Rome'}]
+      { time:'10:00', title:'Santa Severa 중세 성 + 해변 탐방', color:'#1f8a80',
+        badges:[{t:'🏰 중세 성',c:'b-mt'},{t:'🏖️ 무료해변',c:'b-go'}],
+        route:{ time:'도보 코스', km:'약 2 km', mode:'🚶 도보' },
+        details:['<strong>Spiaggia del Castello</strong> — 중세 성 배경 무료 해변 📸 인생사진 포인트','<strong>Castello di Santa Severa</strong> 성 외관·광장 산책','파도 소리 들으며 여유롭게 — 로마 관광 피로 회복'],
+        note:'모래사장 바로 위 중세 성! 이 조합은 세계 어디서도 못 봄. 꼭 사진 찍기.',
+        places:[{name:'Santa Severa 성',lat:42.0478,lng:11.9417,q:'Castello di Santa Severa Italy'},{name:'Spiaggia del Castello Santa Severa',lat:42.0481,lng:11.9420,q:'Spiaggia libera Santa Severa castle beach'}]
       },
-      { time:'14:00', title:'트레비 분수 → 판테온 → 나보나 광장', color:'#a03a18',
-        badges:[{t:'🏛️ 로마',c:'b-ro'}],
-        route:{ time:'도보 40분 코스', km:'약 2 km', mode:'🚶 도보' },
-        details:['<strong>트레비 분수</strong> (호텔에서 도보 5분!) — 동전 던지기 🪙','<strong>판테온</strong> 내부 입장 €5 (예약 권장)','<strong>나보나 광장</strong>에서 젤라토 🍦'],
-        note:'트레비 분수는 호텔 바로 근처 — 아침 산책으로도 추천!',
-        places:[{name:'트레비 분수',lat:41.9009,lng:12.4833,q:'Trevi Fountain Rome'},{name:'판테온',lat:41.8986,lng:12.4769,q:'Pantheon Rome'},{name:'나보나 광장',lat:41.8992,lng:12.4731,q:'Piazza Navona Rome'}]
+      { time:'11:30', title:'Santa Marinella 이동 → 수영 & 비치클럽', color:'#1f8a80',
+        badges:[{t:'🏊 수영',c:'b-mt'},{t:'1정거장',c:'b-go'}],
+        route:{ time:'약 5분', km:'약 8 km', mode:'🚆 FL5 1정거장' },
+        details:['Santa Severa → Santa Marinella역 FL5 1정거장 약 5분 · €2','<strong>맑고 깨끗한 물</strong> — 현지인 강추 수영 포인트','비치클럽(stabilimento) €10~15 — 선베드+우산 포함','spiaggia libera(무료 해변) 구역도 있음'],
+        note:'Santa Marinella는 로마 근교 해변 중 물이 가장 맑기로 유명!',
+        places:[{name:'Santa Marinella 해변',lat:42.0345,lng:11.8607,q:'Santa Marinella beach'}]
       },
-      { time:'19:00', title:'트라스테베레 석식 → 호텔', color:'#a03a18',
+      { time:'14:00', title:'점심 — 해변 레스토랑', color:'#a03a18',
+        badges:[{t:'🍝 해산물 파스타',c:'b-ro'}],
+        route:{ time:'해변 내', km:'도보', mode:'🚶' },
+        details:['Santa Marinella 해변가 레스토랑에서 해산물 파스타','생맥주 or 아페롤 스프리츠 🍊','여유롭게 1시간 점심'],
+        note:'해변에서 먹는 해산물 파스타 — 로마 시내와 완전히 다른 분위기!',
+        places:[{name:'Santa Marinella 해변가',lat:42.0345,lng:11.8607,q:'Santa Marinella seafood restaurant'}]
+      },
+      { time:'15:00', title:'오후 자유시간 — 해변 산책·젤라또', color:'#1f8a80',
+        badges:[{t:'🍦 젤라또',c:'b-mt'},{t:'☀️ 여유',c:'b-go'}],
+        route:{ time:'자유', km:'약 1 km', mode:'🚶 도보' },
+        details:['젤라또 🍦 · 커피 · 선베드 여유','해변 산책로 걷기','아페롤 스프리츠로 마무리 🍊'],
+        places:[{name:'Santa Marinella 해변',lat:42.0345,lng:11.8607,q:'Santa Marinella beach promenade'}]
+      },
+      { time:'16:30', title:'Santa Marinella → Roma Termini 복귀', color:'#1f8a80',
+        badges:[{t:'🚆 FL5 직행',c:'b-mt'}],
+        route:{ time:'약 70분', km:'약 65 km', mode:'🚆 FL5 리저널' },
+        details:['Santa Marinella → Roma Termini 직행 약 70분 · €5'],
+        places:[{name:'Santa Marinella역',lat:42.0330,lng:11.8580,q:'Santa Marinella train station'},{name:'Roma Termini',lat:41.9009,lng:12.5009,q:'Roma Termini Station'}]
+      },
+      { time:'18:00', title:'저녁 — 트라스테베레 or 나보나 맛집', color:'#a03a18',
         badges:[{t:'🍷 저녁',c:'b-ro'}],
-        route:{ time:'약 20분', km:'약 2 km', mode:'🚌 트램' },
-        details:['트라스테베레(Trastevere) 골목 식당가 — 파스타·와인','Trastevere → 호텔 택시 or 버스 23 이용','짐 정리 및 내일 비엔나 이동 준비'],
+        route:{ time:'약 20분', km:'약 3 km', mode:'🚌 버스 or 택시' },
+        details:['추천: <strong>Tonnarello | Paglia</strong> or <strong>Cantina e Cucina</strong> (역사와 전통)','와인 + 파스타로 로마의 밤 시작'],
         places:[{name:'트라스테베레',lat:41.8895,lng:12.4692,q:'Trastevere Rome'},{name:'Sina Bernini Bristol',lat:41.9010,lng:12.4883,q:'Sina Bernini Bristol Rome'}]
+      },
+      { time:'20:00', title:'야경 산책 🌙 — 트레비→판테온→나보나→산탄젤로', color:'#2c6dbf',
+        badges:[{t:'🌙 야경',c:'b-vi'}],
+        route:{ time:'약 1시간', km:'약 3.5 km', mode:'🚶 도보' },
+        details:['트레비 분수 야경 → 판테온 외관 → 나보나 광장 → 산탄젤로 성 야경','로마 야경 루트 전체 코스 — 귀중품 주의'],
+        note:'해변 + 로마 야경의 완벽한 하루! 오늘 야경 봐두면 5.2~5.3 일정 여유 생김.',
+        places:[{name:'트레비 분수',lat:41.9009,lng:12.4833,q:'Trevi Fountain Rome'},{name:'판테온',lat:41.8986,lng:12.4769,q:'Pantheon Rome'},{name:'나보나 광장',lat:41.8992,lng:12.4731,q:'Piazza Navona Rome'},{name:'산탄젤로 성',lat:41.9031,lng:12.4663,q:'Castel Sant Angelo Rome'}]
       }
     ]
   },
   {
-    date:'5월 3일 일요일', flag:'✈️', label:'로마 → 비엔나 이동',
+    date:'5월 2일 토요일', flag:'🇮🇹', label:'로마 1일차 — 콜로세움 · 구시가 · 보르게세 · 야경',
     hotel: 'rome',
-    travel:{ total:'약 3시간', km:'약 1,100 km', walk:'도보 약 1 km' },
+    travel:{ total:'약 09:00~22:00', km:'약 12 km', walk:'도보 약 8 km' },
     events:[
-      { time:'09:00', title:'호텔 체크아웃 + FCO 공항 이동', color:'#5b3fa0',
-        badges:[{t:'✈️ FCO→VIE',c:'b-fl'},{t:'1h 55m',c:'b-go'}],
-        route:{ time:'약 1시간', km:'32 km', mode:'🚆 Leonardo Express' },
-        details:['호텔(Barberini) 체크아웃 → Roma Termini (지하철 A선 또는 택시)','<strong>Leonardo Express</strong> FCO 도착 (32분)','Austrian Airlines <strong>OS556</strong> (FCO 13:40 → VIE 15:25) 또는 오전편','FCO T1 출발 — 체크인 3시간 전 도착 권장'],
-        note:'지금 바로 예매! €50~120 수준.',
-        places:[{name:'Sina Bernini Bristol',lat:41.9010,lng:12.4883,q:'Sina Bernini Bristol Rome'},{name:'Roma Termini',lat:41.9009,lng:12.5009,q:'Roma Termini Station'},{name:'FCO 공항',lat:41.8003,lng:12.2388,q:'Rome Fiumicino Airport'}]
+      { time:'09:00', title:'출발 → 산타 마리아 마조레 대성전', color:'#a03a18',
+        badges:[{t:'🇮🇹 로마 1일차',c:'b-ro'}],
+        route:{ time:'약 20분', km:'약 2 km', mode:'🚇 지하철 A→B' },
+        details:['Barberini → Termini 환승 → Colosseo역 · 약 20분 · Roma Pass 사용','<strong>산타 마리아 마조레 대성전</strong> — 무료 입장 · 내부 황금 천장 · 약 30분'],
+        places:[{name:'Sina Bernini Bristol',lat:41.9010,lng:12.4883,q:'Sina Bernini Bristol Rome'},{name:'산타 마리아 마조레',lat:41.8978,lng:12.4988,q:'Basilica di Santa Maria Maggiore Rome'}]
       },
-      { time:'15:30', title:'비엔나 도착 + A by Adina 체크인', color:'#2c6dbf',
+      { time:'09:50', title:'콜로세움 + 콘스탄티누스 개선문', color:'#a03a18',
+        badges:[{t:'🏟️ 콜로세움',c:'b-ro'},{t:'⚠️ 예약필수',c:'b-wr'}],
+        admission:'콜로세움 09:00~19:00 (마지막 입장 18:00) · Roma Pass 무료',
+        route:{ time:'약 5분', km:'약 0.5 km', mode:'🚶 도보' },
+        details:['<strong>사전 온라인 예약 필수</strong> — coopculture.it','<strong>Roma Pass 48h 첫 사이트 무료</strong> — 이 시점부터 48시간 카운트 시작!','내부 관람 약 1시간 30분','<strong>콘스탄티누스 개선문</strong> — 콜로세움 옆 도보 2분'],
+        note:'Roma Pass 48h 첫 사용 = 콜로세움! 이때부터 48시간 카운트 → 5.3 09:50까지 유효.',
+        places:[{name:'콜로세움',lat:41.8902,lng:12.4922,q:'Colosseum Rome'},{name:'콘스탄티누스 개선문',lat:41.8896,lng:12.4906,q:'Arch of Constantine Rome'}]
+      },
+      { time:'11:30', title:'팔라티노 언덕 + 포로 로마노', color:'#a03a18',
+        badges:[{t:'🏛️ 통합권',c:'b-ro'}],
+        admission:'포로 로마노·팔라티노 09:00~19:00 (마지막 입장 18:00)',
+        route:{ time:'도보 코스', km:'약 1 km', mode:'🚶 도보' },
+        details:['콜로세움 통합권으로 입장 · 약 1시간 20분','팔라티노 언덕 전망 → 포로 로마노 유적 산책'],
+        places:[{name:'팔라티노 언덕',lat:41.8892,lng:12.4875,q:'Palatine Hill Rome'},{name:'포로 로마노',lat:41.8925,lng:12.4853,q:'Roman Forum Rome'}]
+      },
+      { time:'13:00', title:'점심 — Nerone', color:'#a03a18',
+        badges:[{t:'🍝 추천 맛집',c:'b-ro'}],
+        route:{ time:'도보 2분', km:'0.2 km', mode:'🚶' },
+        details:['<strong>Nerone</strong> — Via delle Terme di Tito 96','콜로세움 바로 옆 정통 트라토리아 · 현지인 단골','파스타·카르초피(아티초크) 추천'],
+        note:'콜로세움 관람 후 이동 없이 바로 점심!',
+        places:[{name:'Nerone',lat:41.8905,lng:12.4940,q:'Ristorante Nerone Rome'}]
+      },
+      { time:'14:10', title:'포리 임페리알리 → 캄피돌리오 → 베네치아 광장', color:'#a03a18',
+        badges:[{t:'🏛️ 도보 코스',c:'b-ro'}],
+        route:{ time:'도보 약 30분 코스', km:'약 1.5 km', mode:'🚶 도보' },
+        details:['<strong>포리 임페리알리 거리</strong> 산책 — 고대 포럼 유적 파노라마','<strong>캄피돌리오 광장</strong> — 미켈란젤로 설계','<strong>베네치아 광장</strong> — 빅토리아노 무료 전망대 (로마 전경 최고) ⏰ 09:30~18:45'],
+        places:[{name:'포리 임페리알리',lat:41.8942,lng:12.4876,q:'Via dei Fori Imperiali Rome'},{name:'캄피돌리오 광장',lat:41.8934,lng:12.4831,q:'Piazza del Campidoglio Rome'},{name:'베네치아 광장',lat:41.8961,lng:12.4822,q:'Piazza Venezia Rome'}]
+      },
+      { time:'15:10', title:'트레비 분수 → 판테온', color:'#a03a18',
+        badges:[{t:'⛲ 트레비',c:'b-ro'}],
+        admission:'판테온 09:00~19:00 (마지막 입장 18:30) · €5 · 사전 예약 권장',
+        route:{ time:'도보 약 15분', km:'약 1.5 km', mode:'🚶 도보' },
+        details:['베네치아 → 트레비 분수 도보 약 15분 · 동전 던지기 🪙','<strong>판테온</strong> — 입장 €5 · 사전 예약 pantheonroma.com','판테온 → 나보나 광장 도보 5분 · 젤라또 🍦'],
+        places:[{name:'트레비 분수',lat:41.9009,lng:12.4833,q:'Trevi Fountain Rome'},{name:'판테온',lat:41.8986,lng:12.4769,q:'Pantheon Rome'}]
+      },
+      { time:'16:10', title:'La Rinascente → 스페인 계단 → 콘도티·코르소 거리', color:'#5b3fa0',
+        badges:[{t:'🛍️ 쇼핑',c:'b-fl'}],
+        route:{ time:'도보 코스', km:'약 1 km', mode:'🚶 도보' },
+        details:['<strong>La Rinascente</strong> — Via del Tritone · 뷰티·명품','<strong>스페인 계단</strong> — 포토스팟 · 주변 젤라또 🍦','<strong>콘도티 거리</strong> — Gucci·Valentino · <strong>코르소 거리</strong> — 대중 쇼핑'],
+        places:[{name:'La Rinascente',lat:41.9014,lng:12.4838,q:'La Rinascente Rome Tritone'},{name:'스페인 계단',lat:41.9058,lng:12.4823,q:'Spanish Steps Rome'},{name:'콘도티 거리',lat:41.9046,lng:12.4795,q:'Via Condotti Rome'}]
+      },
+      { time:'17:30', title:'포폴로 광장 → 핀초 언덕 일몰 🌅', color:'#a03a18',
+        badges:[{t:'🌅 일몰 뷰',c:'b-ro'}],
+        route:{ time:'약 15분', km:'약 2 km', mode:'🚇 or 🚶' },
+        details:['<strong>포폴로 광장</strong> — 쌍둥이 교회 · 오벨리스크','<strong>핀초 언덕 테라스</strong> — 로마 일몰 360° 최고 뷰포인트 🌅 17:30~18:30이 골든타임!','보르게세 공원 산책'],
+        note:'핀초 언덕 일몰은 로마에서 꼭 봐야 할 장면! 놓치지 말 것.',
+        places:[{name:'포폴로 광장',lat:41.9109,lng:12.4763,q:'Piazza del Popolo Rome'},{name:'핀초 언덕',lat:41.9121,lng:12.4808,q:'Pincian Hill Rome'}]
+      },
+      { time:'19:30', title:'저녁 — Origano Trevi', color:'#a03a18',
+        badges:[{t:'🍝 저녁',c:'b-ro'}],
+        route:{ time:'약 20분', km:'약 3 km', mode:'🚇 or 택시' },
+        details:['<strong>Origano Trevi</strong> — Via delle Muratte · 트레비 분수 도보 2분','정통 파스타·피자 · 와인'],
+        note:'트레비 분수 바로 옆 맛집 — 저녁 후 야경 산책으로 자연스럽게 연결!',
+        places:[{name:'Origano Trevi',lat:41.9004,lng:12.4818,q:'Origano Trevi Rome'}]
+      },
+      { time:'21:00', title:'야경 산책 🌙 — 트레비→판테온→나보나→산탄젤로', color:'#2c6dbf',
+        badges:[{t:'🌙 야경',c:'b-vi'}],
+        route:{ time:'약 1시간', km:'약 3.5 km', mode:'🚶 도보' },
+        details:['트레비 분수 야경 (저장된 야경 루트)','판테온 외관 → 나보나 광장 → 산탄젤로 성 야경','호텔(Barberini) 복귀 도보 15분'],
+        places:[{name:'트레비 분수',lat:41.9009,lng:12.4833,q:'Trevi Fountain Rome'},{name:'판테온',lat:41.8986,lng:12.4769,q:'Pantheon Rome'},{name:'나보나 광장',lat:41.8992,lng:12.4731,q:'Piazza Navona Rome'},{name:'산탄젤로 성',lat:41.9031,lng:12.4663,q:'Castel Sant Angelo Rome'}]
+      }
+    ]
+  },
+  {
+    date:'5월 3일 일요일', flag:'✈️', label:'로마 2일차 바티칸 → 비엔나 이동',
+    hotel: 'rome',
+    travel:{ total:'약 7시간', km:'약 1,150 km', walk:'도보 약 3 km' },
+    events:[
+      { time:'06:45', title:'기상 · 짐 정리 · 프런트에 맡기기', color:'#888888',
+        badges:[{t:'⚠️ 10:00 공항 출발 목표',c:'b-wr'}],
+        route:{ time:'15분', km:'—', mode:'🏨 호텔 내' },
+        details:['짐은 프런트 벨데스크에 맡기기 · 가볍게 출발','체크아웃 서류 미리 작성해두기'],
+        places:[{name:'Sina Bernini Bristol',lat:41.9010,lng:12.4883,q:'Sina Bernini Bristol Rome'}]
+      },
+      { time:'07:00', title:'Barberini → Ottaviano 지하철 A선', color:'#888888',
+        badges:[{t:'🚇 A선',c:'b-fl'}],
+        route:{ time:'약 15분', km:'약 3 km', mode:'🚇 지하철 A선' },
+        details:['Barberini → Ottaviano (바티칸 입구) · 약 15분 · Roma Pass 사용'],
+        places:[{name:'Barberini역',lat:41.9010,lng:12.4883,q:'Barberini Metro Rome'},{name:'Ottaviano역',lat:41.9035,lng:12.4572,q:'Ottaviano Metro Rome'}]
+      },
+      { time:'07:15', title:'☕ 아침 — Sciascia Caffè 1919', color:'#a03a18',
+        badges:[{t:'☕ 아침',c:'b-ro'},{t:'1919년 역사',c:'b-go'}],
+        route:{ time:'도보 3분', km:'0.3 km', mode:'🚶' },
+        details:['<strong>Sciascia Caffè 1919</strong> — Via Fabio Massimo 80A · Ottaviano역 도보 3분','바티칸 도보 8분 거리 · 1919년부터 이어온 Prati 명카페','<strong>Caffè con Cioccolata</strong>(특제 카카오 에스프레소) + Cornetto · €4~5','바 카운터 스탠딩 10분 해결 → 바티칸으로 직행!'],
+        note:'로마 현지인들이 매일 아침 줄 서는 카페. 특제 에스프레소 꼭 주문!',
+        places:[{name:'Sciascia Caffè 1919',lat:41.9068,lng:12.4613,q:'Sciascia Caffè 1919 Rome'}]
+      },
+      { time:'07:30', title:'바티칸 미술관 + 시스티나 성당', color:'#2c6dbf',
+        badges:[{t:'🎨 바티칸',c:'b-vi'},{t:'예약필수',c:'b-wr'}],
+        route:{ time:'도보 8분', km:'0.7 km', mode:'🚶' },
+        details:['<strong>오픈 직후 입장 권장</strong> — 사전 예약 필수 museivaticani.va · €30','미켈란젤로 <strong>시스티나 성당 천장화</strong> · 라파엘로의 방','<strong>Roma Pass 적용 불가</strong> — 무조건 별도 예매'],
+        note:'바티칸 미술관은 로마 여행 최고 하이라이트! 오픈 직후가 인파 최소.',
+        places:[{name:'바티칸 미술관',lat:41.9065,lng:12.4536,q:'Vatican Museums Rome'}]
+      },
+      { time:'09:00', title:'성 베드로 대성전 + 성 베드로 광장', color:'#2c6dbf',
+        badges:[{t:'⛪ 무료',c:'b-vi'}],
+        route:{ time:'도보 5분', km:'0.4 km', mode:'🚶' },
+        details:['무료 입장 · 쿠폴라(돔) 등반 €8 — 시간상 생략 권장','광장 오벨리스크 · 베르니니 열주 · 성당 내부 미켈란젤로 피에타 상'],
+        places:[{name:'성 베드로 대성전',lat:41.9022,lng:12.4539,q:'St Peters Basilica Vatican'},{name:'성 베드로 광장',lat:41.9022,lng:12.4568,q:'St Peters Square Vatican'}]
+      },
+      { time:'09:45', title:'비아 델라 콘칠리아치오네 → 산탄젤로 성', color:'#2c6dbf',
+        badges:[{t:'🏰 산탄젤로',c:'b-vi'},{t:'Roma Pass 할인',c:'b-go'}],
+        route:{ time:'도보 10분', km:'0.8 km', mode:'🚶' },
+        details:['바티칸 연결 대로 <strong>비아 델라 콘칠리아치오네</strong> 산책 · 사진 포인트','<strong>산탄젤로 성</strong> 내부 입장 · Roma Pass 할인 적용 (~€13)'],
+        places:[{name:'산탄젤로 성',lat:41.9031,lng:12.4663,q:'Castel Sant Angelo Rome'}]
+      },
+      { time:'09:50', title:'☕ 보너스 — Caffetteria Le Terrazze (성 내 옥상)', color:'#2c6dbf',
+        badges:[{t:'🏛️ 성 내 카페',c:'b-vi'},{t:'성 베드로 돔 뷰',c:'b-go'}],
+        route:{ time:'성 내부', km:'—', mode:'🏰 성 관람 중' },
+        details:['산탄젤로 성 옥상 <strong>Caffetteria Le Terrazze</strong>','<strong>성 베드로 대성당 돔</strong>을 바라보며 카푸치노 ☕','카푸치노 or 파니니 €5~8 · 추가 이동 없이 관광+카페 동시에!'],
+        note:'산탄젤로 성 입장 후 옥상까지 올라가면 자동으로 나옴. 뷰 보면서 잠깐 쉬어가기!',
+        places:[{name:'Caffetteria Le Terrazze',lat:41.9031,lng:12.4663,q:'Castel Sant Angelo rooftop cafe Rome'}]
+      },
+      { time:'10:25', title:'🥪 점심 — All\'Antico Vinaio 테이크아웃 → 성 천사의 다리 취식 🌉', color:'#a03a18',
+        badges:[{t:'🥪 파니니 테이크아웃',c:'b-ro'},{t:'🌉 로마 마지막 식사',c:'b-go'}],
+        route:{ time:'도보 5분', km:'0.4 km', mode:'🚶' },
+        details:['<strong>All\'Antico Vinaio</strong> 인근 지점 · 피렌체 발 전설의 파니니 가게','<strong>Schiacciata 빵</strong>에 살루미·리코타·트러플 파니니 포장 · €8~10','👉 <strong>성 천사의 다리(Ponte Sant\'Angelo) 위에서 테베레 강 바라보며 취식!</strong>','천사 조각상이 줄지어 선 다리 위 — 로마에서 가장 낭만적인 식사 장소 🌉'],
+        note:'파니니를 성 천사의 다리 위에서 먹으면 로마 마지막 식사로 감성 최고 🌉 꼭 여기서 먹기!',
+        places:[{name:'All\'Antico Vinaio Rome',lat:41.9025,lng:12.4660,q:'All Antico Vinaio Rome Prati'},{name:'성 천사의 다리',lat:41.9018,lng:12.4660,q:'Ponte Sant Angelo Rome'}]
+      },
+      { time:'10:50', title:'호텔 복귀 · 체크아웃 · 짐 픽업', color:'#888888',
+        badges:[{t:'🏨 체크아웃',c:'b-go'}],
+        route:{ time:'약 15분', km:'약 2 km', mode:'🚇 지하철' },
+        details:['Ottaviano → Barberini 지하철 A선 약 15분 · Roma Pass 마지막 사용','짐 픽업 · 최종 체크아웃'],
+        places:[{name:'Sina Bernini Bristol',lat:41.9010,lng:12.4883,q:'Sina Bernini Bristol Rome'}]
+      },
+      { time:'11:10', title:'Barberini → Roma Termini → Leonardo Express → FCO', color:'#5b3fa0',
+        badges:[{t:'🚆 Leonardo Express',c:'b-fl'},{t:'€14',c:'b-go'}],
+        route:{ time:'Termini까지 10분 + FCO까지 32분', km:'33 km', mode:'🚇 + 🚆' },
+        details:['Barberini → Termini 지하철 A선 약 10분','<strong>Leonardo Express</strong> Termini → FCO T1 32분 · €14 · 플랫폼 31번'],
+        places:[{name:'Roma Termini',lat:41.9009,lng:12.5009,q:'Roma Termini Station'},{name:'FCO 공항',lat:41.8003,lng:12.2388,q:'Rome Fiumicino Airport'}]
+      },
+      { time:'12:00', title:'FCO 공항 도착 · 체크인 · 보안 · 면세쇼핑 🛍️', color:'#5b3fa0',
+        badges:[{t:'✈️ FCO→VIE',c:'b-fl'},{t:'OS556 13:40',c:'b-go'}],
+        route:{ time:'약 1시간 40분 여유', km:'—', mode:'✈️ 탑승 준비' },
+        details:['OS556 <strong>FCO 13:40 출발</strong> → VIE 15:25 도착','체크인 · 보안검색 완료 후 면세 쇼핑 약 1시간 여유 🛍️','T1 출발 터미널 확인 필수'],
+        note:'면세점에서 마지막 이탈리아 쇼핑! 리미티드 에디션 · 로컬 브랜드 챙기기.',
+        places:[{name:'FCO 공항',lat:41.8003,lng:12.2388,q:'Rome Fiumicino Airport'}]
+      },
+      { time:'15:25', title:'비엔나 VIE 도착 + A by Adina 체크인', color:'#2c6dbf',
         badges:[{t:'🇦🇹 비엔나',c:'b-vi'}],
         route:{ time:'16분', km:'19 km', mode:'🚆 CAT 열차' },
-        details:['VIE T3 → <strong>CAT 열차</strong> Wien Mitte (16분, €14.90)','또는 U3/S7 (25분, 더 저렴)','<strong>A by Adina Vienna Danube</strong> 체크인 — VIC(IAEA) 도보 약 10분','근처 SPAR/BILLA 마트 들러 장보기'],
+        details:['VIE T3 → <strong>CAT 열차</strong> Wien Mitte (16분, €14.90)','또는 U3/S7 (25분, 더 저렴)','<strong>A by Adina Vienna Danube</strong> 체크인','근처 SPAR/BILLA 마트 들러 장보기'],
         places:[{name:'VIE 비엔나 공항',lat:48.1103,lng:16.5697,q:'Vienna International Airport'},{name:'Wien Mitte',lat:48.2048,lng:16.3822,q:'Wien Mitte Bahnhof'},{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'}]
       }
     ]
   },
   {
-    date:'5월 4일 월요일', flag:'🇦🇹', label:'비엔나 관광 시작',
+    date:'5월 4일 월요일', flag:'🇦🇹', label:'비엔나 1일차 — 구시가 핵심 + 알베르티나 야경',
     hotel: 'vienna',
-    travel:{ total:'약 3시간 이동', km:'약 15 km', walk:'도보 약 5 km' },
+    travel:{ total:'약 08:00~21:30', km:'약 15 km', walk:'도보 약 7 km' },
     events:[
-      { time:'09:00', title:'쇤브룬 궁전', color:'#2c6dbf',
-        badges:[{t:'🏰 쇤브룬',c:'b-vi'}],
-        route:{ time:'약 30분', km:'약 8 km', mode:'🚇 U1→U4' },
-        details:['호텔 → Kagran U1 → Schwedenplatz → U4 Schönbrunn (약 30분)','Grand Tour (50분) 권장 — 궁전 정원·글로리에테 전망대','예매: schoenbrunn.at'],
-        places:[{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'},{name:'쇤브룬 궁전',lat:48.1845,lng:16.3122,q:'Schönbrunn Palace Vienna'}]
-      },
-      { time:'13:00', title:'나슈마르크트 점심', color:'#2c6dbf',
-        badges:[{t:'🥨 시장',c:'b-vi'}],
-        route:{ time:'약 10분', km:'약 1 km', mode:'🚇 U4' },
-        details:['쇤브룬 → Kettenbrückengasse (U4 1정거장)','비엔나 최대 야외 시장 — 케밥·팔라펠·현지 치즈'],
-        places:[{name:'쇤브룬 궁전',lat:48.1845,lng:16.3122,q:'Schönbrunn Palace Vienna'},{name:'나슈마르크트',lat:48.1984,lng:16.3664,q:'Naschmarkt Vienna'}]
-      },
-      { time:'15:00', title:'슈테판 대성당 → 카페 자허', color:'#2c6dbf',
-        badges:[{t:'🏛️ 구시가지',c:'b-vi'}],
-        route:{ time:'약 15분', km:'약 3 km', mode:'🚇 U1' },
-        details:['Kettenbrückengasse → Stephansplatz (U1)','슈테판 대성당 내부 무료 입장 · 그라벤 거리 산책','<strong>카페 자허</strong> — 자허 토르테 + 아인슈패너 ☕'],
-        places:[{name:'나슈마르크트',lat:48.1984,lng:16.3664,q:'Naschmarkt Vienna'},{name:'슈테판 대성당',lat:48.2085,lng:16.3726,q:'Stephansdom Vienna'},{name:'카페 자허',lat:48.2031,lng:16.3694,q:'Café Sacher Vienna'}]
-      },
-      { time:'19:00', title:'호텔 복귀', color:'#2c6dbf',
-        badges:[{t:'🏠 복귀',c:'b-ht'}],
-        route:{ time:'약 25분', km:'약 7 km', mode:'🚇 U1' },
-        details:['Stephansplatz U1 → Kagran (약 20분)','호텔 A by Adina 도착'],
-        places:[{name:'슈테판 대성당',lat:48.2085,lng:16.3726,q:'Stephansdom Vienna'},{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'}]
-      }
-    ]
-  },
-  {
-    date:'5월 5일 화요일', flag:'🇦🇹', label:'벨베데레 & 링슈트라세',
-    hotel: 'vienna',
-    travel:{ total:'약 2.5시간 이동', km:'약 12 km', walk:'도보 약 4 km' },
-    events:[
-      { time:'10:00', title:'벨베데레 궁전 & 클림트 《키스》', color:'#2c6dbf',
-        badges:[{t:'🎨 미술관',c:'b-vi'}],
-        route:{ time:'약 30분', km:'약 8 km', mode:'🚇 U1→U4' },
-        details:['호텔 → U1 Südtiroler Platz 또는 트램 D','<strong>상궁(Oberes Belvedere)</strong> — 클림트 《키스》 원본','예매: belvedere.at (€16.50)'],
+      { time:'08:00', title:'벨베데레 궁전 (상궁) — 클림트 《키스》', color:'#2c6dbf',
+        badges:[{t:'🇦🇹 비엔나 1일차',c:'b-vi'},{t:'⚠️ 예매 필수',c:'b-wr'}],
+        admission:'08:00~18:00 (마지막 입장 17:30) · €16.50 · belvedere.at 사전 예매',
+        route:{ time:'약 30분', km:'약 8 km', mode:'🚇 U1→트램D' },
+        details:['호텔 → Kagran U1 → Schwedenplatz → 트램 D → Schloss Belvedere','<strong>상궁(Oberes Belvedere)</strong> — 클림트 《키스》 원본 · 오스트리아 황실 미술품'],
+        note:'오픈 직후 입장이 인파 최소! 08:00에 딱 맞춰 들어가기.',
         places:[{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'},{name:'벨베데레 궁전',lat:48.1916,lng:16.3804,q:'Belvedere Palace Vienna'}]
       },
-      { time:'15:00', title:'카페 란트만 & 링슈트라세 산책', color:'#2c6dbf',
-        badges:[{t:'☕ 산책',c:'b-vi'}],
-        route:{ time:'약 15분', km:'약 2 km', mode:'🚶 도보 or 🚋 트램' },
-        details:['벨베데레 → 트램 D → 링슈트라세','<strong>카페 란트만</strong> — 아인슈패너 커피','링슈트라세 — 시청·국회·부르크극장 외관'],
-        places:[{name:'벨베데레 궁전',lat:48.1916,lng:16.3804,q:'Belvedere Palace Vienna'},{name:'카페 란트만',lat:48.2104,lng:16.3613,q:'Café Landtmann Vienna'}]
+      { time:'10:00', title:'빈 국립 오페라극장 외관 → 케른트너 거리', color:'#2c6dbf',
+        badges:[{t:'🎭 오페라극장',c:'b-vi'}],
+        route:{ time:'트램 D → 도보', km:'약 2 km', mode:'🚋 트램' },
+        details:['벨베데레 → 트램 D → Oper · 오페라극장 웅장한 외관 감상','<strong>케른트너 거리</strong> — 비엔나 핵심 보행자 거리 · 명품·기념품'],
+        places:[{name:'빈 국립 오페라극장',lat:48.2031,lng:16.3693,q:'Wiener Staatsoper Vienna'},{name:'케른트너 거리',lat:48.2055,lng:16.3720,q:'Kärntner Strasse Vienna'}]
+      },
+      { time:'10:45', title:'슈테판 대성당 + 하스 하우스 + 앙커우어 인형시계', color:'#2c6dbf',
+        badges:[{t:'⛪ 슈테판',c:'b-vi'}],
+        admission:'슈테판 대성당 내부 무료 · 탑 등반 €5.50 · 지하납골당 €6',
+        route:{ time:'도보 5분', km:'0.4 km', mode:'🚶' },
+        details:['<strong>슈테판 대성당</strong> — 내부 무료 · 남탑 등반 권장 (360° 뷰)','<strong>하스 하우스</strong> — 현대건축 vs 고딕 성당 대비 포토스팟','<strong>앙커우어 인형시계</strong> (Hoher Markt) — 정시 인형 퍼레이드 ⏰ 매 정시'],
+        places:[{name:'슈테판 대성당',lat:48.2085,lng:16.3726,q:'Stephansdom Vienna'},{name:'앙커우어 인형시계',lat:48.2109,lng:16.3700,q:'Anker Clock Vienna Hoher Markt'}]
+      },
+      { time:'12:00', title:'그라벤 거리 → 성 페터 성당 → 율리어스 마이늘', color:'#2c6dbf',
+        badges:[{t:'🛍️ 그라벤',c:'b-vi'}],
+        route:{ time:'도보 코스', km:'약 0.5 km', mode:'🚶' },
+        details:['<strong>그라벤 거리</strong> — 비엔나 최고급 쇼핑 거리','<strong>성 페터 성당</strong> — 바로크 걸작 · 무료 입장','<strong>율리어스 마이늘 암 그라벤</strong> — 고급 식료품·기념품 구경'],
+        places:[{name:'그라벤 거리',lat:48.2089,lng:16.3697,q:'Graben Vienna'},{name:'성 페터 성당',lat:48.2084,lng:16.3696,q:'Peterskirche Vienna'},{name:'율리어스 마이늘',lat:48.2094,lng:16.3693,q:'Julius Meinl am Graben Vienna'}]
+      },
+      { time:'13:00', title:'점심 — Figlmüller Bäckerstraße 슈니첼 🍽️', color:'#2c6dbf',
+        badges:[{t:'🥩 슈니첼 원조',c:'b-vi'}],
+        route:{ time:'도보 5분', km:'0.3 km', mode:'🚶' },
+        details:['<strong>Figlmüller – Bäckerstraße</strong> — 비엔나 슈니첼 원조 · 1905년 창업','슈니첼이 접시보다 큰 것으로 유명 😄','예약 권장 — figlmueller.at'],
+        note:'비엔나 왔으면 피글뮐러 슈니첼은 필수! 접시보다 크게 나오는 전통 방식.',
+        places:[{name:'Figlmüller Bäckerstraße',lat:48.2083,lng:16.3742,q:'Figlmüller Bäckerstraße Vienna'}]
+      },
+      { time:'14:30', title:'미하엘 광장 → 호프부르크 왕궁 → 시시 뮤지엄', color:'#2c6dbf',
+        badges:[{t:'🏰 호프부르크',c:'b-vi'}],
+        admission:'시시 뮤지엄 09:00~17:30 (마지막 입장 17:00) · €16',
+        route:{ time:'도보 8분', km:'0.6 km', mode:'🚶' },
+        details:['<strong>미하엘 광장(Michaelerplatz)</strong> — 호프부르크 정문 광장','<strong>호프부르크 왕궁</strong> — 시시 뮤지엄·황실 보물박물관','<strong>신 왕궁(Neue Burg)</strong> — 에페소스 뮤지엄 선택'],
+        places:[{name:'미하엘 광장',lat:48.2075,lng:16.3658,q:'Michaelerplatz Vienna'},{name:'호프부르크 왕궁',lat:48.2064,lng:16.3642,q:'Hofburg Palace Vienna'},{name:'신 왕궁',lat:48.2047,lng:16.3641,q:'Neue Burg Vienna'}]
+      },
+      { time:'16:00', title:'모차르트 동상 → 폭스가르텐', color:'#2c6dbf',
+        badges:[{t:'🎵 모차르트',c:'b-vi'}],
+        route:{ time:'도보 5분', km:'0.4 km', mode:'🚶' },
+        details:['부르크가르텐 공원 내 <strong>모차르트 동상</strong> 📸','<strong>폭스가르텐(Volksgarten)</strong> — 5월 장미 만개 시즌!'],
+        places:[{name:'모차르트 동상',lat:48.2039,lng:16.3655,q:'Mozart Statue Vienna Burggarten'},{name:'폭스가르텐',lat:48.2062,lng:16.3618,q:'Volksgarten Vienna'}]
+      },
+      { time:'17:00', title:'호텔 복귀 · 휴식', color:'#888888',
+        badges:[{t:'🏨 휴식',c:'b-go'}],
+        route:{ time:'약 25분', km:'약 7 km', mode:'🚇 U1' },
+        details:['Stephansplatz U1 → Kagran · 저녁 전 약 1시간 휴식'],
+        places:[{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'}]
+      },
+      { time:'18:30', title:'저녁 — Plachutta Wollzeile 타펠슈피츠', color:'#2c6dbf',
+        badges:[{t:'🥩 타펠슈피츠 원조',c:'b-vi'}],
+        route:{ time:'약 20분', km:'약 6 km', mode:'🚇 U1' },
+        details:['<strong>Plachutta Wollzeile</strong> — 황실 요리 타펠슈피츠 원조','오스트리아 전통 소 등심 수육 요리 · 예약 plachutta.at','또는 <strong>카페 자허</strong> — 자허 토르테 + 아인슈패너 ☕'],
+        places:[{name:'Plachutta Wollzeile',lat:48.2083,lng:16.3756,q:'Plachutta Wollzeile Vienna'}]
+      },
+      { time:'20:30', title:'🌙 야경 — 알베르티나 + 오페라극장', color:'#2c6dbf',
+        badges:[{t:'🌙 야경',c:'b-vi'}],
+        route:{ time:'도보 코스', km:'약 1 km', mode:'🚶' },
+        details:['<strong>알베르티나 미술관</strong> — 야경 포인트 · 계단 테라스에서 오페라극장 방향','<strong>오페라극장 야간 조명</strong> → 케른트너 거리 야경 산책'],
+        places:[{name:'알베르티나',lat:48.2039,lng:16.3680,q:'Albertina Vienna'},{name:'빈 국립 오페라극장',lat:48.2031,lng:16.3693,q:'Wiener Staatsoper Vienna'}]
       }
     ]
   },
   {
-    date:'5월 6일 수요일', flag:'🇦🇹', label:'Salome 오페라의 밤 🎭',
+    date:'5월 5일 화요일', flag:'🇦🇹', label:'비엔나 2일차 — 링슈트라세 + 쇤브룬 + 노이바우',
     hotel: 'vienna',
-    travel:{ total:'약 1시간 이동', km:'약 8 km', walk:'도보 약 1 km' },
+    travel:{ total:'약 08:00~21:30', km:'약 18 km', walk:'도보 약 6 km' },
     events:[
-      { time:'10:00', title:'미술사 박물관 (KHM)', color:'#2c6dbf',
-        badges:[{t:'🖼️ KHM',c:'b-vi'}],
-        route:{ time:'약 30분', km:'약 8 km', mode:'🚇 U1→U3' },
-        details:['호텔 → U1 → Schwedenplatz → U4 또는 U2/U3 Volkstheater역','<strong>Kunsthistorisches Museum</strong> — 라파엘·루벤스 소장 / 입장 €21'],
-        places:[{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'},{name:'미술사 박물관',lat:48.2033,lng:16.3614,q:'Kunsthistorisches Museum Vienna'}]
+      { time:'08:00', title:'링슈트라세 건축 투어 — 의회·시청·대학·보티프 교회', color:'#2c6dbf',
+        badges:[{t:'🇦🇹 비엔나 2일차',c:'b-vi'}],
+        route:{ time:'도보 약 1.5km 코스', km:'약 1.5 km', mode:'🚶 도보' },
+        details:['<strong>오스트리아 의회의사당</strong> — 그리스 신전 양식 · 외관','<strong>빈 시청(Rathaus)</strong> — 고딕 양식 · 광장','<strong>빈 대학교</strong> — 링슈트라세 정원','<strong>보티프 교회(Votivkirche)</strong> — 신고딕 첨탑 · 내부 입장 권장'],
+        note:'아침 일찍 링슈트라세는 인파 없이 건축물 감상 최적!',
+        places:[{name:'오스트리아 의회의사당',lat:48.2104,lng:16.3574,q:'Austrian Parliament Vienna'},{name:'빈 시청',lat:48.2107,lng:16.3567,q:'Vienna Rathaus'},{name:'보티프 교회',lat:48.2157,lng:16.3596,q:'Votivkirche Vienna'}]
       },
-      { time:'18:10', title:'빈 국립오페라극장 — Salome 19:30 🎭', color:'#b54060',
+      { time:'09:30', title:'미술사 박물관 (KHM)', color:'#2c6dbf',
+        badges:[{t:'🖼️ KHM',c:'b-vi'},{t:'⚠️ 예매',c:'b-wr'}],
+        admission:'10:00~18:00 (목요일 ~21:00) · 마지막 입장 1시간 전 · €21',
+        route:{ time:'도보 10분', km:'약 0.8 km', mode:'🚶' },
+        details:['<strong>Kunsthistorisches Museum</strong> — 클림트·라파엘·루벤스·렘브란트','세계 4대 미술관 중 하나 · 약 2시간'],
+        places:[{name:'미술사 박물관',lat:48.2033,lng:16.3614,q:'Kunsthistorisches Museum Vienna'}]
+      },
+      { time:'11:40', title:'MuseumsQuartier 산책', color:'#2c6dbf',
+        badges:[{t:'🎨 MQ',c:'b-vi'}],
+        route:{ time:'도보 3분', km:'0.2 km', mode:'🚶' },
+        details:['빈 최대 문화지구 · 레오폴트 미술관 · mumok 현대미술관 외관','MQ 광장 카페에서 커피 ☕'],
+        places:[{name:'MuseumsQuartier',lat:48.2013,lng:16.3590,q:'MuseumsQuartier Vienna'}]
+      },
+      { time:'12:15', title:'점심 — 나슈마르크트', color:'#2c6dbf',
+        badges:[{t:'🥙 나슈마르크트',c:'b-vi'}],
+        route:{ time:'U2 → U4', km:'약 2 km', mode:'🚇 지하철' },
+        details:['U4 Kettenbrückengasse · 비엔나 최대 야외 시장','<strong>NENI am Naschmarkt</strong> — 이스라엘 요리 · 추천','케밥·팔라펠·현지 치즈·소시지'],
+        places:[{name:'나슈마르크트',lat:48.1984,lng:16.3664,q:'Naschmarkt Vienna'}]
+      },
+      { time:'13:15', title:'카를 광장 → 오토 바그너 역사 건물 → 카를성당', color:'#2c6dbf',
+        badges:[{t:'🏛️ 카를광장',c:'b-vi'}],
+        admission:'카를성당 09:00~18:00 · €8 (엘리베이터로 천장화 근접 관람 포함)',
+        route:{ time:'도보 5분', km:'0.3 km', mode:'🚶' },
+        details:['<strong>오토 바그너 설계 카를광장 지하철역</strong> — 아르누보 걸작','<strong>카를성당(Karlskirche)</strong> — 바로크 · 내부 엘리베이터로 천장화 근접 관람'],
+        places:[{name:'카를성당',lat:48.1977,lng:16.3724,q:'Karlskirche Vienna'},{name:'카를 광장',lat:48.1987,lng:16.3697,q:'Karlsplatz Vienna'}]
+      },
+      { time:'14:10', title:'쇤브룬 궁전 — 글로리에테 전망', color:'#2c6dbf',
+        badges:[{t:'🏰 쇤브룬',c:'b-vi'},{t:'⚠️ 예매',c:'b-wr'}],
+        admission:'쇤브룬 궁전 08:30~17:30 (성수기 ~18:30) · Grand Tour €22 · schoenbrunn.at',
+        route:{ time:'약 15분', km:'약 4 km', mode:'🚇 U4' },
+        details:['U4 Schönbrunn · <strong>Grand Tour (50분)</strong> — 40개 방 관람 권장','<strong>넵튠 분수</strong> · <strong>글로리에테</strong> 언덕 전망대 ☕ — 비엔나 전경 최고'],
+        places:[{name:'쇤브룬 궁전',lat:48.1845,lng:16.3122,q:'Schönbrunn Palace Vienna'},{name:'글로리에테',lat:48.1817,lng:16.3125,q:'Gloriette Schönbrunn Vienna'}]
+      },
+      { time:'16:20', title:'노이바우 쇼핑 — 마리아힐퍼·노이바우가세·지벤슈테른', color:'#5b3fa0',
+        badges:[{t:'🛍️ 노이바우',c:'b-fl'}],
+        route:{ time:'U4→U3', km:'약 2 km', mode:'🚇' },
+        details:['<strong>마리아힐퍼 거리</strong> — 대중 쇼핑 · C&A·Foot Locker·TK Maxx','<strong>노이바우가세</strong> — 편집숍·빈티지 · Bootik54·HUMANA','<strong>지벤슈테른가세</strong> — Carhartt·FREITAG · 라이문트호프'],
+        places:[{name:'마리아힐퍼 거리',lat:48.1963,lng:16.3460,q:'Mariahilfer Strasse Vienna'},{name:'노이바우가세',lat:48.1982,lng:16.3493,q:'Neubaugasse Vienna'}]
+      },
+      { time:'18:00', title:'저녁 — 살람 브라우 (Salm Bräu) 양조장', color:'#2c6dbf',
+        badges:[{t:'🍺 양조장 맛집',c:'b-vi'}],
+        route:{ time:'트램 D', km:'약 2 km', mode:'🚋 트램' },
+        details:['<strong>Salm Bräu</strong> — 벨베데레 옆 현지 양조장 · 직접 양조 맥주','<strong>슈니첼 + 하우스 맥주</strong> 조합 강추 🍺','또는 <strong>7Stern Bräu</strong> — 노이바우 지역 양조장'],
+        places:[{name:'Salm Bräu',lat:48.1920,lng:16.3800,q:'Salm Bräu Vienna'}]
+      },
+      { time:'20:00', title:'🌙 야경 — 빈 시청 야간 조명', color:'#2c6dbf',
+        badges:[{t:'🌙 야경',c:'b-vi'}],
+        route:{ time:'트램 1호선', km:'약 3 km', mode:'🚋 트램' },
+        details:['<strong>빈 시청 야간 조명</strong> — 링슈트라세 야경','부르크극장·의회의사당 조명 · 도보 야경 산책'],
+        places:[{name:'빈 시청',lat:48.2107,lng:16.3567,q:'Vienna Rathaus night'},{name:'링슈트라세',lat:48.2080,lng:16.3580,q:'Ringstrasse Vienna'}]
+      }
+    ]
+  },
+  {
+    date:'5월 6일 수요일', flag:'🇦🇹', label:'비엔나 3일차 — 알베르티나 + Salome 오페라의 밤 🎭',
+    hotel: 'vienna',
+    travel:{ total:'약 08:00~21:30', km:'약 10 km', walk:'도보 약 4 km' },
+    events:[
+      { time:'08:00', title:'시민공원 (Stadtpark) — 요한 슈트라우스 동상', color:'#2c6dbf',
+        badges:[{t:'🇦🇹 비엔나 3일차',c:'b-vi'}],
+        route:{ time:'약 25분', km:'약 7 km', mode:'🚇 U1→U4' },
+        details:['U4 Stadtpark역 · 황금빛 요한 슈트라우스 동상 📸','브람스 동상 · 공원 산책 · 아침 조깅하는 현지인들'],
+        places:[{name:'시민공원',lat:48.2019,lng:16.3789,q:'Stadtpark Vienna'},{name:'요한 슈트라우스 동상',lat:48.2013,lng:16.3778,q:'Johann Strauss Monument Vienna'}]
+      },
+      { time:'09:00', title:'알베르티나 미술관', color:'#2c6dbf',
+        badges:[{t:'🎨 알베르티나',c:'b-vi'},{t:'⚠️ 예매',c:'b-wr'}],
+        admission:'10:00~18:00 (수요일 ~21:00) · 마지막 입장 1시간 전 · €19.90',
+        route:{ time:'도보 10분', km:'0.8 km', mode:'🚶' },
+        details:['<strong>알베르티나 미술관</strong> — 모네·피카소·뒤러·마티스','Habsburg 황실 컬렉션 · 오페라극장 도보 5분 거리','📸 알베르티나 계단 테라스 — 오페라극장 방향 야경 포인트'],
+        places:[{name:'알베르티나',lat:48.2039,lng:16.3680,q:'Albertina Vienna'}]
+      },
+      { time:'11:00', title:'빈 모차르트 하우스 (Mozarthaus Vienna)', color:'#2c6dbf',
+        badges:[{t:'🎵 모차르트 하우스',c:'b-vi'}],
+        admission:'10:00~18:00 · 마지막 입장 17:30 · €12',
+        route:{ time:'도보 8분', km:'0.6 km', mode:'🚶' },
+        details:['<strong>모차르트 실제 거주지</strong> — 피가로의 결혼 작곡 장소','도마노가세 5번지 · 3층 전시 · 약 1시간'],
+        places:[{name:'빈 모차르트 하우스',lat:48.2074,lng:16.3740,q:'Mozarthaus Vienna'}]
+      },
+      { time:'12:10', title:'점심 — 카페 첸트랄 or 카페 데멜', color:'#2c6dbf',
+        badges:[{t:'☕ 역사와 전통',c:'b-vi'}],
+        route:{ time:'도보 7분', km:'0.5 km', mode:'🚶' },
+        details:['<strong>카페 첸트랄(Café Central)</b> — 1876년 창업 · 높은 아치 천장 · 케이크+런치','또는 <strong>카페 데멜(Café Demel)</strong> — 황실 납품 제과점 · 마르지판·케이크'],
+        places:[{name:'카페 첸트랄',lat:48.2097,lng:16.3673,q:'Café Central Vienna'},{name:'카페 데멜',lat:48.2093,lng:16.3684,q:'Café Demel Vienna'}]
+      },
+      { time:'13:30', title:'오스트리아 국립도서관 (Hofburg 내)', color:'#2c6dbf',
+        badges:[{t:'📚 도서관',c:'b-vi'}],
+        admission:'10:00~18:00 (목~21:00) · €10',
+        route:{ time:'도보 8분', km:'0.6 km', mode:'🚶' },
+        details:['<strong>프룽크잘(Prunksaal)</strong> — 세계에서 가장 아름다운 바로크 도서관','황금빛 프레스코 천장 · 인스타 필수 포토스팟'],
+        places:[{name:'오스트리아 국립도서관',lat:48.2049,lng:16.3656,q:'Austrian National Library Vienna'}]
+      },
+      { time:'15:00', title:'호텔 복귀 · 오페라 준비', color:'#888888',
+        badges:[{t:'🎭 오페라 준비',c:'b-go'}],
+        route:{ time:'약 20분', km:'약 6 km', mode:'🚇 U1' },
+        details:['스마트 캐주얼 의상 · 스카프/손수건 준비 (입석 난간 자리 표시용)','핸드폰 완전 충전 · 코트 클락룸 맡길 준비'],
+        places:[{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'}]
+      },
+      { time:'17:30', title:'저녁 — 바트징거 소세지 스탠드 (오페라 전)', color:'#2c6dbf',
+        badges:[{t:'🌭 소세지 스탠드',c:'b-vi'}],
+        route:{ time:'약 20분', km:'약 6 km', mode:'🚇 U1' },
+        details:['<strong>Bitzinger Würstelstand</strong> — 오페라극장 바로 옆','비엔나 명물 소세지 스탠드 · 현지인·신사들 정장 입고 서서 먹는 풍경','Käsekrainer(치즈 소시지) + Sekt(스파클링) 조합 추천 🥂'],
+        note:'오페라 전 바트징거 소세지는 비엔나 정통 문화! 신사들이 정장 입고 서서 먹는 게 포인트.',
+        places:[{name:'Bitzinger Würstelstand',lat:48.2027,lng:16.3690,q:'Bitzinger Würstelstand Vienna Staatsoper'}]
+      },
+      { time:'18:10', title:'🎭 빈 국립오페라극장 — Salome 19:30', color:'#b54060',
         badges:[{t:'✅ 예약완료',c:'b-ok'},{t:'Salome 19:30',c:'b-op'}],
         confirmed:{ no:'4844046', time:'19:30' },
-        route:{ time:'약 5분', km:'약 0.5 km', mode:'🚶 도보' },
-        details:['KHM → 오페라극장 도보 5분','<strong>18:10 Operngasse 입구</strong> 도착 — 입석 줄서기','입장 후 스카프/손수건으로 난간에 자리 표시','바에서 음료 선주문 (비엔나 오페라 문화)','<strong>약 1시간 40분</strong> — 인터미션 없음'],
-        note:'공연 중 사진·영상 금지. 핸드폰 무음. 코트는 클락룸에.',
-        places:[{name:'미술사 박물관',lat:48.2033,lng:16.3614,q:'Kunsthistorisches Museum Vienna'},{name:'빈 국립오페라극장',lat:48.2031,lng:16.3693,q:'Wiener Staatsoper Vienna'}]
+        route:{ time:'도보 1분', km:'0.1 km', mode:'🚶' },
+        details:['<strong>18:10 Operngasse 입구</strong> 도착 — 입석 줄서기 (늦으면 뒤쪽)','입장 후 <strong>스카프/손수건으로 난간에 자리 표시</strong>','바에서 음료 선주문 (비엔나 오페라 문화)','<strong>약 1시간 40분</strong> — 인터미션 없음'],
+        admission:'입석 €4~13 · Operngasse 입구 · 18:00 오픈',
+        note:'공연 중 사진·영상 촬영 금지. 핸드폰 무음 필수. 코트는 클락룸에.',
+        places:[{name:'빈 국립오페라극장',lat:48.2031,lng:16.3693,q:'Wiener Staatsoper Vienna'}]
+      },
+      { time:'21:10', title:'🌙 야경 — 슈테판 광장 → 그라벤 야간 산책', color:'#2c6dbf',
+        badges:[{t:'🌙 야경',c:'b-vi'}],
+        route:{ time:'도보 코스', km:'약 1 km', mode:'🚶' },
+        details:['오페라 감흥 유지하며 → 슈테판 광장 야경','그라벤 거리 · 성 페터 성당 야간 조명'],
+        places:[{name:'슈테판 대성당',lat:48.2085,lng:16.3726,q:'Stephansdom Vienna night'},{name:'그라벤 거리',lat:48.2089,lng:16.3697,q:'Graben Vienna night'}]
       }
     ]
   },
   {
-    date:'5월 7일 목요일', flag:'🇦🇹', label:'비엔나 자유일',
+    date:'5월 7일 목요일', flag:'🇦🇹', label:'비엔나 4일차 — 프라터 + 훈데르트바서 + Das LOFT 야경',
     hotel: 'vienna',
-    travel:{ total:'약 2시간 이동', km:'약 10 km', walk:'도보 약 4 km' },
+    travel:{ total:'약 08:00~22:00', km:'약 15 km', walk:'도보 약 5 km' },
     events:[
-      { time:'10:00', title:'프라터 공원 & 대관람차', color:'#2c6dbf',
-        badges:[{t:'🎡 프라터',c:'b-vi'}],
-        route:{ time:'약 15분', km:'약 5 km', mode:'🚇 U1/U2' },
-        details:['호텔 → Praterstern (U1 2정거장, 약 5분)','<strong>Prater 공원</strong> 무료 입장','<strong>Riesenrad 대관람차</strong> €15 — 비엔나 전경 360°'],
-        places:[{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'},{name:'프라터 공원',lat:48.2167,lng:16.3961,q:'Prater Park Vienna'},{name:'대관람차',lat:48.2168,lng:16.3976,q:'Wiener Riesenrad'}]
+      { time:'08:00', title:'프라터 공원 + 대관람차 (Riesenrad)', color:'#2c6dbf',
+        badges:[{t:'🇦🇹 비엔나 4일차',c:'b-vi'}],
+        admission:'대관람차 09:00~19:45 · €15',
+        route:{ time:'약 10분', km:'약 4 km', mode:'🚇 U1' },
+        details:['호텔 → Praterstern U1 2정거장 · 약 5분','<strong>Prater 공원</strong> 무료 입장 · 아침 산책','<strong>Riesenrad 대관람차</strong> €15 — 비엔나 전경 360°'],
+        places:[{name:'프라터 공원',lat:48.2167,lng:16.3961,q:'Prater Park Vienna'},{name:'대관람차',lat:48.2168,lng:16.3976,q:'Wiener Riesenrad'}]
       },
-      { time:'14:00', title:'자유 탐방 — 훈데르트바서 & 카를스교회', color:'#2c6dbf',
-        badges:[{t:'🚶 자유',c:'b-vi'}],
-        route:{ time:'약 30분', km:'약 5 km', mode:'🚇 U1 or 트램' },
-        details:['<strong>훈데르트바서 하우스</strong> (Rasumofskygasse역 근처)','<strong>카를스교회</strong> (Karlsplatz역 하차)','마리아힐퍼 거리 쇼핑 예비 탐방'],
-        places:[{name:'훈데르트바서 하우스',lat:48.2071,lng:16.3929,q:'Hundertwasserhaus Vienna'},{name:'카를스교회',lat:48.1977,lng:16.3724,q:'Karlskirche Vienna'}]
+      { time:'09:30', title:'훈데르트바서 하우스 + 쿤스트 하우스 빈', color:'#2c6dbf',
+        badges:[{t:'🎨 훈데르트바서',c:'b-vi'}],
+        admission:'쿤스트 하우스 빈 10:00~18:00 · €16',
+        route:{ time:'약 15분', km:'약 4 km', mode:'🚇 U1→트램' },
+        details:['U1 Rochusgasse → 트램 O → Hetzgasse','<strong>훈데르트바서 하우스</strong> 외관 📸 — 세상에서 가장 독특한 공동주택','<strong>쿤스트 하우스 빈 뮤지엄</strong> — 훈데르트바서 전시'],
+        places:[{name:'훈데르트바서 하우스',lat:48.2071,lng:16.3929,q:'Hundertwasserhaus Vienna'},{name:'쿤스트 하우스 빈',lat:48.2069,lng:16.3957,q:'Kunst Haus Wien Vienna'}]
+      },
+      { time:'11:00', title:'슈피텔라우 소각장 (Spittelau Incinerator)', color:'#2c6dbf',
+        badges:[{t:'🏭 훈데르트바서',c:'b-vi'}],
+        route:{ time:'약 15분', km:'약 3 km', mode:'🚇 U6' },
+        details:['U6 Spittelau역 · <strong>훈데르트바서 설계 소각장</strong>','형형색색 외관 — 외관만 포토 · 5분 컷','다뉴브 강변 인접 · 산책 연계'],
+        places:[{name:'슈피텔라우 소각장',lat:48.2317,lng:16.3577,q:'Spittelau Incinerator Vienna'}]
+      },
+      { time:'12:00', title:'점심 — 분위기 좋은 곳', color:'#2c6dbf',
+        badges:[{t:'🍽️ 점심',c:'b-vi'}],
+        route:{ time:'약 10분', km:'약 2 km', mode:'🚇' },
+        details:['추천 A: <strong>Glacis Beisl</strong> — MuseumsQuartier 공원 야외 레스토랑 🌳','추천 B: <strong>Café & Restaurant Motto am Fluss</strong> — 다뉴브 운하변 분위기'],
+        places:[{name:'Glacis Beisl',lat:48.2004,lng:16.3598,q:'Glacis Beisl Vienna MuseumsQuartier'}]
+      },
+      { time:'13:30', title:'다뉴브 타워 (Danube Tower)', color:'#2c6dbf',
+        badges:[{t:'🗼 전망대',c:'b-vi'}],
+        admission:'10:00~23:30 · €17 · 회전 레스토랑 포함',
+        route:{ time:'약 15분', km:'약 5 km', mode:'🚇 U1' },
+        details:['호텔 근처 · U1 Alte Donau · <strong>회전 전망대 €17</strong>','비엔나+다뉴브+도나우시티 파노라마','약 1시간 코스'],
+        places:[{name:'다뉴브 타워',lat:48.2407,lng:16.4127,q:'Danube Tower Vienna Donauturm'}]
+      },
+      { time:'15:00', title:'🛍️ 쇼핑 — Westfield Donau Zentrum + Manner + Swarovski', color:'#5b3fa0',
+        badges:[{t:'🛍️ 쇼핑',c:'b-fl'}],
+        route:{ time:'약 10분', km:'약 2 km', mode:'🚇 U1' },
+        details:['<strong>Westfield Donau Zentrum</strong> — 호텔 인근 대형 쇼핑몰','<strong>Manner 과자</strong> (웨이퍼 초콜릿 · 비엔나 대표 기념품) 🍫','<strong>Swarovski</strong> 크리스털 · <strong>dm 드로게리</strong> 화장품 쇼핑'],
+        note:'Manner 과자는 비엔나 최고 기념품! 박스 포장으로 선물용 구매 추천.',
+        places:[{name:'Westfield Donau Zentrum',lat:48.2370,lng:16.4350,q:'Westfield Donau Zentrum Vienna'},{name:'Swarovski Donau Zentrum',lat:48.2370,lng:16.4350,q:'Swarovski Donau Zentrum Vienna'}]
+      },
+      { time:'17:00', title:'호텔 복귀 · 휴식 · Das LOFT 예약 확인', color:'#888888',
+        badges:[{t:'🏨 준비',c:'b-go'}],
+        route:{ time:'약 5분', km:'약 1 km', mode:'🚇 U1' },
+        details:['Das LOFT 예약 재확인 · 스마트 캐주얼 준비'],
+        places:[{name:'A by Adina Vienna Danube',lat:48.2320,lng:16.4090,q:'A by Adina Vienna Danube Hotel'}]
+      },
+      { time:'18:30', title:'저녁 — Das LOFT 뷰맛집 🌆 (슈니첼 포함)', color:'#2c6dbf',
+        badges:[{t:'🌆 뷰맛집 1위',c:'b-vi'},{t:'⚠️ 예약필수',c:'b-wr'}],
+        route:{ time:'약 20분', km:'약 6 km', mode:'🚇 U1' },
+        details:['<strong>Das LOFT</strong> — Sofitel Vienna Stephansdom 18층','비엔나 360° 전경 + 슈테판 대성당 야경 뷰','<strong>슈니첼 + 와인</strong> 페어링 추천 🥩🍷','반드시 사전 예약 — dasloftwien.at'],
+        note:'비엔나에서 가장 뷰가 좋은 레스토랑! 슈니첼 먹으면서 야경 보는 경험은 여기서만.',
+        places:[{name:'Das LOFT',lat:48.2126,lng:16.3797,q:'Das LOFT Vienna Sofitel Stephansdom'}]
+      },
+      { time:'21:00', title:'🌙 야경 — 슈테판 광장 → 그라벤 야간 산책', color:'#2c6dbf',
+        badges:[{t:'🌙 야경',c:'b-vi'}],
+        route:{ time:'도보 코스', km:'약 1 km', mode:'🚶' },
+        details:['Das LOFT 후 자연스럽게 슈테판 광장 야경','그라벤 거리 야간 조명 · 도보 복귀 or 지하철'],
+        places:[{name:'슈테판 대성당',lat:48.2085,lng:16.3726,q:'Stephansdom Vienna night'}]
       }
     ]
   },
@@ -550,29 +888,35 @@ const DAYS = [
 ══════════════════════════ */
 const TODO = {
   ur:[
-    {text:'로마 → 비엔나 항공권 예약 (FCO→VIE, 5.3)',sub:'Austrian OS556 / Ryanair — Google Flights',tag:'ur'},
-    {text:'콜로세움 + 포로 로마노 사전 예약',sub:'coopculture.it — 당일 예약 불가',tag:'ur'},
+    {text:'FCO → VIE 항공권 예약 (OS556, 5.3 13:40)',sub:'Austrian Airlines / Google Flights — 지금 바로 예매!',tag:'ur'},
+    {text:'바티칸 미술관 + 시스티나 성당 예약 [로마 2일차 5.3]',sub:'museivaticani.va · €30 · 오전 07:30 타임 지정 · Roma Pass 적용 불가',tag:'ur'},
+    {text:'콜로세움 + 포로 로마노 예약 [로마 1일차 5.2]',sub:'coopculture.it · Roma Pass 48h 첫 사이트 무료 적용 가능',tag:'ur'},
     {text:'여행자 보험 가입',sub:'질병·상해·휴행손 포함',tag:'ur'},
   ],
   tt:[
-    {text:'Sina Bernini Bristol 호텔 예약 확인 (4.30~5.3)',sub:'Piazza Barberini 23, Roma — Autograph Collection',tag:'bk'},
-    {text:'Roma Termini → Napoli 기차 예약 (5.1)',sub:'italotreno.com / trenitalia.com',tag:'bk'},
-    {text:'할슈타트 ÖBB 기차표 예약 (5.8)',sub:'Wien Westbahnhof 07:53 출발 — oebb.at',tag:'bk'},
+    {text:'Sina Bernini Bristol 호텔 예약 확인 (4.30~5.3)',sub:'Piazza Barberini 23, Roma — 4.30 체크인 / 5.3 체크아웃',tag:'bk'},
+    {text:'Roma Pass 48h 구매 [5.2~5.3 사용]',sub:'romapass.it · €32 · 5.2 콜로세움에서 첫 개시 — 5.1 해변 날 사용 금지!',tag:'bk'},
+    {text:'FCO 도착 / 출발 Leonardo Express 티켓',sub:'Termini ↔ FCO · 32분 · €14 · Trenitalia 앱 사전 구매 추천',tag:'bk'},
+    {text:'Termini → Santa Severa/Marinella FL5 열차 시간 확인 [5.1]',sub:'Roma Termini → Santa Severa 약 50분 · €5 · 현장 구매 가능',tag:'in'},
     {text:'비엔나 Vienna City Card 구입',sub:'24/48/72h 대중교통 무제한',tag:'in'},
     {text:'VIE → A by Adina 호텔 루트 확인',sub:'CAT 열차 Wien Mitte → Kagran U1 (총 약 40분)',tag:'in'},
   ],
   tl:[
+    {text:'판테온 입장 예약 [로마 1일차 5.2]',sub:'pantheonroma.com · €5 · 사전 예약 권장',tag:'bk'},
+    {text:'산탄젤로 성 입장 [로마 2일차 5.3]',sub:'Roma Pass 할인 적용 ~€13 · 사전 예약 권장',tag:'bk'},
+    {text:'빌라 파르네시나 휴무 확인 [5.3 일요일]',sub:'villafarnesina.it · 일요일 휴무 가능 — 사전 확인 필수',tag:'in'},
     {text:'피글뮐러 (Figlmüller) 슈니첼 예약',sub:'Wollzeile점 — 온라인 예약',tag:'bk'},
     {text:'할슈타트 소금광산 투어 예약',sub:'hallstatt.net — 성수기 필수',tag:'bk'},
     {text:'쇤브룬 궁전 입장권 예약',sub:'schoenbrunn.at',tag:'bk'},
     {text:'벨베데레 궁전 사전 예매',sub:'belvedere.at — €16.50',tag:'bk'},
   ],
   tm:[
+    {text:'🧳 여행용 캐리어 구매',sub:'로마·비엔나 약 11박 — 28인치 이상 추천 / 4륜 하드케이스',tag:'pk'},
     {text:'유로 환전 €200~300 현금',sub:'소액권 포함',tag:'in'},
     {text:'해외 결제 수수료 없는 카드 확인',sub:'트래블월렛 / 신한 SOL / 토스',tag:'in'},
     {text:'Type C 유럽 어댑터 준비',sub:'이탈리아·오스트리아 공통 2핀',tag:'pk'},
     {text:'유럽 eSIM 준비',sub:'airalo.com — 출발 전 개통 테스트',tag:'pk'},
-    {text:'구글맵 오프라인 지도 다운로드',sub:'로마·나폴리·비엔나·할슈타트 (Wi-Fi에서)',tag:'in'},
+    {text:'구글맵 오프라인 지도 다운로드',sub:'로마·비엔나·할슈타트 (Wi-Fi에서)',tag:'in'},
     {text:'넷플릭스 다운로드',sub:'기내 시청용 — 여행 전 Wi-Fi에서 다운로드',tag:'pk'},
   ]
 };
@@ -584,6 +928,7 @@ const CHECK = {
     {text:'항공권 e-ticket',sub:'ICN, FCO→VIE 각각 저장·출력',tag:'ur'},
     {text:'호텔 바우처',sub:'Sina Bernini Bristol (로마) + A by Adina (비엔나)',tag:'bk'},
     {text:'여행자 보험 증명서',sub:'긴급 연락처 별도 메모',tag:'ur'},
+    {text:'🧳 여행용 캐리어 구매 확인',sub:'28인치 이상 하드케이스 4륜 추천 / 약 11박 여행',tag:'pk'},
     {text:'신용카드 2장 이상',sub:'마스터+비자 다른 카드사',tag:'pk'},
     {text:'유로 현금 €200~300',sub:'소액권 포함',tag:'pk'},
     {text:'인천 출발 48시간 전 온라인 체크인',sub:'항공사 앱 or 웹사이트에서 사전 체크인',tag:'ur'},
@@ -613,10 +958,11 @@ const CHECK = {
     {text:'카메라 + 여분 배터리·메모리',sub:'할슈타트 절경 대비',tag:'pk'},
     {text:'유럽 eSIM 활성화 확인',sub:'출발 전 데이터 개통 테스트',tag:'ur'},
     {text:'Google Translate 오프라인 다운로드',sub:'이탈리아어·독일어',tag:'in'},
+    {text:'구글맵 오프라인 지도 다운로드',sub:'로마·비엔나·할슈타트 (Wi-Fi 있는 곳에서)',tag:'in'},
     {text:'넷플릭스 다운로드 완료 확인',sub:'기내 시청용 콘텐츠 — Wi-Fi 있는 곳에서',tag:'pk'},
   ],
   cw:[
-    {text:'소매치기 주의 — 나폴리·로마',sub:'가방 앞으로, 귀중품 분산 보관',tag:'wn'},
+    {text:'소매치기 주의 — 로마 (트레비·나보나·콜로세움)',sub:'가방 앞으로, 귀중품 분산 보관',tag:'wn'},
     {text:'이탈리아 열차 탑승 전 개찰 필수',sub:'노란 박스 삽입 — 미이행 벌금 €50',tag:'wn'},
     {text:'노동절(5.1) 박물관 휴무 가능',sub:'사전 확인 필수',tag:'wn'},
     {text:'오페라 공연 중 사진 촬영 금지',sub:'핸드폰 무음 / 코트는 클락룸',tag:'wn'},
@@ -647,6 +993,15 @@ function openGMap(places){
 }
 function openNav(place){window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(place.q)}&travelmode=transit`,'_blank');}
 
+/* ══ COUNTRY LABEL ══ */
+const COUNTRY_MAP={
+  '🇰🇷':{label:'🇰🇷 대한민국',bg:'#fff0f0',color:'#cc0000'},
+  '🇮🇹':{label:'🇮🇹 이탈리아',bg:'#fff7e6',color:'#c86400'},
+  '🏖️':{label:'🇮🇹 이탈리아 · 해변',bg:'#e6f6f4',color:'#0f6e56'},
+  '✈️':{label:'✈️ 이동일',bg:'#f0eefb',color:'#5b3fa0'},
+  '🇦🇹':{label:'🇦🇹 오스트리아',bg:'#fdeef3',color:'#b54060'},
+};
+
 /* ══ SCHEDULE RENDER ══ */
 function buildSched(){
   const root=document.getElementById('sched-root');
@@ -655,12 +1010,19 @@ function buildSched(){
     const grp=document.createElement('div');
     grp.className='day-group';
 
+    // Country banner
+    const ctry=COUNTRY_MAP[day.flag]||{label:day.flag,bg:'#f7f4ef',color:'#8a8278'};
+    const banner=document.createElement('div');
+    banner.style.cssText=`background:${ctry.bg};color:${ctry.color};font-size:11px;font-weight:600;padding:5px 10px;border-radius:6px;display:inline-flex;align-items:center;gap:4px;margin:12px 2px 4px;letter-spacing:.04em`;
+    banner.textContent=ctry.label;
+    grp.appendChild(banner);
+
     // Day header
     const hdr=document.createElement('div');
     hdr.className='day-hdr';
     const dateEl=document.createElement('div');
     dateEl.className='day-date';
-    dateEl.textContent=day.flag+' '+day.date;
+    dateEl.textContent=day.date;
     const nameEl=document.createElement('div');
     nameEl.className='day-name';
     nameEl.textContent=day.label;
@@ -677,13 +1039,12 @@ function buildSched(){
     hdr.appendChild(dateEl); hdr.appendChild(nameEl); hdr.appendChild(trvEl);
     grp.appendChild(hdr);
 
-    // Hotel start chip
+    // Hotel chip - large, always visible
     if(day.hotel && HOTELS[day.hotel]){
       const h=HOTELS[day.hotel];
       const hotelDiv=document.createElement('div');
-      hotelDiv.className='hotel-chip';
-      hotelDiv.innerHTML=`🏨 출발: <strong>${h.name}</strong>`;
-      hotelDiv.style.cursor='pointer';
+      hotelDiv.style.cssText='cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;margin-bottom:10px;background:var(--goldbg);border:1.5px solid rgba(184,134,42,.35);box-shadow:0 1px 6px rgba(184,134,42,.10)';
+      hotelDiv.innerHTML=`<span style="font-size:24px;flex-shrink:0">🏨</span><div style="min-width:0"><div style="font-size:13px;font-weight:700;color:var(--gold)">${h.name}</div><div style="font-size:11px;color:var(--gold);opacity:.7;margin-top:2px">${h.addr} · 지도 보기 →</div></div>`;
       hotelDiv.onclick=()=>window.open(`https://www.google.com/maps/search/${encodeURIComponent(h.q)}`,'_blank');
       grp.appendChild(hotelDiv);
     }
@@ -725,6 +1086,11 @@ function buildCard(ev,di,ei){
       </iframe></div>`;
   }
 
+  let admHtml='';
+  if(ev.admission){
+    admHtml=`<div style="display:flex;align-items:center;gap:6px;padding:7px 10px;background:#fdeef3;border:1px solid rgba(181,64,96,.2);border-radius:8px;margin:8px 0 4px;font-size:12px;color:#b54060;font-weight:600">⏰ 입장 제한: ${ev.admission}</div>`;
+  }
+
   let confHtml='';
   if(ev.confirmed){
     confHtml=`<div class="confirmed-box"><span style="font-size:16px">🎟️</span>
@@ -755,6 +1121,7 @@ function buildCard(ev,di,ei){
     </div>
     <div class="sc-body"><div class="sc-inner">
       ${routeHtml}
+      ${admHtml}
       ${mapHtml}
       ${confHtml}
       ${btnHtml}
