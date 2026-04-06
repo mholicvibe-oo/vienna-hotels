@@ -183,7 +183,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="hdr-top">
     <div class="hdr-lbl">2026 Italia · Austria Trip</div>
     <div class="hdr-title">4.30 — 5.10 <em>여행 플래너</em></div>
-    <div class="hdr-sub">🇮🇹 로마 &nbsp;|&nbsp; 🇦🇹 비엔나 · 할슈타트</div>
+    <div class="hdr-sub">🇮🇹 로마 · 비엔나 &nbsp;|&nbsp; 🇦🇹 비엔나 · 할슈타트</div>
   </div>
   <div class="tabnav">
     <button class="tnav active" id="bt-sched" onclick="switchTab('sched')"><span class="ticon">🗓️</span>일정</button>
@@ -274,16 +274,16 @@ const GMAP_KEY = 'AIzaSyAI7UiCreT29nI95BVbCm_j8qCdqt0rpgk';
 ══════════════════════════ */
 const HOTELS = {
   rome: {
-    name: 'Domus Australia',
-    addr: 'Via Cernaia 14/B, 00185 Roma',
-    lat: 41.9027, lng: 12.4960,
-    q: 'Domus Australia Rome Via Cernaia'
+    name: 'Sina Bernini Bristol, Autograph Collection',
+    addr: 'Piazza Barberini 23, Roma',
+    lat: 41.9010, lng: 12.4883,
+    q: 'Sina Bernini Bristol Autograph Collection Rome'
   },
   vienna: {
-    name: 'ibis Wien Hauptbahnhof',
-    addr: 'Gerhard-Eisler-Gasse 1, 1100 Wien',
-    lat: 48.1842, lng: 16.3776,
-    q: 'ibis Wien Hauptbahnhof'
+    name: 'Leonardo Hotel Vienna Hauptbahnhof',
+    addr: 'Gerhard-Bronner-Straße 5, 1100 Wien',
+    lat: 48.1840, lng: 16.3810,
+    q: 'Leonardo Hotel Vienna Hauptbahnhof'
   }
 };
 
@@ -299,8 +299,8 @@ const HOTELS = {
    RT(mode,time,km) → route
    Hotels: PH_ROME / PH_VIENNA → hotel place shorthand
 */
-const PH_ROME={name:'Domus Australia',lat:41.9027,lng:12.4960,q:'Domus Australia Rome Via Cernaia'};
-const PH_VIENNA={name:'ibis Wien Hauptbahnhof',lat:48.1842,lng:16.3776,q:'ibis Wien Hauptbahnhof'};
+const PH_ROME={name:'Sina Bernini Bristol',lat:41.9010,lng:12.4883,q:'Sina Bernini Bristol Rome'};
+const PH_VIENNA={name:'Leonardo Hotel Vienna Hauptbahnhof',lat:48.1840,lng:16.3810,q:'Leonardo Hotel Vienna Hauptbahnhof'};
 function P(name,lat,lng,q){return{name,lat,lng,q};}
 function B(t,c){return{t,c};}
 function RT(mode,time,km){return{mode,time,km};}
@@ -325,14 +325,14 @@ const DAYS = [
       { time:'19:15', title:'로마 피우미치노 공항 도착 (FCO)', color:'#a03a18',
         badges:[{t:'🇮🇹 로마 도착',c:'b-ro'}],
         route:{ time:'32분', km:'32 km', mode:'🚆 Leonardo Express' },
-        details:['<strong>Leonardo Express</strong>: FCO → Roma Termini (32분, €14) — 플랫폼 31번','<strong>Domus Australia 호텔</strong> — Roma Termini 도보 약 10분','간단한 저녁 식사 후 야경 산책 준비'],
+        details:['<strong>Leonardo Express</strong>: FCO → Roma Termini (32분, €14) — 플랫폼 31번','<strong>Sina Bernini Bristol 호텔</strong> 도보 15분 or 택시 (Termini→Barberini)','간단한 저녁 식사 후 야경 산책 준비'],
         note:'도착 후 짐 풀고 간단히 식사! 피자 한 조각으로 가볍게. 🍕',
         places:[{name:'FCO 공항',lat:41.8003,lng:12.2388,q:'Rome Fiumicino Airport'},{name:'Roma Termini',lat:41.9009,lng:12.5009,q:'Roma Termini Station'},PH_ROME]
       },
       { time:'21:30', title:'로마 야경 산책 🌙 (도보 왕복 1시간)', color:'#a03a18',
         badges:[{t:'🌙 야경',c:'b-ro'},{t:'도보 왕복',c:'b-go'}],
         route:{ time:'왕복 약 1시간', km:'약 2 km', mode:'🚶 도보' },
-        details:['<strong>호텔(Domus Australia)</strong> 출발 → 도보 약 10분','🪙 <strong>트레비 분수</strong> — 야간 조명 최고, 동전 던지기','→ 도보 10분 → <strong>퀴리날레 광장(Piazza del Quirinale)</strong> — 로마 시내 전경 야경 포인트','→ 도보로 호텔 복귀 (총 왕복 약 1시간)','도착 첫날 몸 풀기용 가벼운 코스'],
+        details:['<strong>호텔(Barberini)</strong> 출발 → 도보 5분','🪙 <strong>트레비 분수</strong> — 야간 조명 최고, 동전 던지기','→ 도보 10분 → <strong>퀴리날레 광장(Piazza del Quirinale)</strong> — 로마 시내 전경 야경 포인트','→ 도보로 호텔 복귀 (총 왕복 약 1시간)','도착 첫날 몸 풀기용 가벼운 코스'],
         note:'야간에도 트레비 분수 주변은 사람이 많아 소매치기 주의! 귀중품은 최소화.',
         places:[PH_ROME,{name:'트레비 분수',lat:41.9009,lng:12.4833,q:'Trevi Fountain Rome'},{name:'퀴리날레 광장',lat:41.8994,lng:12.4871,q:'Piazza del Quirinale Rome'}]
       }
@@ -346,7 +346,7 @@ const DAYS = [
       { time:'08:30', title:'트레비 분수 — 아침 일찍 인파 없을 때 🪙', color:'#a03a18',
         badges:[{t:'⚠️ 노동절',c:'b-wr'},{t:'🇮🇹 로마 1일차',c:'b-ro'}],
         route:{ time:'도보 5분', km:'0.4 km', mode:'🚶 도보' },
-        details:['호텔(Domus Australia) → <strong>트레비 분수</strong> 도보 약 10분 — 아침 일찍이 인파 없는 황금 타임!','동전 던지기 🪙 — 오른손으로 왼쪽 어깨 너머로 던지면 로마 재방문 소원','<strong>노동절 주의</strong> — 유명 박물관 다수 휴무, 야외 명소·쇼핑 위주로 이동'],
+        details:['호텔(Barberini) → <strong>트레비 분수</strong> 도보 5분 — 아침 일찍이 인파 없는 황금 타임!','동전 던지기 🪙 — 오른손으로 왼쪽 어깨 너머로 던지면 로마 재방문 소원','<strong>노동절 주의</strong> — 유명 박물관 다수 휴무, 야외 명소·쇼핑 위주로 이동'],
         note:'트레비 분수는 호텔에서 도보 5분! 아침 08:30~09:00이 가장 한산. 오후에는 인파 폭발.',
         places:[PH_ROME,{name:'트레비 분수',lat:41.9009,lng:12.4833,q:'Trevi Fountain Rome'}]
       },
@@ -424,7 +424,7 @@ const DAYS = [
       { time:'08:20', title:'호텔 → Roma Termini → FCO 공항', color:'#5b3fa0',
         badges:[{t:'🚆 Leonardo Express',c:'b-fl'},{t:'09:30 공항 도착',c:'b-wr'}],
         route:{ time:'Termini 10분 + FCO 32분', km:'33 km', mode:'🚇 + 🚆' },
-        details:['Domus Australia → Termini 도보 약 10분','<strong>Leonardo Express</strong> Termini → FCO 32분 · €14 · 플랫폼 31번','<strong>09:30 FCO 도착</strong> — 체크인·보안 충분한 여유'],
+        details:['Barberini → Termini 지하철 A선 약 10분','<strong>Leonardo Express</strong> Termini → FCO 32분 · €14 · 플랫폼 31번','<strong>09:30 FCO 도착</strong> — 체크인·보안 충분한 여유'],
         places:[PH_ROME,{name:'Roma Termini',lat:41.9009,lng:12.5009,q:'Roma Termini Station'},{name:'FCO 공항',lat:41.8003,lng:12.2388,q:'Rome Fiumicino Airport'}]
       },
       { time:'09:30', title:'FCO 공항 체크인 · 보안 · 탑승 준비', color:'#5b3fa0',
@@ -434,12 +434,12 @@ const DAYS = [
         note:'마지막 이탈리아 면세 쇼핑! 이탈리아 오일·파스타·와인은 여기서.',
         places:[{name:'FCO 공항',lat:41.8003,lng:12.2388,q:'Rome Fiumicino Airport'},{name:'VIE 비엔나 공항',lat:48.1103,lng:16.5697,q:'Vienna International Airport'}]
       },
-      { time:'12:20', title:'비엔나 VIE 도착 → ibis Wien Hauptbahnhof 체크인', color:'#2c6dbf',
+      { time:'12:20', title:'비엔나 VIE 도착 → Leonardo Hotel 체크인', color:'#2c6dbf',
         badges:[{t:'🇦🇹 비엔나 도착',c:'b-vi'},{t:'⚠️ 예약 필요',c:'b-wr'}],
-        route:{ time:'약 25분', km:'19 km', mode:'🚆 S7→Wien Hbf' },
-        details:['VIE T3 → <strong>S7 열차</strong> Wien Hauptbahnhof 직행 (25분, €4.60 · 추천)','또는 CAT → Wien Mitte → Wien Hauptbahnhof','<strong>ibis Wien Hauptbahnhof</strong> 체크인 — Wien Hbf 도보 약 5분!','호텔 프런트에 짐 맡기고 바로 시내 관광'],
-        note:'S7이 Wien Hauptbahnhof 직결이라 가장 편리! ibis가 역 바로 앞.',
-        places:[{name:'VIE 비엔나 공항',lat:48.1103,lng:16.5697,q:'Vienna International Airport'},{name:'Wien Hauptbahnhof',lat:48.1850,lng:16.3786,q:'Wien Hauptbahnhof'},PH_VIENNA]
+        route:{ time:'약 25분', km:'19 km', mode:'🚆 CAT→Wien Hbf' },
+        details:['VIE T3 → <strong>CAT 열차</strong> Wien Mitte (16분, €14.90) → Wien Hauptbahnhof 도보 10분','또는 S7 → Wien Hauptbahnhof 직행 (25분, €4.60 · 더 저렴)','<strong>Leonardo Hotel Vienna Hauptbahnhof</strong> 체크인 — Wien Hbf 바로 앞!','호텔 프런트에 짐 맡기고 바로 시내 관광'],
+        note:'S7이 Wien Hauptbahnhof 직결이라 더 편리! 호텔이 역 앞이라 짐 이동 최소.',
+        places:[{name:'VIE 비엔나 공항',lat:48.1103,lng:16.5697,q:'Vienna International Airport'},{name:'Wien Hauptbahnhof',lat:48.1850,lng:16.3786,q:'Wien Hauptbahnhof'},{name:'Leonardo Hotel Vienna Hauptbahnhof',lat:48.1840,lng:16.3810,q:'Leonardo Hotel Vienna Hauptbahnhof'}]
       },
       { time:'14:00', title:'벨베데레 궁전 — 클림트 《키스》 🎨', color:'#2c6dbf',
         badges:[{t:'🏰 벨베데레',c:'b-vi'},{t:'도보 15분',c:'b-go'}],
@@ -447,7 +447,7 @@ const DAYS = [
         route:{ time:'도보 약 15분', km:'약 1.2 km', mode:'🚶 도보' },
         details:['호텔 → 벨베데레 궁전 도보 약 15분 (가장 가까운 세계적 명소!)','<strong>상궁(Oberes Belvedere)</strong> — 클림트 《키스》 원본 관람','오스트리아 바로크 궁전 정원 산책'],
         note:'호텔에서 도보 15분! 비엔나 도착하자마자 세계적 명화 바로 감상.',
-        places:[PH_VIENNA,{name:'벨베데레 궁전',lat:48.1916,lng:16.3804,q:'Belvedere Palace Vienna'}]
+        places:[{name:'Leonardo Hotel Vienna Hauptbahnhof',lat:48.1840,lng:16.3810,q:'Leonardo Hotel Vienna Hauptbahnhof'},{name:'벨베데레 궁전',lat:48.1916,lng:16.3804,q:'Belvedere Palace Vienna'}]
       },
       { time:'16:30', title:'슈테판 대성당 → 그라벤 → 케른트너 거리', color:'#2c6dbf',
         badges:[{t:'⛪ 구시가지',c:'b-vi'}],
@@ -466,7 +466,7 @@ const DAYS = [
         badges:[{t:'🌙 야경',c:'b-vi'}],
         route:{ time:'도보 코스', km:'약 1 km', mode:'🚶' },
         details:['<strong>빈 국립 오페라극장</strong> 야간 조명 🎭','<strong>알베르티나 계단 테라스</strong> — 오페라극장 방향 최고 뷰포인트','U1 Stephansplatz → Hauptbahnhof · 호텔 복귀'],
-        places:[{name:'빈 국립 오페라극장',lat:48.2031,lng:16.3693,q:'Wiener Staatsoper Vienna'},{name:'알베르티나',lat:48.2039,lng:16.3680,q:'Albertina Vienna'},PH_VIENNA]
+        places:[{name:'빈 국립 오페라극장',lat:48.2031,lng:16.3693,q:'Wiener Staatsoper Vienna'},{name:'알베르티나',lat:48.2039,lng:16.3680,q:'Albertina Vienna'},{name:'Leonardo Hotel Vienna Hauptbahnhof',lat:48.1840,lng:16.3810,q:'Leonardo Hotel Vienna Hauptbahnhof'}]
       }
     ]
   },
@@ -978,12 +978,12 @@ const TODO = {
     {text:'여행자 보험 가입',sub:'질병·상해·휴행손 포함',tag:'ur'},
   ],
   tt:[
-    {text:'Domus Australia 호텔 예약 확인 (4.30~5.2)',sub:'Via Cernaia 14/B, Roma — 4.30 체크인 / 5.2 체크아웃',tag:'bk'},
-    {text:'ibis Wien Hauptbahnhof 예약 확인 (5.2~5.3)',sub:'Wien Hauptbahnhof 도보 5분 — 5.2 체크인 / 5.3 이동',tag:'bk'},
+    {text:'Sina Bernini Bristol 호텔 예약 확인 (4.30~5.2)',sub:'Piazza Barberini 23, Roma — 4.30 체크인 / 5.2 체크아웃',tag:'bk'},
+    {text:'⚠️ Leonardo Hotel Vienna Hauptbahnhof 1박 추가 예약 (5.2)',sub:'Gerhard-Bronner-Str. 5, Wien — 5.2 체크인 / 5.3 이동',tag:'ur'},
     {text:'FCO 도착 / 출발 Leonardo Express 티켓',sub:'Termini ↔ FCO · 32분 · €14 · Trenitalia 앱 사전 구매 추천',tag:'bk'},
     {text:'5.2 항공권 — FCO→VIE 11:50 출발 편 예매',sub:'VIE 도착 12:20 · Austrian Airlines or Ryanair 확인',tag:'bk'},
     {text:'비엔나 Vienna City Card 구입',sub:'24/48/72h 대중교통 무제한',tag:'in'},
-    {text:'VIE → ibis Wien Hauptbahnhof 루트 확인',sub:'S7 → Wien Hauptbahnhof 직행 (약 25분) · 호텔이 역 바로 앞!',tag:'in'},
+    {text:'VIE → Leonardo Hotel Wien Hbf 루트 확인',sub:'S7 → Wien Hauptbahnhof 직행 (약 25분) · 호텔이 역 바로 앞!',tag:'in'},
   ],
   tl:[
     {text:'판테온 입장 예약 [로마 1일차 5.2]',sub:'pantheonroma.com · €5 · 사전 예약 권장',tag:'bk'},
@@ -1025,7 +1025,7 @@ const CHECK = {
     {text:'여권',sub:'귀국일 기준 6개월 이상 유효기간',tag:'ur'},
     {text:'여권 사본 + 사진 2장',sub:'분실 대비 — 숙소 체크인용',tag:'ur'},
     {text:'항공권 e-ticket',sub:'ICN, FCO→VIE 각각 저장·출력',tag:'ur'},
-    {text:'호텔 바우처',sub:'Domus Australia (로마) + ibis Wien Hauptbahnhof (비엔나)',tag:'bk'},
+    {text:'호텔 바우처',sub:'Sina Bernini Bristol (로마) + Leonardo Hotel Vienna Hauptbahnhof',tag:'bk'},
     {text:'여행자 보험 증명서',sub:'긴급 연락처 별도 메모',tag:'ur'},
     {text:'🧳 여행용 캐리어 구매 확인',sub:'28인치 이상 하드케이스 4륜 추천 / 약 11박 여행',tag:'pk'},
     {text:'신용카드 2장 이상',sub:'마스터+비자 다른 카드사',tag:'pk'},
