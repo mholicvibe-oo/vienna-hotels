@@ -1075,105 +1075,19 @@ const CHECK = {
   ]
 };
 
-/* ══ STATE — JSONBin.io 동기화 ══ */
-const JB_BIN_ID  = '69d3ac65aaba882197cc7e2e';
-const JB_API_KEY = '$2a$10$3ps8Ki2tG1c60wIeT89cruIO6MTR8zNltfLjqNKhX1N6skA.Z2Nhm';
-const JB_URL     = `https://api.jsonbin.io/v3/b/${JB_BIN_ID}`;
-
-let ST = {};
-let _saving = false;
-let _pendingSave = false;
-
-/* ── 동기화 상태 표시 ── */
-function showSyncStatus(state){
-  let el=document.getElementById('sync-status');
-  if(!el){
-    el=document.createElement('div');
-    el.id='sync-status';
-    el.style.cssText='position:fixed;bottom:calc(var(--safe)+70px);right:14px;font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;z-index:998;transition:opacity .6s;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,.1)';
-    document.body.appendChild(el);
-  }
-  el.style.opacity='1';
-  const map={
-    loading: ['⏳ 불러오는 중…', '#f0eefb', '#5b3fa0'],
-    saving:  ['☁️ 저장 중…',    'var(--goldbg)', 'var(--gold)'],
-    ok:      ['✓ 저장됨',        'var(--sagebg)', 'var(--sage)'],
-    err:     ['⚠️ 저장 실패',    'var(--rosebg)', 'var(--rose)'],
-    offline: ['📴 오프라인',      'var(--bg2)',    'var(--muted)']
-  };
-  const [txt,bg,color]=map[state]||map.ok;
-  el.style.background=bg; el.style.color=color; el.textContent=txt;
-  if(state!=='loading'&&state!=='saving') setTimeout(()=>{el.style.opacity='0';},2500);
-}
-
-/* ── JSONBin에서 불러오기 ── */
-async function ldST(){
-  // 로컬 캐시 먼저 표시 (빠른 초기 렌더)
+/* ══ STATE ══ */
+let ST={};
+const ST_KEY='vt26c_v2';
+function ldST(){
   try{
-    const cached=localStorage.getItem('vt26c_v2')||localStorage.getItem('vt26c');
-    if(cached){ ST=JSON.parse(cached); }
+    const s=localStorage.getItem(ST_KEY);
+    if(s){ST=JSON.parse(s);return;}
+    // Migrate from old key if exists
+    const old=localStorage.getItem('vt26c');
+    if(old){ST=JSON.parse(old);svST();}
   }catch(e){}
-  buildSched(); renderAll();
-
-  // 설정 전이면 로컬 모드
-  if(JB_BIN_ID==='JSONBIN_BIN_ID'){ return; }
-
-  showSyncStatus('loading');
-  try{
-    const res=await fetch(JB_URL+'/latest',{
-      headers:{
-        'X-Master-Key': JB_API_KEY,
-        'X-Bin-Meta':   'false'
-      }
-    });
-    if(!res.ok) throw new Error('fetch '+res.status);
-    const remote=await res.json();
-    if(remote && typeof remote==='object'){
-      ST=remote;
-      try{localStorage.setItem('vt26c_v2',JSON.stringify(ST));}catch(e){}
-      renderAll();
-    }
-    showSyncStatus('ok');
-  }catch(e){
-    console.warn('JSONBin load failed:',e);
-    showSyncStatus('offline');
-  }
 }
-
-/* ── JSONBin에 저장 (디바운스 400ms) ── */
-let _debTimer=null;
-function svST(){
-  // 로컬 즉시 백업
-  try{localStorage.setItem('vt26c_v2',JSON.stringify(ST));}catch(e){}
-  // 설정 전이면 로컬만
-  if(JB_BIN_ID==='JSONBIN_BIN_ID') return;
-  // 디바운스
-  clearTimeout(_debTimer);
-  _debTimer=setTimeout(_doSave, 400);
-}
-
-async function _doSave(){
-  if(_saving){ _pendingSave=true; return; }
-  _saving=true; _pendingSave=false;
-  showSyncStatus('saving');
-  try{
-    const res=await fetch(JB_URL,{
-      method:'PUT',
-      headers:{
-        'Content-Type':  'application/json',
-        'X-Master-Key':  JB_API_KEY
-      },
-      body: JSON.stringify(ST)
-    });
-    if(!res.ok) throw new Error('save '+res.status);
-    showSyncStatus('ok');
-  }catch(e){
-    console.warn('JSONBin save failed:',e);
-    showSyncStatus('err');
-  }
-  _saving=false;
-  if(_pendingSave){ _pendingSave=false; _doSave(); }
-}
+function svST(){try{localStorage.setItem(ST_KEY,JSON.stringify(ST));}catch(e){}}
 
 /* ══ MAP ══ */
 function parseKm(s){if(!s)return 999;const m=(s+'').match(/[\d.]+/);return m?parseFloat(m[0]):999;}
@@ -1423,7 +1337,7 @@ function addIt(mode){
     if(!txt)return;
     const cat=document.getElementById('check-cat').value;
     const tag=document.getElementById('check-tag').value;
-    const listId=CHECK_CAT_TO_LIST[cat]||'ct';
+    const listId=CHECK_CAT_TO_LIST[cat]||'cw';
     if(!ST['cxl_'+listId])ST['cxl_'+listId]=[];
     ST['cxl_'+listId].push({text:txt,tag,done:false});
     svST(); document.getElementById('ci').value=''; renderAll();
@@ -1445,7 +1359,7 @@ function switchTab(tab){
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
 /* ══ INIT ══ */
-ldST();
+ldST(); buildSched(); renderAll();
 </script>
 </body>
 </html>
