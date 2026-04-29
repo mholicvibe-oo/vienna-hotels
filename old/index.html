@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="비엔나 여행">
+<title>🇦🇹 비엔나 여행 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f7f4ef; --bg2:#f0ece4; --surface:#fff; --surface2:#f7f4ef;
+  --border:rgba(0,0,0,.08); --border2:rgba(0,0,0,.14);
+  --text:#1a1814; --text2:#4a453e; --muted:#8a8278; --dim:#b8b2aa;
+  --gold:#b8862a; --gold2:#d4a340; --goldbg:#fdf3e0;
+  --rose:#b54060; --rosebg:#fdeef3;
+  --teal:#1f8a80; --tealbg:#e6f6f4;
+  --blue:#2c6dbf; --bluebg:#e8f0fb;
+  --sage:#3d7a50; --sagebg:#ebf5ef;
+  --purple:#5b3fa0; --purplebg:#eeebfb;
+  --safe:env(safe-area-inset-bottom,0px); --top:env(safe-area-inset-top,0px);
+  --tab-h:56px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;padding-bottom:24px}
+
+/* ── HEADER + TABS ── */
+.hdr{padding:calc(var(--top)+18px) 20px 0;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200}
+.hdr-top{padding-bottom:12px}
+.hdr-lbl{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:4px}
+.hdr-title{font-family:'DM Serif Display',serif;font-size:26px;line-height:1.15;color:var(--text)}
+.hdr-title em{font-style:italic;color:var(--gold2)}
+.hdr-sub{font-size:12px;color:var(--muted);font-weight:300;margin-top:2px}
+
+.tabnav{display:flex;border-top:1px solid var(--border);background:var(--surface)}
+.tnav{flex:1;position:relative;padding:0;background:none;border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;height:var(--tab-h);justify-content:center;transition:color .2s}
+.tnav .ticon{font-size:18px;line-height:1}
+.tnav::after{content:'';position:absolute;bottom:0;left:12%;right:12%;height:3px;border-radius:2px 2px 0 0;background:var(--gold);transform:scaleX(0);transition:transform .25s cubic-bezier(.4,0,.2,1)}
+.tnav.active{color:var(--gold);font-weight:600}
+.tnav.active::after{transform:scaleX(1)}
+.tbdg{display:inline-block;font-size:9px;font-weight:600;padding:1px 5px;border-radius:10px;background:var(--goldbg);color:var(--gold);margin-left:3px;vertical-align:middle;border:1px solid rgba(184,134,42,.2)}
+.tbdg-t{background:var(--tealbg);color:var(--teal);border-color:rgba(31,138,128,.2)}
+
+/* ── PANELS ── */
+.panel{display:none;padding:12px 14px 40px}
+.panel.active{display:block}
+
+/* ══ SCHEDULE ══ */
+.day-group{margin-bottom:4px}
+.day-hdr{padding:16px 2px 8px;display:flex;flex-direction:column;gap:4px}
+.day-date{font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;color:var(--text);line-height:1.1}
+.day-label-row{display:flex;align-items:center;gap:8px;margin-top:2px}
+.day-flag-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.04em;white-space:nowrap;flex-shrink:0}
+.day-label{font-size:14px;font-weight:700;color:var(--text);letter-spacing:.01em}
+.day-travel{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.travel-chip{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;background:var(--bg2);color:var(--muted);border:1px solid var(--border)}
+.day-divider{height:1px;background:var(--border);margin-bottom:8px}
+
+/* Hotel chip */
+.hotel-chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:4px 10px;border-radius:8px;background:var(--goldbg);color:var(--gold);border:1px solid rgba(184,134,42,.25);margin-bottom:8px}
+
+.sc-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04);transition:box-shadow .2s}
+.sc-card.open{box-shadow:0 3px 12px rgba(0,0,0,.08)}
+.sc-head{display:flex;align-items:stretch;cursor:pointer;user-select:none}
+.sc-stripe{width:4px;flex-shrink:0}
+.sc-main{flex:1;padding:12px 12px 12px;min-width:0}
+.sc-time{font-size:11px;color:var(--muted);margin-bottom:3px;font-weight:500;letter-spacing:.03em}
+.sc-title{font-size:14px;font-weight:600;color:var(--text);line-height:1.3;margin-bottom:6px}
+.sc-badges{display:flex;gap:4px;flex-wrap:wrap}
+.sc-arr{width:36px;display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:18px;transition:transform .25s;flex-shrink:0}
+.sc-card.open .sc-arr{transform:rotate(90deg)}
+.sc-body{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1)}
+.sc-card.open .sc-body{max-height:900px}
+.sc-inner{padding:0 12px 14px;border-top:1px solid var(--border)}
+
+/* Hotel start indicator */
+.hotel-start{display:flex;align-items:center;gap:6px;padding:7px 10px;background:var(--goldbg);border:1px solid rgba(184,134,42,.2);border-radius:8px;margin-top:10px;font-size:12px;color:var(--gold)}
+.hotel-start strong{font-weight:600}
+
+/* Travel time summary */
+.route-summary{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 4px}
+.route-chip{font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px;background:var(--bg2);color:var(--text2);border:1px solid var(--border)}
+
+.map-embed{width:100%;height:200px;border-radius:10px;overflow:hidden;margin:10px 0 8px;background:var(--bg2);position:relative;border:1px solid var(--border)}
+.map-embed iframe{width:100%;height:100%;border:none;display:block}
+.map-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted)}
+
+.confirmed-box{display:flex;align-items:center;gap:8px;background:var(--sagebg);border:1px solid rgba(61,122,80,.2);border-radius:8px;padding:8px 12px;margin:8px 0}
+.confirmed-text{font-size:12px;color:var(--sage);font-weight:500}
+.confirmed-sub{font-size:11px;color:var(--sage);opacity:.7}
+
+.map-btns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.mb{display:flex;align-items:center;gap:4px;padding:7px 11px;border-radius:8px;border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:transform .15s;white-space:nowrap}
+.mb:active{transform:scale(.96)}
+.mb-map{background:var(--tealbg);color:var(--teal);border:1px solid rgba(31,138,128,.25)}
+.mb-dir{background:var(--bluebg);color:var(--blue);border:1px solid rgba(44,109,191,.25)}
+.mb-route{background:var(--goldbg);color:var(--gold);border:1px solid rgba(184,134,42,.25)}
+
+.sc-details{margin:8px 0}
+.sc-details li{font-size:13px;color:var(--text2);padding:3px 0;list-style:none;display:flex;gap:8px;line-height:1.55}
+.sc-details li::before{content:'·';color:var(--dim);flex-shrink:0}
+.sc-details li strong{color:var(--text);font-weight:600}
+.sc-note{padding:8px 10px;background:var(--goldbg);border:1px solid rgba(184,134,42,.2);border-radius:8px;font-size:12px;color:var(--gold);line-height:1.5;margin-top:8px}
+
+/* Badges */
+.b{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px}
+.b-fl{background:var(--purplebg);color:var(--purple);border:1px solid rgba(91,63,160,.2)}
+.b-ro{background:#fdeee8;color:#a03a18;border:1px solid rgba(160,58,24,.2)}
+.b-na{background:var(--sagebg);color:var(--sage);border:1px solid rgba(61,122,80,.2)}
+.b-vi{background:var(--bluebg);color:var(--blue);border:1px solid rgba(44,109,191,.2)}
+.b-op{background:var(--rosebg);color:var(--rose);border:1px solid rgba(181,64,96,.2)}
+.b-mt{background:var(--tealbg);color:var(--teal);border:1px solid rgba(31,138,128,.2)}
+.b-go{background:var(--goldbg);color:var(--gold);border:1px solid rgba(184,134,42,.2)}
+.b-wr{background:#fdeef0;color:#b54060;border:1px solid rgba(181,64,96,.2)}
+.b-ok{background:var(--sagebg);color:var(--sage);border:1px solid rgba(61,122,80,.3)}
+.b-ht{background:var(--goldbg);color:var(--gold);border:1px solid rgba(184,134,42,.3)}
+
+/* ══ TODO / CHECK ══ */
+.prog-wrap{padding:6px 2px 0}
+.prog-row{display:flex;justify-content:space-between;margin-bottom:4px}
+.prog-lbl{font-size:10px;color:var(--muted)}
+.prog-num{font-size:10px;color:var(--gold);font-weight:600}
+.prog-track{height:4px;background:var(--bg2);border-radius:2px;overflow:hidden;margin-bottom:10px;border:1px solid var(--border)}
+.prog-fill{height:100%;border-radius:2px;transition:width .4s cubic-bezier(.4,0,.2,1)}
+.pf-t{background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.pf-c{background:linear-gradient(90deg,var(--teal),var(--sage))}
+
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin:18px 0 8px}
+.sec-hdr:first-of-type{margin-top:6px}
+.sec-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.sec-cnt{font-size:10px;color:var(--dim)}
+
+.ilist{display:flex;flex-direction:column;gap:5px}
+.item{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;background:var(--surface);border:1px solid var(--border);border-radius:11px;cursor:pointer;user-select:none;position:relative;overflow:hidden;transition:box-shadow .15s,border-color .15s;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.item:active{transform:scale(.98)}
+.item.done{background:var(--bg2);border-color:var(--border);box-shadow:none}
+.item.done::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(31,138,128,.04),transparent);pointer-events:none}
+.ichk{width:20px;height:20px;flex-shrink:0;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;transition:all .25s;margin-top:1px}
+.item.done .ichk{background:var(--teal);border-color:var(--teal)}
+.ichk svg{opacity:0;transition:opacity .2s}
+.item.done .ichk svg{opacity:1}
+.ibody{flex:1;min-width:0}
+.itxt{font-size:13px;font-weight:400;color:var(--text);line-height:1.4}
+.item.done .itxt{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--dim)}
+.isub{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.4;font-weight:300}
+.item.done .isub{color:var(--dim)}
+.itag{font-size:9px;font-weight:600;padding:2px 6px;border-radius:20px;flex-shrink:0;align-self:flex-start;margin-top:2px;letter-spacing:.03em}
+.t-ur{background:var(--rosebg);color:var(--rose);border:1px solid rgba(181,64,96,.25)}
+.t-bk{background:var(--goldbg);color:var(--gold);border:1px solid rgba(184,134,42,.25)}
+.t-in{background:var(--bluebg);color:var(--blue);border:1px solid rgba(44,109,191,.25)}
+.t-pk{background:var(--sagebg);color:var(--sage);border:1px solid rgba(61,122,80,.25)}
+.t-wn{background:#fdeef0;color:var(--rose);border:1px solid rgba(181,64,96,.2)}
+.idel{width:18px;height:18px;flex-shrink:0;border-radius:50%;border:none;background:var(--bg2);color:var(--dim);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;align-self:flex-start;margin-top:1px}
+.item:hover .idel,.item:active .idel{opacity:1}
+.idel:hover{background:var(--rosebg);color:var(--rose)}
+
+.notice{background:var(--rosebg);border:1px solid rgba(181,64,96,.2);border-radius:10px;padding:10px 12px;margin-bottom:8px}
+.notice-t{font-size:11px;font-weight:600;color:var(--rose);margin-bottom:3px}
+.notice-b{font-size:11px;color:var(--text2);line-height:1.6}
+
+/* ── ADD ITEM with category ── */
+.add-wrap{margin-top:10px}
+.add-row{display:flex;gap:7px;flex-direction:column}
+.add-inputs{display:flex;gap:7px}
+.add-in{flex:1;background:var(--surface);border:1px solid var(--border2);border-radius:9px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color .2s}
+.add-in::placeholder{color:var(--dim)}
+.add-in:focus{border-color:var(--gold)}
+.add-cat{background:var(--surface);border:1px solid var(--border2);border-radius:9px;padding:10px 10px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text2);outline:none;cursor:pointer;min-width:90px;flex-shrink:0}
+.add-cat:focus{border-color:var(--gold)}
+.add-btn{width:40px;height:40px;border:none;border-radius:9px;font-size:22px;font-weight:300;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .15s}
+.add-btn:active{transform:scale(.94)}
+.abt{background:var(--gold);color:#fff}
+.abc{background:var(--teal);color:#fff}
+
+@keyframes popIn{0%{transform:scale(1)}40%{transform:scale(1.07)}100%{transform:scale(1)}}
+.just-done{animation:popIn .3s ease}
+::-webkit-scrollbar{width:0}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="hdr-lbl">2026 Italia · Austria Trip</div>
+    <div class="hdr-title">4.30 — 5.10 <em>여행 플래너</em></div>
+    <div class="hdr-sub">🇮🇹 로마 &nbsp;|&nbsp; 🇦🇹 비엔나 · 할슈타트</div>
+  </div>
+  <div class="tabnav">
+    <button class="tnav active" id="bt-sched" onclick="switchTab('sched')"><span class="ticon">🗓️</span>일정</button>
+    <button class="tnav" id="bt-todo" onclick="switchTab('todo')"><span class="ticon">📋</span>To Do<span class="tbdg" id="tbdg">0</span></button>
+    <button class="tnav" id="bt-check" onclick="switchTab('check')"><span class="ticon">🎒</span>Packing List<span class="tbdg tbdg-t" id="cbdg">0</span></button>
+  </div>
+</div>
+
+<div class="panel active" id="panel-sched"><div id="sched-root"></div></div>
+
+<div class="panel" id="panel-todo">
+  <div class="prog-wrap">
+    <div class="prog-row"><span class="prog-lbl">완료율</span><span class="prog-num" id="tp-n">0/0</span></div>
+    <div class="prog-track"><div class="prog-fill pf-t" id="tp-f" style="width:0%"></div></div>
+  </div>
+  <div class="sec-hdr"><span class="sec-title">🚨 긴급 예약</span><span class="sec-cnt" id="c-ur"></span></div><div class="ilist" id="l-ur"></div>
+  <div class="sec-hdr"><span class="sec-title">🏨 숙소·교통</span><span class="sec-cnt" id="c-tt"></span></div><div class="ilist" id="l-tt"></div>
+  <div class="sec-hdr"><span class="sec-title">🎭 현지 예약</span><span class="sec-cnt" id="c-tl"></span></div><div class="ilist" id="l-tl"></div>
+  <div class="sec-hdr"><span class="sec-title">📝 기타 준비</span><span class="sec-cnt" id="c-tm"></span></div><div class="ilist" id="l-tm"></div>
+  <div class="sec-hdr"><span class="sec-title">⚠️ 여행 중 주의사항</span><span class="sec-cnt" id="c-tw"></span></div><div class="ilist" id="l-tw"></div>
+  <div class="sec-hdr" style="margin-top:20px"><span class="sec-title">+ 항목 추가</span></div>
+  <div class="add-wrap">
+    <div class="add-row">
+      <div class="add-inputs">
+        <select class="add-cat" id="todo-cat">
+          <option value="ur">🚨 긴급 예약</option>
+          <option value="tt">🏨 숙소·교통</option>
+          <option value="tl">🎭 현지 예약</option>
+          <option value="tm" selected>📝 기타 준비</option>
+          <option value="tw">⚠️ 주의사항</option>
+        </select>
+        <select class="add-cat" id="todo-tag" style="min-width:80px">
+          <option value="ur">긴급</option>
+          <option value="bk">예약</option>
+          <option value="in">정보</option>
+          <option value="pk" selected>챙기기</option>
+        </select>
+      </div>
+      <div class="add-inputs">
+        <input class="add-in" id="ti" placeholder="할 일 입력..." maxlength="80">
+        <button class="add-btn abt" onclick="addIt('t')">+</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel" id="panel-check">
+  <div class="prog-wrap">
+    <div class="prog-row"><span class="prog-lbl">완료율</span><span class="prog-num" id="cp-n">0/0</span></div>
+    <div class="prog-track"><div class="prog-fill pf-c" id="cp-f" style="width:0%"></div></div>
+  </div>
+  <div class="notice"><div class="notice-t">🎒 출발 전 짐싸기 체크리스트</div><div class="notice-b">여권 유효기간: 귀국일 기준 6개월 이상 필수 · 캐리어 무게 23kg 이하 확인</div></div>
+  <div class="sec-hdr"><span class="sec-title">🪪 필수 서류</span><span class="sec-cnt" id="c-cd"></span></div><div class="ilist" id="l-cd"></div>
+  <div class="sec-hdr"><span class="sec-title">💊 건강·의약품</span><span class="sec-cnt" id="c-ch"></span></div><div class="ilist" id="l-ch"></div>
+  <div class="sec-hdr"><span class="sec-title">👗 의류·용품</span><span class="sec-cnt" id="c-cc"></span></div><div class="ilist" id="l-cc"></div>
+  <div class="sec-hdr"><span class="sec-title">📱 전자기기</span><span class="sec-cnt" id="c-ct"></span></div><div class="ilist" id="l-ct"></div>
+  <div class="sec-hdr" style="margin-top:20px"><span class="sec-title">+ 항목 추가</span></div>
+  <div class="add-wrap">
+    <div class="add-row">
+      <div class="add-inputs">
+        <select class="add-cat" id="check-cat">
+          <option value="cd">🪪 필수 서류</option>
+          <option value="ch">💊 건강·의약품</option>
+          <option value="cc">👗 의류·용품</option>
+          <option value="ct" selected>📱 전자기기</option>
+        </select>
+        <select class="add-cat" id="check-tag" style="min-width:80px">
+          <option value="ur">긴급</option>
+          <option value="bk">예약</option>
+          <option value="in">정보</option>
+          <option value="pk" selected>챙기기</option>
+          <option value="wn">주의</option>
+        </select>
+      </div>
+      <div class="add-inputs">
+        <input class="add-in" id="ci" placeholder="체크 항목 입력..." maxlength="80">
+        <button class="add-btn abc" onclick="addIt('c')">+</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const GMAP_KEY = 'AIzaSyAI7UiCreT29nI95BVbCm_j8qCdqt0rpgk';
+
+/* ══════════════════════════
+   HOTELS
+══════════════════════════ */
+const HOTELS = {
+  rome: {
+    name: 'Domus Australia',
+    addr: 'Via Cernaia 14/B, 00185 Roma',
+    lat: 41.9027, lng: 12.4960,
+    q: 'Domus Australia Rome Via Cernaia'
+  },
+  vienna: {
+    name: 'ibis Wien Hauptbahnhof',
+    addr: 'Gerhard-Eisler-Gasse 1, 1100 Wien',
+    lat: 48.1842, lng: 16.3776,
+    q: 'ibis Wien Hauptbahnhof'
+  }
+};
+
+/* ══════════════════════════
+   SCHEDULE DATA
+   start: hotel key ('rome'|'vienna'|null)
+   Each day begins from the hotel, so first map includes hotel→first stop
+══════════════════════════ */
+
+/* ── DATA HELPERS (편집은 DAYS/TODO/CHECK 블록만) ──
+   P(name,lat,lng,q) → place object
+   B(t,c) → badge  Bvi/Bro/Bmt/Bfl/Bgo/Bwr/Bok/Bop → preset badges
+   RT(mode,time,km) → route
+   Hotels: PH_ROME / PH_VIENNA → hotel place shorthand
+*/
+const PH_ROME={name:'Domus Australia',lat:41.9027,lng:12.4960,q:'Domus Australia Rome Via Cernaia'};
+const PH_VIENNA={name:'ibis Wien Hauptbahnhof',lat:48.1842,lng:16.3776,q:'ibis Wien Hauptbahnhof'};
+function P(name,lat,lng,q){return{name,lat,lng,q};}
+function B(t,c){return{t,c};}
+function RT(mode,time,km){return{mode,time,km};}
+// Badge presets
+const Bvi=(t)=>B(t,'b-vi'), Bro=(t)=>B(t,'b-ro'), Bmt=(t)=>B(t,'b-mt');
+const Bfl=(t)=>B(t,'b-fl'), Bgo=(t)=>B(t,'b-go'), Bwr=(t)=>B(t,'b-wr');
+const Bok=(t)=>B(t,'b-ok'), Bop=(t)=>B(t,'b-op'), Bht=(t)=>B(t,'b-ht');
+
+const DAYS = [
+  {
+    date:'4월 30일 목요일', flag:'🇮🇹', label:'인천 출발 → 로마 도착',
+    hotel: null,
+    travel:{ total:'약 12시간', km:'약 9,200 km', walk:'도보 약 3 km' },
+    events:[
+      { time:'10:00', title:'인천공항 T1 도착 🛬', color:'#3d7a50',
+        badges:[{t:'🇰🇷 인천 출발',c:'b-na'},{t:'T1 탑승수속',c:'b-go'}],
+        route:{ time:'도보 이동', km:'—', mode:'🚶 공항 내' },
+        details:['<strong>인천국제공항 제1여객터미널(T1)</strong> 도착','항공사 카운터 체크인 · 짐 위탁 · 보안검색','환전 (공항 은행 환율 확인) · 출국장 이동','면세 쇼핑 시간 여유 있게 확보'],
+        note:'12:15 출발 기준 — 10:00 도착이면 체크인·보안·면세 여유 충분!',
+        places:[{name:'인천국제공항 T1',lat:37.4492,lng:126.4506,q:'인천국제공항 제1여객터미널'}]
+      },
+      { time:'12:15', title:'인천국제공항 T1 출발 ✈️', color:'#5b3fa0',
+        badges:[{t:'ICN→FCO',c:'b-fl'},{t:'직항 약 12h',c:'b-go'}],
+        route:{ time:'비행 12시간', km:'9,200 km', mode:'✈️' },
+        details:['항공: 인천 → 로마 피우미치노 직항 약 12시간','3시간 전 공항 도착·수속 권장','기내 최대한 수면 → 시차 적응 (한국 -7시간)'],
+        note:'기내식 후 수면 우선! 도착 다다음날부터 관광이므로 체력 비축.',
+        places:[{name:'인천국제공항 T1',lat:37.4492,lng:126.4506,q:'인천국제공항 제1여객터미널'}]
+      },
+      { time:'19:15', title:'로마 피우미치노 공항 도착 (FCO)', color:'#a03a18',
+        badges:[{t:'🇮🇹 로마 도착',c:'b-ro'}],
+        route:{ time:'32분', km:'32 km', mode:'🚆 Leonardo Express' },
+        details:['<strong>Leonardo Express</strong>: FCO → Roma Termini (32분, €14) — 플랫폼 31번','<strong>Domus Australia 호텔</strong> — Roma Termini 도보 약 10분','간단한 저녁 식사 후 야경 산책 준비'],
+        note:'도착 후 짐 풀고 간단히 식사! 피자 한 조각으로 가볍게. 🍕',
+        places:[{name:'Roma Termini',lat:41.9009,lng:12.5009,q:'Roma Termini Station'},PH_ROME]
+      },
+      { time:'20:30', title:'🍕 첫날 저녁 추천 — Termini 주변', color:'#a03a18',
+        badges:[{t:'🍝 저녁',c:'b-ro'},{t:'도보 5분',c:'b-go'}],
+        route:{ time:'도보 5분', km:'0.4 km', mode:'🚶 도보' },
+        details:['<strong>Trattoria da Valentino</strong> — Via Cernaia 근처, 정통 로마 파스타 €12~15','<strong>Pizzeria Montecarlo</strong> — 피자+맥주 캐주얼하게 €10~','<strong>Ristorante Il Matriciano</strong> — 현지인 단골 까르보나라','첫날 피로 감안 — 호텔 도보 5분 이내 가볍게'],
+        alt:'근처 편의점 CONAD/CARREFOUR Express — 샌드위치+음료 야외 취식 €5',
+        note:'도착 첫날! 멀리 안 가도 됩니다. Termini 주변 골목만 해도 맛집 많음.',
+        places:[PH_ROME,{name:'Termini 주변 식당가',lat:41.9009,lng:12.4980,q:'restaurants near Roma Termini'}]
+      },
+      { time:'21:30', title:'로마 야경 산책 🌙 (도보 왕복 1시간)', color:'#a03a18',
+        badges:[{t:'🌙 야경',c:'b-ro'},{t:'도보 왕복',c:'b-go'}],
+        route:{ time:'왕복 약 1시간', km:'약 2 km', mode:'🚶 도보' },
+        details:['<strong>호텔(Domus Australia)</strong> 출발 → 도보 약 10분','🪙 <strong>트레비 분수</strong> — 야간 조명 최고, 동전 던지기','→ 도보 10분 → <strong>퀴리날레 광장(Piazza del Quirinale)</strong> — 로마 시내 전경 야경 포인트','→ 도보로 호텔 복귀 (총 왕복 약 1시간)','도착 첫날 몸 풀기용 가벼운 코스'],
+        note:'야간에도 트레비 분수 주변은 사람이 많아 소매치기 주의! 귀중품은 최소화.',
+        places:[PH_ROME,{name:'트레비 분수',lat:41.9009,lng:12.4833,q:'Trevi Fountain Rome'},{name:'퀴리날레 광장',lat:41.8994,lng:12.4871,q:'Piazza del Quirinale Rome'}]
+      }
+    ]
+  },
+  {
+    date:'5월 1일 금요일', flag:'🇮🇹', label:'로마 시내 관광 & 쇼핑 🛍️',
+    hotel: 'rome',
+    travel:{ total:'약 08:30~21:00', km:'약 10 km', walk:'도보 약 9 km' },
+    events:[
+      { time:'08:30', title:'트레비 분수 — 아침 일찍 인파 없을 때 🪙', color:'#a03a18',
+        badges:[{t:'⚠️ 노동절',c:'b-wr'},{t:'🇮🇹 로마 1일차',c:'b-ro'}],
+        route:{ time:'도보 5분', km:'0.4 km', mode:'🚶 도보' },
+        details:['호텔(Domus Australia) → <strong>트레비 분수</strong> 도보 약 10분 — 아침 일찍이 인파 없는 황금 타임!','동전 던지기 🪙 — 오른손으로 왼쪽 어깨 너머로 던지면 로마 재방문 소원','<strong>노동절 주의</strong> — 유명 박물관 다수 휴무, 야외 명소·쇼핑 위주로 이동'],
+        note:'트레비 분수는 호텔에서 도보 5분! 아침 08:30~09:00이 가장 한산. 오후에는 인파 폭발.',
+        places:[PH_ROME,{name:'트레비 분수',lat:41.9009,lng:12.4833,q:'Trevi Fountain Rome'}]
+      },
+      { time:'09:00', title:'스페인 광장 & 스페인 계단 → Via Condotti 명품 거리', color:'#a03a18',
+        badges:[{t:'🏛️ 스페인 광장',c:'b-ro'}],
+        route:{ time:'도보 12분', km:'약 1 km', mode:'🚶 도보' },
+        details:['트레비 → <strong>스페인 광장(Piazza di Spagna)</strong> 도보 약 12분','<strong>스페인 계단(Scalinata di Trinità dei Monti)</strong> — 137계단 올라가면 로마 전경 📸','<strong>Via Condotti</strong> — 구찌·불가리·페라가모·펜디 명품 거리 (노동절도 일부 오픈)','계단 아래 <strong>바르카치아 분수</strong> — 베르니니 작품'],
+        note:'스페인 계단 위에서 내려다보는 로마 전경이 최고의 포토스팟!',
+        places:[{name:'스페인 광장',lat:41.9058,lng:12.4822,q:'Piazza di Spagna Rome'}]
+      },
+      { time:'10:30', title:'판테온 → 나보나 광장 — 로마 역사 지구 핵심', color:'#a03a18',
+        badges:[{t:'🏛️ 역사 지구',c:'b-ro'},{t:'€5',c:'b-go'}],
+        admission:'판테온 09:00~19:00 · €5 · pantheonroma.com (노동절 개방 여부 사전 확인)',
+        route:{ time:'도보 15분', km:'약 1.5 km', mode:'🚶 도보' },
+        details:['스페인 광장 → <strong>판테온(Pantheon)</strong> 도보 약 15분 · 세계에서 가장 완벽한 고대 건축물','내부 오쿨루스(천장 구멍)로 들어오는 빛 — 노동절 개방 여부 사전 확인 필수','판테온 → <strong>나보나 광장(Piazza Navona)</strong> 도보 5분','<strong>베르니니 4대강 분수</strong> 감상 · 광장 주변 카페에서 에스프레소 ☕'],
+        alt:'Sant\'Eustachio il Caffè — 판테온 옆 로마 최고 에스프레소 테이크아웃 €1.5',
+        places:[{name:'판테온',lat:41.8986,lng:12.4769,q:'Pantheon Rome'},{name:'나보나 광장',lat:41.8992,lng:12.4731,q:'Piazza Navona Rome'}]
+      },
+      { time:'14:00', title:'점심 — 나보나 주변 or 캄포 데 피오리', color:'#a03a18',
+        badges:[{t:'🍝 점심',c:'b-ro'}],
+        route:{ time:'도보 8분', km:'약 0.6 km', mode:'🚶' },
+        details:['추천 A: <strong>Ristorante Tre Scalini</strong> — 나보나 광장 면한 클래식 레스토랑','추천 B: <strong>Campo de\' Fiori</strong> 광장 주변 — 현지 시장과 노상 카페','까르보나라·까치오에 페페 €12~18 수준 · <strong>영업: 12:00~15:30 / 19:00~23:00</strong> (브레이크타임 있음)'],
+        alt:'All\'Antico Vinaio Roma — 파니니 테이크아웃 후 나보나 광장 야외 취식 €8',
+        places:[{name:'나보나 광장',lat:41.8992,lng:12.4731,q:'Piazza Navona Rome'},{name:'캄포 데 피오리',lat:41.8956,lng:12.4722,q:'Campo de Fiori Rome'}]
+      },
+      { time:'13:30', title:'Via del Corso — 로마 최대 쇼핑 거리 🛍️', color:'#a03a18',
+        badges:[{t:'🛍️ 쇼핑',c:'b-ro'}],
+        route:{ time:'도보 15분', km:'약 1.3 km', mode:'🚶 도보' },
+        details:['나보나 → <strong>Via del Corso</strong> (약 1.5km 직선 쇼핑 거리) 도보·버스 이동','<strong>자라(Zara)</strong> · <strong>H&M</strong> · <strong>Mango</strong> · <strong>Nike</strong> · <strong>Adidas</strong> 집결','<strong>La Rinascente Roma</strong> (Via del Tritone점) — 이탈리아 프리미엄 백화점 · 식품관 추천','노동절에도 대형 체인·백화점은 대부분 오픈'],
+        note:'Via del Corso는 로마에서 가장 긴 쇼핑 거리! 트레비 분수→스페인 광장 사이를 잇는 핵심 루트.',
+        places:[{name:'나보나 광장',lat:41.8992,lng:12.4731,q:'Piazza Navona Rome'},{name:'Via del Corso',lat:41.9013,lng:12.4769,q:'Via del Corso Rome'},{name:'La Rinascente Roma',lat:41.9011,lng:12.4832,q:'La Rinascente Rome Via del Tritone'}]
+      },
+      { time:'15:30', title:'포폴로 광장 → 보르게세 공원 산책', color:'#a03a18',
+        badges:[{t:'🌳 포폴로 광장',c:'b-ro'}],
+        route:{ time:'도보 20분', km:'약 1.8 km', mode:'🚶 도보' },
+        details:['Via del Corso 북쪽 끝 — <strong>포폴로 광장(Piazza del Popolo)</strong> · 쌍둥이 교회 & 오벨리스크 📸','광장 동쪽 언덕 올라가면 <strong>핀초 테라스(Terrazza del Pincio)</strong> — 로마 전경 파노라마 무료 전망대','옆으로 <strong>보르게세 공원</strong> 산책 (5월 신록 최고) — 보르게세 미술관은 노동절 휴무 가능'],
+        note:'핀초 테라스에서 바라보는 로마 전경은 콜로세움보다 더 넓게 펼쳐짐! 무료 포인트.',
+        places:[{name:'포폴로 광장',lat:41.9110,lng:12.4763,q:'Piazza del Popolo Rome'},{name:'핀초 테라스',lat:41.9116,lng:12.4831,q:'Terrazza del Pincio Rome'},{name:'보르게세 공원',lat:41.9135,lng:12.4922,q:'Villa Borghese Gardens Rome'}]
+      },
+      { time:'17:30', title:'기념품 쇼핑 — 나보나·판테온 일대', color:'#a03a18',
+        badges:[{t:'🎁 기념품',c:'b-ro'}],
+        route:{ time:'도보 코스', km:'약 1 km', mode:'🚶' },
+        details:['판테온 주변 기념품 골목 — 로마 마그넷·엽서·가죽제품','<strong>Mercato Monti</strong> or 판테온 근처 가죽숍 — 이탈리아 수제 가죽 지갑 €15~30','<strong>올리브 오일·파스타·트러플 제품</strong> — 식품 기념품 최강 아이템'],
+        alt:'판테온 근처 소규모 델리 — 파니니+콜라 야외 취식 €7',
+        places:[{name:'판테온',lat:41.8986,lng:12.4769,q:'Pantheon Rome'},{name:'나보나 광장',lat:41.8992,lng:12.4731,q:'Piazza Navona Rome'}]
+      },
+      { time:'19:00', title:'저녁 — 트라스테베레 골목 석식 🍷', color:'#a03a18',
+        badges:[{t:'🍷 저녁',c:'b-ro'}],
+        route:{ time:'버스 약 20분', km:'약 2.5 km', mode:'🚌 버스 40·64' },
+        details:['나보나 → 버스 40·64 → <strong>트라스테베레(Trastevere)</strong> · 약 15분','<strong>Da Enzo al 29</strong> — 로마 현지인 단골 · 까르보나라·까치오에 페페 강추','<strong>Tonnarello</strong> — 노천 테이블 · 현지 분위기 최고','와인 카라페 한 잔 + 파스타로 로마의 밤 마무리 🍷'],
+        alt:'All\'Antico Vinaio — 파니니 테이크아웃 후 트라스테베레 골목 야외 취식 €8~10',
+        note:'트라스테베레는 로마에서 가장 현지 분위기가 살아있는 골목! 노동절 저녁은 더 활기참.',
+        places:[{name:'나보나 광장',lat:41.8992,lng:12.4731,q:'Piazza Navona Rome'},{name:'트라스테베레',lat:41.8895,lng:12.4692,q:'Trastevere Rome'},{name:'Da Enzo al 29',lat:41.8880,lng:12.4680,q:'Da Enzo al 29 Trastevere Rome'}]
+      },
+      { time:'21:00', title:'야경 산책 🌙 — 트레비→산탄젤로 루트', color:'#a03a18',
+        badges:[{t:'🌙 야경',c:'b-ro'}],
+        route:{ time:'왕복 약 1시간', km:'약 3 km', mode:'🚶 도보' },
+        details:['트라스테베레 → 버스 or 도보 → <strong>산탄젤로 성(Castel Sant\'Angelo)</strong> 야간 조명','테베레 강 산책로 → <strong>나보나 광장</strong> 야경','→ <strong>트레비 분수</strong> 야간 재방문 (저녁엔 또 다른 분위기) → 호텔 도보 5분'],
+        note:'야간에도 트레비 분수·산탄젤로 성 주변 소매치기 주의! 귀중품 최소화.',
+        places:[{name:'산탄젤로 성',lat:41.9031,lng:12.4663,q:'Castel Sant Angelo Rome'},{name:'나보나 광장',lat:41.8992,lng:12.4731,q:'Piazza Navona Rome'},{name:'트레비 분수',lat:41.9009,lng:12.4833,q:'Trevi Fountain Rome'},PH_ROME]
+      }
+    ]
+  },
+  {
+    date:'5월 2일 토요일', flag:'✈️', label:'로마 마무리 → 비엔나 이동 + 1박',
+    hotel: 'rome',
+    travel:{ total:'약 4시간', km:'약 1,100 km', walk:'도보 약 2 km' },
+    events:[
+      { time:'08:00', title:'기상 · 짐 체크아웃 · 프런트 맡기기', color:'#888888',
+        badges:[{t:'⚠️ 09:30 공항 도착 목표',c:'b-wr'}],
+        route:{ time:'호텔 내', km:'—', mode:'🏨' },
+        details:['짐은 벨데스크에 맡기기 · 가볍게 출발','체크아웃 서류 미리 작성'],
+        places:[PH_ROME]
+      },
+      { time:'08:20', title:'호텔 → Roma Termini → FCO 공항', color:'#5b3fa0',
+        badges:[{t:'🚆 Leonardo Express',c:'b-fl'},{t:'09:30 공항 도착',c:'b-wr'}],
+        route:{ time:'Termini 10분 + FCO 32분', km:'33 km', mode:'🚇 + 🚆' },
+        details:['Domus Australia → Termini 도보 약 10분','<strong>Leonardo Express</strong> Termini → FCO 32분 · €14 · 플랫폼 31번','<strong>09:30 FCO 도착</strong> — 체크인·보안 충분한 여유'],
+        places:[PH_ROME,{name:'Roma Termini',lat:41.9009,lng:12.5009,q:'Roma Termini Station'},{name:'FCO 공항',lat:41.8003,lng:12.2388,q:'Rome Fiumicino Airport'}]
+      },
+      { time:'09:30', title:'FCO 공항 체크인 · 보안 · 탑승 준비', color:'#5b3fa0',
+        badges:[{t:'✈️ FCO→VIE 11:50',c:'b-fl'}],
+        route:{ time:'약 2시간 20분 여유', km:'—', mode:'✈️ 탑승 준비' },
+        details:['FCO T1 도착 · 체크인 · 보안 완료 후 면세 쇼핑','<strong>11:50 FCO 출발</strong> → VIE 12:20 도착 (약 1시간 50분)','탑승 30분 전 게이트 도착 필수'],
+        note:'마지막 이탈리아 면세 쇼핑! 이탈리아 오일·파스타·와인은 여기서.',
+        places:[{name:'FCO 공항',lat:41.8003,lng:12.2388,q:'Rome Fiumicino Airport'},{name:'VIE 비엔나 공항',lat:48.1103,lng:16.5697,q:'Vienna International Airport'}]
+      },
+      { time:'12:20', title:'비엔나 VIE 도착 → ibis Wien Hauptbahnhof 체크인', color:'#2c6dbf',
+        badges:[{t:'🇦🇹 비엔나 도착',c:'b-vi'},{t:'⚠️ 예약 필요',c:'b-wr'}],
+        route:{ time:'약 25분', km:'19 km', mode:'🚆 S7→Wien Hbf' },
+        details:['VIE T3 → <strong>S7 열차</strong> Wien Hauptbahnhof 직행 (25분, €4.60 · 추천)','또는 CAT → Wien Mitte → Wien Hauptbahnhof','<strong>ibis Wien Hauptbahnhof</strong> 체크인 — Wien Hbf 도보 약 5분!','호텔 프런트에 짐 맡기고 바로 시내 관광'],
+        note:'S7이 Wien Hauptbahnhof 직결이라 가장 편리! ibis가 역 바로 앞.',
+        places:[{name:'VIE 비엔나 공항',lat:48.1103,lng:16.5697,q:'Vienna International Airport'},{name:'Wien Hauptbahnhof',lat:48.1850,lng:16.3786,q:'Wien Hauptbahnhof'},PH_VIENNA]
+      },
+      { time:'14:00', title:'벨베데레 궁전 — 클림트 《키스》 🎨', color:'#2c6dbf',
+        badges:[{t:'🏰 벨베데레',c:'b-vi'},{t:'도보 15분',c:'b-go'}],
+        admission:'08:00~18:00 (마지막 입장 17:30) · €16.50 · belvedere.at 사전 예매',
+        route:{ time:'도보 약 15분', km:'약 1.2 km', mode:'🚶 도보' },
+        details:['호텔 → 벨베데레 궁전 도보 약 15분 (가장 가까운 세계적 명소!)','<strong>상궁(Oberes Belvedere)</strong> — 클림트 《키스》 원본 관람','오스트리아 바로크 궁전 정원 산책'],
+        note:'호텔에서 도보 15분! 비엔나 도착하자마자 세계적 명화 바로 감상.',
+        places:[PH_VIENNA,{name:'벨베데레 궁전',lat:48.1916,lng:16.3804,q:'Belvedere Palace Vienna'}]
+      },
+      { time:'16:30', title:'슈테판 대성당 → 그라벤 → 케른트너 거리', color:'#2c6dbf',
+        badges:[{t:'⛪ 구시가지',c:'b-vi'}],
+        route:{ time:'약 20분', km:'약 4 km', mode:'🚇 U1 or 트램 D' },
+        details:['벨베데레 → 트램 D or U1 → Stephansplatz','<strong>슈테판 대성당</strong> — 내부 무료 · 남탑 전망 권장','<strong>그라벤 거리</strong> · <strong>케른트너 거리</strong> — 비엔나 중심 보행자로'],
+        places:[{name:'벨베데레 궁전',lat:48.1916,lng:16.3804,q:'Belvedere Palace Vienna'},{name:'슈테판 대성당',lat:48.2085,lng:16.3726,q:'Stephansdom Vienna'},{name:'그라벤 거리',lat:48.2089,lng:16.3697,q:'Graben Vienna'}]
+      },
+      { time:'18:30', title:'저녁 — 카페 자허 or 구시가지 레스토랑', color:'#2c6dbf',
+        badges:[{t:'🍰 비엔나 첫 저녁',c:'b-vi'}],
+        route:{ time:'도보 코스', km:'약 0.5 km', mode:'🚶' },
+        details:['<strong>카페 자허</strong> — 자허 토르테 + 아인슈패너 ☕ (비엔나 첫날 필수!)','또는 <strong>Figlmüller Bäckerstraße</strong> — 슈니첼 원조'],
+        alt:'Bitzinger Würstelstand (오페라 옆 소세지 스탠드, €4~5) — 비엔나식 첫날 야식',
+        places:[{name:'그라벤 거리',lat:48.2089,lng:16.3697,q:'Graben Vienna'},{name:'카페 자허',lat:48.2031,lng:16.3694,q:'Café Sacher Vienna'}]
+      },
+      { time:'20:30', title:'🌙 야경 — 오페라극장 → 알베르티나 테라스', color:'#2c6dbf',
+        badges:[{t:'🌙 야경',c:'b-vi'}],
+        route:{ time:'도보 코스', km:'약 1 km', mode:'🚶' },
+        details:['<strong>빈 국립 오페라극장</strong> 야간 조명 🎭','<strong>알베르티나 계단 테라스</strong> — 오페라극장 방향 최고 뷰포인트','U1 Stephansplatz → Hauptbahnhof · 호텔 복귀'],
+        places:[{name:'빈 국립 오페라극장',lat:48.2031,lng:16.3693,q:'Wiener Staatsoper Vienna'},{name:'알베르티나',lat:48.2039,lng:16.3680,q:'Albertina Vienna'},PH_VIENNA]
+      }
+    ]
+  },
+  {
+    date:'5월 3일 일요일', flag:'🇦🇹', label:'비엔나 1일차 — 호프부르크 · KHM · 구시가 탐방',
+    hotel: 'vienna',
+    travel:{ total:'약 09:00~21:00', km:'약 12 km', walk:'도보 약 6 km' },
+    events:[
+      { time:'09:00', title:'호프부르크 왕궁 → 시시 뮤지엄', color:'#2c6dbf',
+        badges:[{t:'🇦🇹 비엔나 1일차',c:'b-vi'}],
+        admission:'시시 뮤지엄 09:00~17:30 · €16',
+        route:{ time:'약 15분', km:'약 2 km', mode:'🚇 U1 Südtiroler Platz→Karlsplatz' },
+        details:['호텔(Hauptbahnhof) → U1 Karlsplatz → 도보 10분','<strong>호프부르크 왕궁</strong> — 미하엘 광장·황실 보물박물관','<strong>시시 뮤지엄</strong> — 엘리자베트 황후 유품'],
+        places:[PH_VIENNA,{name:'호프부르크 왕궁',lat:48.2064,lng:16.3642,q:'Hofburg Palace Vienna'},{name:'시시 뮤지엄',lat:48.2064,lng:16.3647,q:'Sisi Museum Vienna'}]
+      },
+      { time:'11:00', title:'미술사 박물관 KHM — 클림트·루벤스·라파엘', color:'#2c6dbf',
+        badges:[{t:'🖼️ KHM',c:'b-vi'},{t:'⚠️ 예매',c:'b-wr'}],
+        admission:'10:00~18:00 (목 ~21:00) · €21',
+        route:{ time:'도보 10분', km:'0.7 km', mode:'🚶' },
+        details:['<strong>Kunsthistorisches Museum</strong> — 세계 4대 미술관','클림트·루벤스·렘브란트·라파엘 소장 · 약 1시간 30분'],
+        places:[{name:'호프부르크 왕궁',lat:48.2064,lng:16.3642,q:'Hofburg Palace Vienna'},{name:'미술사 박물관',lat:48.2033,lng:16.3614,q:'Kunsthistorisches Museum Vienna'}]
+      },
+      { time:'14:00', title:'점심 — MuseumsQuartier or 나슈마르크트', color:'#2c6dbf',
+        badges:[{t:'🥙 점심',c:'b-vi'}],
+        route:{ time:'도보 5분', km:'0.3 km', mode:'🚶' },
+        details:['<strong>MuseumsQuartier 광장 카페</strong> — 야외 테이블 런치','또는 U4 Kettenbrückengasse → <strong>나슈마르크트</strong> — 다양한 스탠드 €5~10'],
+        alt:'MQ 앞 Würstelstand — 소세지+맥주 야외 취식 €5',
+        places:[{name:'미술사 박물관',lat:48.2033,lng:16.3614,q:'Kunsthistorisches Museum Vienna'},{name:'MuseumsQuartier',lat:48.2013,lng:16.3590,q:'MuseumsQuartier Vienna'}]
+      },
+      { time:'14:00', title:'슈테판 대성당 → 그라벤 → 앙커우어 시계', color:'#2c6dbf',
+        badges:[{t:'⛪ 구시가지',c:'b-vi'}],
+        route:{ time:'도보 or U2→U1', km:'약 3 km', mode:'🚇 or 🚶' },
+        details:['<strong>슈테판 대성당</strong> — 내부 무료 · 남탑 등반 €5.50','<strong>그라벤 거리</strong> · <strong>성 페터 성당</strong>','<strong>앙커우어 인형시계</strong> (Hoher Markt) — 매 정시 퍼레이드'],
+        places:[{name:'슈테판 대성당',lat:48.2085,lng:16.3726,q:'Stephansdom Vienna'},{name:'그라벤 거리',lat:48.2089,lng:16.3697,q:'Graben Vienna'},{name:'앙커우어 인형시계',lat:48.2109,lng:16.3700,q:'Anker Clock Vienna'}]
+      },
+      { time:'16:00', title:'모차르트 동상 → 부르크가르텐 → 폭스가르텐', color:'#2c6dbf',
+        badges:[{t:'🎵 공원 산책',c:'b-vi'}],
+        route:{ time:'도보 10분', km:'0.8 km', mode:'🚶' },
+        details:['<strong>부르크가르텐</strong> 내 모차르트 동상 📸','<strong>폭스가르텐</strong> — 5월 장미 만개 시즌 🌹'],
+        places:[{name:'그라벤 거리',lat:48.2089,lng:16.3697,q:'Graben Vienna'},{name:'모차르트 동상',lat:48.2039,lng:16.3655,q:'Mozart Statue Vienna Burggarten'},{name:'폭스가르텐',lat:48.2062,lng:16.3618,q:'Volksgarten Vienna'}]
+      },
+      { time:'18:30', title:'저녁 — Plachutta Wollzeile 타펠슈피츠', color:'#2c6dbf',
+        badges:[{t:'🥩 타펠슈피츠',c:'b-vi'}],
+        route:{ time:'도보 10분', km:'0.7 km', mode:'🚶' },
+        details:['<strong>Plachutta Wollzeile</strong> — 황실 요리 타펠슈피츠 원조 · plachutta.at 예약'],
+        alt:'Bitzinger Würstelstand (오페라 옆 소세지 €5) / Figlmüller Bäckerstraße (슈니첼)',
+        places:[{name:'폭스가르텐',lat:48.2062,lng:16.3618,q:'Volksgarten Vienna'},{name:'Plachutta Wollzeile',lat:48.2083,lng:16.3756,q:'Plachutta Wollzeile Vienna'}]
+      },
+      { time:'20:30', title:'🌙 야경 — 오페라극장 → 알베르티나 테라스 → 호텔', color:'#2c6dbf',
+        badges:[{t:'🌙 야경',c:'b-vi'}],
+        route:{ time:'도보 코스 후 U1', km:'약 2 km', mode:'🚶 + 🚇' },
+        details:['<strong>빈 국립 오페라극장</strong> 야간 조명','<strong>알베르티나 계단 테라스</strong> — 오페라 방향 뷰','U1 Karlsplatz → Südtiroler Platz → 호텔 도보 5분'],
+        places:[{name:'Plachutta Wollzeile',lat:48.2083,lng:16.3756,q:'Plachutta Wollzeile Vienna'},{name:'빈 국립 오페라극장',lat:48.2031,lng:16.3693,q:'Wiener Staatsoper Vienna'},{name:'알베르티나',lat:48.2039,lng:16.3680,q:'Albertina Vienna'},PH_VIENNA]
+      }
+    ]
+  },
+  {
+    date:'5월 4일 월요일', flag:'🇦🇹', label:'비엔나 2일차 — 구시가 핵심 + 스와로브스키 쇼핑 + 야경',
+    hotel: 'vienna',
+    travel:{ total:'약 09:00~22:30', km:'약 12 km', walk:'도보 약 6 km' },
+    events:[
+      { time:'09:00', title:'호텔 출발 → 빈 국립 오페라극장 외관 → 케른트너 거리', color:'#2c6dbf',
+        badges:[{t:'🇦🇹 비엔나 2일차',c:'b-vi'},{t:'🎭 오페라극장',c:'b-vi'}],
+        route:{ time:'약 20분', km:'약 6 km', mode:'🚇 U1 Südtiroler Platz → Karlsplatz' },
+        details:['호텔(ibis Wien Hauptbahnhof) → U1 Südtiroler Platz → Karlsplatz 하차 약 20분','<strong>빈 국립 오페라극장</strong> 외관 감상 — 웅장한 네오르네상스 건축물','<strong>케른트너 거리</strong> — 비엔나 핵심 보행자 거리 · 명품·기념품'],
+        places:[PH_VIENNA,{name:'빈 국립 오페라극장',lat:48.2031,lng:16.3693,q:'Wiener Staatsoper Vienna'},{name:'케른트너 거리',lat:48.2055,lng:16.3720,q:'Kärntner Strasse Vienna'}]
+      },
+      { time:'10:00', title:'슈테판 대성당 + 하스 하우스 + 앙커우어 인형시계', color:'#2c6dbf',
+        badges:[{t:'⛪ 슈테판',c:'b-vi'}],
+        admission:'슈테판 대성당 내부 무료 · 탑 등반 €5.50 · 지하납골당 €6',
+        route:{ time:'도보 5분', km:'0.4 km', mode:'🚶' },
+        details:['<strong>슈테판 대성당</strong> — 내부 무료 · 남탑 등반 권장 (360° 뷰)','<strong>하스 하우스</strong> — 현대건축 vs 고딕 성당 대비 포토스팟','<strong>앙커우어 인형시계</strong> (Hoher Markt) — 정시 인형 퍼레이드 ⏰ 매 정시'],
+        places:[{name:'케른트너 거리',lat:48.2055,lng:16.3720,q:'Kärntner Strasse Vienna'},{name:'슈테판 대성당',lat:48.2085,lng:16.3726,q:'Stephansdom Vienna'},{name:'앙커우어 인형시계',lat:48.2109,lng:16.3700,q:'Anker Clock Vienna Hoher Markt'}]
+      },
+      { time:'11:00', title:'그라벤 거리 → 성 페터 성당 → 율리어스 마이늘', color:'#2c6dbf',
+        badges:[{t:'🛍️ 그라벤',c:'b-vi'}],
+        route:{ time:'도보 코스', km:'약 0.5 km', mode:'🚶' },
+        details:['<strong>그라벤 거리</strong> — 비엔나 최고급 쇼핑 거리','<strong>성 페터 성당</strong> — 바로크 걸작 · 무료 입장','<strong>율리어스 마이늘 암 그라벤</strong> — 고급 식료품·기념품 구경'],
+        places:[{name:'슈테판 대성당',lat:48.2085,lng:16.3726,q:'Stephansdom Vienna'},{name:'그라벤 거리',lat:48.2089,lng:16.3697,q:'Graben Vienna'},{name:'성 페터 성당',lat:48.2084,lng:16.3696,q:'Peterskirche Vienna'},{name:'율리어스 마이늘',lat:48.2094,lng:16.3693,q:'Julius Meinl am Graben Vienna'}]
+      },
+      { time:'12:00', title:'미하엘 광장 → 호프부르크 왕궁 → 시시 뮤지엄', color:'#2c6dbf',
+        badges:[{t:'🏰 호프부르크',c:'b-vi'}],
+        admission:'시시 뮤지엄 09:00~17:30 (마지막 입장 17:00) · €16',
+        route:{ time:'도보 8분', km:'0.6 km', mode:'🚶' },
+        details:['<strong>미하엘 광장(Michaelerplatz)</strong> — 호프부르크 정문 광장','<strong>호프부르크 왕궁</strong> — 시시 뮤지엄·황실 보물박물관','<strong>신 왕궁(Neue Burg)</strong> — 에페소스 뮤지엄 선택'],
+        places:[{name:'그라벤 거리',lat:48.2089,lng:16.3697,q:'Graben Vienna'},{name:'미하엘 광장',lat:48.2075,lng:16.3658,q:'Michaelerplatz Vienna'},{name:'호프부르크 왕궁',lat:48.2064,lng:16.3642,q:'Hofburg Palace Vienna'}]
+      },
+      { time:'14:00', title:'점심 — Figlmüller Bäckerstraße 슈니첼 🍽️', color:'#2c6dbf',
+        badges:[{t:'🥩 슈니첼 원조',c:'b-vi'}],
+        route:{ time:'도보 8분', km:'0.6 km', mode:'🚶' },
+        details:['<strong>Figlmüller – Bäckerstraße</strong> — 비엔나 슈니첼 원조 · 1905년 창업','슈니첼이 접시보다 큰 것으로 유명 😄','영업: 11:00~22:30 (브레이크 타임 없음) · 예약 figlmueller.at'],
+        alt:'Würstelstand zum Hohen Markt — 소세지 스탠드 · 앙커우어 광장 야외 취식 €5',
+        note:'비엔나 왔으면 피글뮐러 슈니첼은 필수! 접시보다 크게 나오는 전통 방식.',
+        places:[{name:'호프부르크 왕궁',lat:48.2064,lng:16.3642,q:'Hofburg Palace Vienna'},{name:'Figlmüller Bäckerstraße',lat:48.2083,lng:16.3742,q:'Figlmüller Bäckerstraße Vienna'}]
+      },
+      { time:'15:30', title:'모차르트 동상 → 폭스가르텐 장미 공원', color:'#2c6dbf',
+        badges:[{t:'🎵 모차르트',c:'b-vi'},{t:'🌹 장미',c:'b-go'}],
+        route:{ time:'도보 5분', km:'0.4 km', mode:'🚶' },
+        details:['부르크가르텐 공원 내 <strong>모차르트 동상</strong> 📸','<strong>폭스가르텐(Volksgarten)</strong> — 5월 장미 만개 시즌! 🌹'],
+        places:[{name:'Figlmüller Bäckerstraße',lat:48.2083,lng:16.3742,q:'Figlmüller Bäckerstraße Vienna'},{name:'모차르트 동상',lat:48.2039,lng:16.3655,q:'Mozart Statue Vienna Burggarten'},{name:'폭스가르텐',lat:48.2062,lng:16.3618,q:'Volksgarten Vienna'}]
+      },
+      { time:'17:30', title:'💎 Swarovski Kristallwelten Store Wien — 크리스털 쇼핑', color:'#5b3fa0',
+        badges:[{t:'💎 스와로브스키',c:'b-fl'},{t:'🛍️ 택스 리펀',c:'b-go'}],
+        route:{ time:'도보 약 10분', km:'약 0.8 km', mode:'🚶 도보' },
+        details:['폭스가르텐 → <strong>Swarovski Kristallwelten Store Wien</strong> 도보 약 10분 (케른트너 거리 13번지)','비엔나 최대 스와로브스키 플래그십 스토어','<strong>💳 카드 결제 가능</strong> · <strong>택스 리펀(Tax Free) 신청 가능 — 🛂 여권 필수 지참</strong>','€75 이상 구매 시 VAT 환급 (약 12~15%) — Tax Free 양식 작성 → VIE 공항 세관 스탬프 → 환급 카운터','추천 아이템: 목걸이·귀걸이·피규어·키링 · 여행 기념 크리스털','영업: 09:00~21:00 (월~토) · 일요일 10:00~19:00'],
+        note:'택스 리펀은 여권 원본 필수! 구매 당일 Tax Free 양식 받고, VIE 공항 출국 시 세관 스탬프 받아야 환급 가능.',
+        places:[{name:'폭스가르텐',lat:48.2062,lng:16.3618,q:'Volksgarten Vienna'},{name:'Swarovski Wien Flagship',lat:48.2053,lng:16.3702,q:'Swarovski Kristallwelten Store Wien Kärntner Straße'}]
+      },
+      { time:'19:30', title:'호텔 복귀 · 정리', color:'#888888',
+        badges:[{t:'🏨 잠시 복귀',c:'b-go'}],
+        route:{ time:'약 20분', km:'약 6 km', mode:'🚇 U1 Stephansplatz → Südtiroler Platz' },
+        details:['Stephansplatz U1 → Südtiroler Platz 하차 → 호텔 도보 5분','쇼핑 짐 정리 · 잠시 휴식 후 저녁 외출'],
+        places:[{name:'Swarovski Wien Flagship',lat:48.2053,lng:16.3702,q:'Swarovski Kristallwelten Store Wien Kärntner Straße'},PH_VIENNA]
+      },
+      { time:'20:00', title:'저녁 — Lugeck 슈테판 광장 도보 3분 🍽️', color:'#2c6dbf',
+        badges:[{t:'🍽️ 저녁 맛집',c:'b-vi'}],
+        route:{ time:'약 20분', km:'약 6 km', mode:'🚇 U1 역방향' },
+        details:['<strong>Lugeck</strong> — 슈테판 광장 도보 3분 · 타르타르·슈니첼·오스트리아 요리 · 구시가 분위기','<strong>💳 카드 결제 가능</strong> · 비교적 예약 없이도 입장 가능','또는 <strong>Café Mozart</strong> — 오페라 옆 클래식한 비엔나 카페레스토랑','또는 <strong>Figlmüller Wollzeile</strong> — 슈니첼 원조 2지점 (예약 figlmueller.at)'],
+        alt:'Bitzinger Würstelstand (오페라 옆, Käsekrainer+Sekt €5~8) — 가볍게 야식으로 대체',
+        note:'저녁은 슈테판 광장 주변이 야경+분위기 최고! Lugeck은 예약 없어도 줄 서면 입장 가능.',
+        places:[PH_VIENNA,{name:'Lugeck Vienna',lat:48.2099,lng:16.3744,q:'Lugeck Vienna Stephansplatz'},{name:'Café Mozart',lat:48.2033,lng:16.3694,q:'Café Mozart Vienna'}]
+      },
+      { time:'21:30', title:'🌙 야경 산책 — 슈테판 대성당 → 그라벤 → 알베르티나 테라스', color:'#2c6dbf',
+        badges:[{t:'🌙 야경',c:'b-vi'}],
+        route:{ time:'도보 야경 코스 약 1시간', km:'약 1.5 km', mode:'🚶 도보' },
+        details:['<strong>슈테판 대성당</strong> 야간 조명 — 광장 야경 📸','<strong>그라벤 거리</strong> 야간 — 비엔나 황금빛 가로등 분위기','<strong>알베르티나 계단 테라스</strong> — 오페라극장 방향 최고 뷰포인트','<strong>빈 국립 오페라극장</strong> 야간 조명 감상'],
+        places:[{name:'슈테판 대성당',lat:48.2085,lng:16.3726,q:'Stephansdom Vienna night'},{name:'그라벤 거리',lat:48.2089,lng:16.3697,q:'Graben Vienna night'},{name:'알베르티나',lat:48.2039,lng:16.3680,q:'Albertina Vienna'},{name:'빈 국립 오페라극장',lat:48.2031,lng:16.3693,q:'Wiener Staatsoper Vienna'}]
+      },
+      { time:'22:30', title:'🚇 숙소 복귀 — U1 Stephansplatz → Südtiroler Platz', color:'#888888',
+        badges:[{t:'🏨 귀환',c:'b-go'},{t:'U1 막차 확인',c:'b-wr'}],
+        route:{ time:'약 20분', km:'약 6 km', mode:'🚇 U1' },
+        details:['<strong>Stephansplatz U1</strong> 탑승 → <strong>Südtiroler Platz</strong> 하차 (2정거장)','도보 약 5분 → ibis Wien Hauptbahnhof 도착','⚠️ U1 막차: 평일 약 00:30 (Vienna City Card 사용 가능)'],
+        places:[{name:'슈테판 대성당',lat:48.2085,lng:16.3726,q:'Stephansdom Vienna'},{name:'Wien Südtiroler Platz',lat:48.1850,lng:16.3786,q:'Südtiroler Platz Wien U-Bahn'},PH_VIENNA]
+      }
+    ]
+  },
+  {
+    date:'5월 5일 화요일', flag:'🇦🇹', label:'비엔나 3일차 — 링슈트라세 + 쇤브룬 + 노이바우',
+    hotel: 'vienna',
+    travel:{ total:'약 08:00~21:30', km:'약 18 km', walk:'도보 약 6 km' },
+    events:[
+      { time:'08:00', title:'링슈트라세 건축 투어 — 의회·시청·대학·보티프 교회', color:'#2c6dbf',
+        badges:[{t:'🇦🇹 비엔나 3일차',c:'b-vi'}],
+        route:{ time:'도보 약 1.5km 코스', km:'약 1.5 km', mode:'🚶 도보' },
+        details:['<strong>오스트리아 의회의사당</strong> — 그리스 신전 양식 · 외관','<strong>빈 시청(Rathaus)</strong> — 고딕 양식 · 광장','<strong>빈 대학교</strong> — 링슈트라세 정원','<strong>보티프 교회(Votivkirche)</strong> — 신고딕 첨탑 · 내부 입장 권장'],
+        note:'아침 일찍 링슈트라세는 인파 없이 건축물 감상 최적!',
+        places:[PH_VIENNA,{name:'오스트리아 의회의사당',lat:48.2104,lng:16.3574,q:'Austrian Parliament Vienna'},{name:'빈 시청',lat:48.2107,lng:16.3567,q:'Vienna Rathaus'},{name:'보티프 교회',lat:48.2157,lng:16.3596,q:'Votivkirche Vienna'}]
+      },
+      { time:'09:30', title:'미술사 박물관 (KHM)', color:'#2c6dbf',
+        badges:[{t:'🖼️ KHM',c:'b-vi'},{t:'⚠️ 예매',c:'b-wr'}],
+        admission:'10:00~18:00 (목요일 ~21:00) · 마지막 입장 1시간 전 · €21',
+        route:{ time:'도보 10분', km:'약 0.8 km', mode:'🚶' },
+        details:['<strong>Kunsthistorisches Museum</strong> — 클림트·라파엘·루벤스·렘브란트','세계 4대 미술관 중 하나 · 약 2시간'],
+        places:[{name:'미술사 박물관',lat:48.2033,lng:16.3614,q:'Kunsthistorisches Museum Vienna'}]
+      },
+      { time:'11:40', title:'MuseumsQuartier 산책', color:'#2c6dbf',
+        badges:[{t:'🎨 MQ',c:'b-vi'}],
+        route:{ time:'도보 3분', km:'0.2 km', mode:'🚶' },
+        details:['빈 최대 문화지구 · 레오폴트 미술관 · mumok 현대미술관 외관','MQ 광장 카페에서 커피 ☕'],
+        places:[{name:'MuseumsQuartier',lat:48.2013,lng:16.3590,q:'MuseumsQuartier Vienna'}]
+      },
+      { time:'14:00', title:'점심 — 나슈마르크트', color:'#2c6dbf',
+        badges:[{t:'🥙 나슈마르크트',c:'b-vi'}],
+        route:{ time:'U2 → U4', km:'약 2 km', mode:'🚇 지하철' },
+        details:['U4 Kettenbrückengasse · 비엔나 최대 야외 시장','<strong>NENI am Naschmarkt</strong> — 이스라엘 요리 · 추천','케밥·팔라펠·현지 치즈·소시지','<strong>나슈마르크트 영업: 06:00~19:30 (토 ~17:00 / 일 휴무)</strong> — 14시도 완전 영업 중'],
+        alt:'나슈마르크트 내 케밥·팔라펠 스탠드 — 야외 테이블 취식 €5~8',
+        places:[{name:'나슈마르크트',lat:48.1984,lng:16.3664,q:'Naschmarkt Vienna'}]
+      },
+      { time:'13:15', title:'카를 광장 → 오토 바그너 역사 건물 → 카를성당', color:'#2c6dbf',
+        badges:[{t:'🏛️ 카를광장',c:'b-vi'}],
+        admission:'카를성당 09:00~18:00 · €8 (엘리베이터로 천장화 근접 관람 포함)',
+        route:{ time:'도보 5분', km:'0.3 km', mode:'🚶' },
+        details:['<strong>오토 바그너 설계 카를광장 지하철역</strong> — 아르누보 걸작','<strong>카를성당(Karlskirche)</strong> — 바로크 · 내부 엘리베이터로 천장화 근접 관람'],
+        places:[{name:'카를성당',lat:48.1977,lng:16.3724,q:'Karlskirche Vienna'},{name:'카를 광장',lat:48.1987,lng:16.3697,q:'Karlsplatz Vienna'}]
+      },
+      { time:'14:10', title:'쇤브룬 궁전 — 글로리에테 전망', color:'#2c6dbf',
+        badges:[{t:'🏰 쇤브룬',c:'b-vi'},{t:'⚠️ 예매',c:'b-wr'}],
+        admission:'쇤브룬 궁전 08:30~17:30 (성수기 ~18:30) · Grand Tour €22 · schoenbrunn.at',
+        route:{ time:'약 15분', km:'약 4 km', mode:'🚇 U4' },
+        details:['U4 Schönbrunn · <strong>Grand Tour (50분)</strong> — 40개 방 관람 권장','<strong>넵튠 분수</strong> · <strong>글로리에테</strong> 언덕 전망대 ☕ — 비엔나 전경 최고'],
+        places:[{name:'쇤브룬 궁전',lat:48.1845,lng:16.3122,q:'Schönbrunn Palace Vienna'},{name:'글로리에테',lat:48.1817,lng:16.3125,q:'Gloriette Schönbrunn Vienna'}]
+      },
+      { time:'16:20', title:'노이바우 쇼핑 — 마리아힐퍼·노이바우가세·지벤슈테른', color:'#5b3fa0',
+        badges:[{t:'🛍️ 노이바우',c:'b-fl'}],
+        route:{ time:'U4→U3', km:'약 2 km', mode:'🚇' },
+        details:['<strong>마리아힐퍼 거리</strong> — 대중 쇼핑 · C&A·Foot Locker·TK Maxx','<strong>노이바우가세</strong> — 편집숍·빈티지 · Bootik54·HUMANA','<strong>지벤슈테른가세</strong> — Carhartt·FREITAG · 라이문트호프'],
+        places:[{name:'마리아힐퍼 거리',lat:48.1963,lng:16.3460,q:'Mariahilfer Strasse Vienna'},{name:'노이바우가세',lat:48.1982,lng:16.3493,q:'Neubaugasse Vienna'}]
+      },
+      { time:'18:00', title:'저녁 — 살람 브라우 (Salm Bräu) 양조장', color:'#2c6dbf',
+        badges:[{t:'🍺 양조장 맛집',c:'b-vi'}],
+        route:{ time:'트램 D', km:'약 2 km', mode:'🚋 트램' },
+        details:['<strong>Salm Bräu</strong> — 벨베데레 옆 현지 양조장 · 직접 양조 맥주','<strong>슈니첼 + 하우스 맥주</strong> 조합 강추 🍺','또는 <strong>7Stern Bräu</strong> — 노이바우 지역 양조장'],
+        alt:'근처 대안: 7Stern Bräu (노이바우 양조장) / Huth Gastwirtschaft 코르동블루 (MQ 근처) / Ottendorfer 슈니첼 (벨베데레 도보 5분)',
+        places:[{name:'노이바우가세',lat:48.1982,lng:16.3493,q:'Neubaugasse Vienna'},{name:'Salm Bräu',lat:48.1920,lng:16.3800,q:'Salm Bräu Vienna'}]
+      },
+      { time:'20:00', title:'🌙 야경 — 빈 시청 야간 조명', color:'#2c6dbf',
+        badges:[{t:'🌙 야경',c:'b-vi'}],
+        route:{ time:'트램 1호선', km:'약 3 km', mode:'🚋 트램' },
+        details:['<strong>빈 시청 야간 조명</strong> — 링슈트라세 야경','부르크극장·의회의사당 조명 · 도보 야경 산책'],
+        places:[{name:'빈 시청',lat:48.2107,lng:16.3567,q:'Vienna Rathaus night'},{name:'링슈트라세',lat:48.2080,lng:16.3580,q:'Ringstrasse Vienna'}]
+      }
+    ]
+  },
+  {
+    date:'5월 6일 수요일', flag:'🇦🇹', label:'비엔나 4일차 — 알베르티나 + Salome 오페라의 밤 🎭',
+    hotel: 'vienna',
+    travel:{ total:'약 08:00~21:30', km:'약 10 km', walk:'도보 약 4 km' },
+    events:[
+      { time:'08:00', title:'시민공원 (Stadtpark) — 요한 슈트라우스 동상', color:'#2c6dbf',
+        badges:[{t:'🇦🇹 비엔나 4일차',c:'b-vi'}],
+        route:{ time:'약 25분', km:'약 7 km', mode:'🚇 U1→U4' },
+        details:['U4 Stadtpark역 · 황금빛 요한 슈트라우스 동상 📸','브람스 동상 · 공원 산책 · 아침 조깅하는 현지인들'],
+        places:[PH_VIENNA,{name:'시민공원',lat:48.2019,lng:16.3789,q:'Stadtpark Vienna'},{name:'요한 슈트라우스 동상',lat:48.2013,lng:16.3778,q:'Johann Strauss Monument Vienna'}]
+      },
+      { time:'09:00', title:'알베르티나 미술관', color:'#2c6dbf',
+        badges:[{t:'🎨 알베르티나',c:'b-vi'},{t:'⚠️ 예매',c:'b-wr'}],
+        admission:'10:00~18:00 (수요일 ~21:00) · 마지막 입장 1시간 전 · €19.90',
+        route:{ time:'도보 10분', km:'0.8 km', mode:'🚶' },
+        details:['<strong>알베르티나 미술관</strong> — 모네·피카소·뒤러·마티스','Habsburg 황실 컬렉션 · 오페라극장 도보 5분 거리','📸 알베르티나 계단 테라스 — 오페라극장 방향 야경 포인트'],
+        places:[{name:'시민공원',lat:48.2019,lng:16.3789,q:'Stadtpark Vienna'},{name:'알베르티나',lat:48.2039,lng:16.3680,q:'Albertina Vienna'}]
+      },
+      { time:'11:00', title:'빈 모차르트 하우스 (Mozarthaus Vienna)', color:'#2c6dbf',
+        badges:[{t:'🎵 모차르트 하우스',c:'b-vi'}],
+        admission:'10:00~18:00 · 마지막 입장 17:30 · €12',
+        route:{ time:'도보 8분', km:'0.6 km', mode:'🚶' },
+        details:['<strong>모차르트 실제 거주지</strong> — 피가로의 결혼 작곡 장소','도마노가세 5번지 · 3층 전시 · 약 1시간'],
+        places:[{name:'알베르티나',lat:48.2039,lng:16.3680,q:'Albertina Vienna'},{name:'빈 모차르트 하우스',lat:48.2074,lng:16.3740,q:'Mozarthaus Vienna'}]
+      },
+      { time:'14:00', title:'점심 — 카페 첸트랄 or 카페 데멜', color:'#2c6dbf',
+        badges:[{t:'☕ 역사와 전통',c:'b-vi'}],
+        route:{ time:'도보 7분', km:'0.5 km', mode:'🚶' },
+        details:['<strong>카페 첸트랄(Café Central)</strong> — 1876년 창업 · 높은 아치 천장 · 케이크+런치 · <strong>영업 07:30~22:00 (브레이크 타임 없음)</strong>','또는 <strong>카페 데멜(Café Demel)</strong> — 황실 납품 제과점 · <strong>영업 10:00~19:00</strong>'],
+        alt:'근처 대안: Zum Wohl 와인바 (그라벤 인근) / Bitzinger 소세지 (오페라 광장 야외 €5)',
+        places:[{name:'빈 모차르트 하우스',lat:48.2074,lng:16.3740,q:'Mozarthaus Vienna'},{name:'카페 첸트랄',lat:48.2097,lng:16.3673,q:'Café Central Vienna'},{name:'카페 데멜',lat:48.2093,lng:16.3684,q:'Café Demel Vienna'}]
+      },
+      { time:'13:30', title:'오스트리아 국립도서관 (Hofburg 내)', color:'#2c6dbf',
+        badges:[{t:'📚 도서관',c:'b-vi'}],
+        admission:'10:00~18:00 (목~21:00) · €10',
+        route:{ time:'도보 8분', km:'0.6 km', mode:'🚶' },
+        details:['<strong>프룽크잘(Prunksaal)</strong> — 세계에서 가장 아름다운 바로크 도서관','황금빛 프레스코 천장 · 인스타 필수 포토스팟'],
+        places:[{name:'카페 첸트랄',lat:48.2097,lng:16.3673,q:'Café Central Vienna'},{name:'오스트리아 국립도서관',lat:48.2049,lng:16.3656,q:'Austrian National Library Vienna'}]
+      },
+      { time:'15:00', title:'호텔 복귀 · 오페라 준비', color:'#888888',
+        badges:[{t:'🎭 오페라 준비',c:'b-go'}],
+        route:{ time:'약 20분', km:'약 6 km', mode:'🚇 U1' },
+        details:['스마트 캐주얼 의상 · 모바일 오페라 티켓 스크린샷 저장','핸드폰 완전 충전 · 코트 클락룸 맡길 준비'],
+        places:[{name:'오스트리아 국립도서관',lat:48.2049,lng:16.3656,q:'Austrian National Library Vienna'},PH_VIENNA]
+      },
+      { time:'17:30', title:'저녁 — 바트징거 소세지 스탠드 (오페라 전)', color:'#2c6dbf',
+        badges:[{t:'🌭 소세지 스탠드',c:'b-vi'}],
+        route:{ time:'약 20분', km:'약 6 km', mode:'🚇 U1' },
+        details:['<strong>Bitzinger Würstelstand</strong> — 오페라극장 바로 옆','비엔나 명물 소세지 스탠드 · 현지인·신사들 정장 입고 서서 먹는 풍경','Käsekrainer(치즈 소시지) + Sekt(스파클링) 조합 추천 🥂'],
+        alt:'이게 이미 Street Food! Käsekrainer €4~5 · 근처 대안: Café Mozart (오페라 도보 2분, 저녁 식사) / Café Landtmann (링슈트라세 뷰, 오페라 전 여유)',
+        note:'오페라 전 바트징거 소세지는 비엔나 정통 문화! 신사들이 정장 입고 서서 먹는 게 포인트.',
+        places:[{name:'Bitzinger Würstelstand',lat:48.2027,lng:16.3690,q:'Bitzinger Würstelstand Vienna Staatsoper'}]
+      },
+      { time:'18:10', title:'🎭 빈 국립오페라극장 — Salome 19:30', color:'#b54060',
+        badges:[{t:'✅ 예약완료',c:'b-ok'},{t:'Salome 19:30',c:'b-op'}],
+        confirmed:{ no:'4844046', time:'19:30' },
+        route:{ time:'도보 1분', km:'0.1 km', mode:'🚶' },
+        details:['<strong>18:10 Operngasse 입구</strong> 도착 — <strong>좌석 예약 완료</strong> · 모바일 티켓 스크린샷 미리 저장','바에서 음료 선주문 (비엔나 오페라 문화) · 코트는 클락룸에','<strong>약 1시간 40분</strong> — 인터미션 없음'],
+        admission:'좌석 예약 완료 · 예약번호 4844046 · Operngasse 입구',
+        note:'공연 중 사진·영상 촬영 금지. 핸드폰 무음 필수.',
+        places:[{name:'빈 국립오페라극장',lat:48.2031,lng:16.3693,q:'Wiener Staatsoper Vienna'}]
+      },
+      { time:'21:10', title:'🌙 야경 — 슈테판 광장 → 그라벤 야간 산책', color:'#2c6dbf',
+        badges:[{t:'🌙 야경',c:'b-vi'}],
+        route:{ time:'도보 코스', km:'약 1 km', mode:'🚶' },
+        details:['오페라 감흥 유지하며 → 슈테판 광장 야경','그라벤 거리 · 성 페터 성당 야간 조명'],
+        places:[{name:'슈테판 대성당',lat:48.2085,lng:16.3726,q:'Stephansdom Vienna night'},{name:'그라벤 거리',lat:48.2089,lng:16.3697,q:'Graben Vienna night'}]
+      }
+    ]
+  },
+  {
+    date:'5월 7일 목요일', flag:'🇦🇹', label:'비엔나 5일차 — 프라터 + 훈데르트바서 + Das LOFT 야경',
+    hotel: 'vienna',
+    travel:{ total:'약 08:00~22:00', km:'약 15 km', walk:'도보 약 5 km' },
+    events:[
+      { time:'08:00', title:'프라터 공원 + 대관람차 (Riesenrad)', color:'#2c6dbf',
+        badges:[{t:'🇦🇹 비엔나 5일차',c:'b-vi'}],
+        admission:'대관람차 09:00~19:45 · €15',
+        route:{ time:'약 10분', km:'약 4 km', mode:'🚇 U1' },
+        details:['호텔 → Praterstern U1 2정거장 · 약 5분','<strong>Prater 공원</strong> 무료 입장 · 아침 산책','<strong>Riesenrad 대관람차</strong> €15 — 비엔나 전경 360°'],
+        places:[PH_VIENNA,{name:'프라터 공원',lat:48.2167,lng:16.3961,q:'Prater Park Vienna'},{name:'대관람차',lat:48.2168,lng:16.3976,q:'Wiener Riesenrad'}]
+      },
+      { time:'09:30', title:'훈데르트바서 하우스 + 쿤스트 하우스 빈', color:'#2c6dbf',
+        badges:[{t:'🎨 훈데르트바서',c:'b-vi'}],
+        admission:'쿤스트 하우스 빈 10:00~18:00 · €16',
+        route:{ time:'약 15분', km:'약 4 km', mode:'🚇 U1→트램' },
+        details:['U1 Rochusgasse → 트램 O → Hetzgasse','<strong>훈데르트바서 하우스</strong> 외관 📸 — 세상에서 가장 독특한 공동주택','<strong>쿤스트 하우스 빈 뮤지엄</strong> — 훈데르트바서 전시'],
+        places:[{name:'훈데르트바서 하우스',lat:48.2071,lng:16.3929,q:'Hundertwasserhaus Vienna'},{name:'쿤스트 하우스 빈',lat:48.2069,lng:16.3957,q:'Kunst Haus Wien Vienna'}]
+      },
+      { time:'11:00', title:'슈피텔라우 소각장 (Spittelau Incinerator)', color:'#2c6dbf',
+        badges:[{t:'🏭 훈데르트바서',c:'b-vi'}],
+        route:{ time:'약 15분', km:'약 3 km', mode:'🚇 U6' },
+        details:['U6 Spittelau역 · <strong>훈데르트바서 설계 소각장</strong>','형형색색 외관 — 외관만 포토 · 5분 컷','다뉴브 강변 인접 · 산책 연계'],
+        places:[{name:'쿤스트 하우스 빈',lat:48.2069,lng:16.3957,q:'Kunst Haus Wien Vienna'},{name:'슈피텔라우 소각장',lat:48.2317,lng:16.3577,q:'Spittelau Incinerator Vienna'}]
+      },
+      { time:'14:00', title:'점심 — Glacis Beisl or Motto am Fluss', color:'#2c6dbf',
+        badges:[{t:'🍽️ 점심',c:'b-vi'}],
+        route:{ time:'약 10분', km:'약 2 km', mode:'🚇 U4' },
+        details:['추천 A: <strong>Glacis Beisl</strong> — MuseumsQuartier 공원 야외 레스토랑 🌳 · <strong>영업: 11:30~23:00 (브레이크 없음)</strong>','추천 B: <strong>Motto am Fluss</strong> — 다뉴브 운하변 · <strong>영업: 10:00~02:00</strong>'],
+        alt:'MQ 앞 Würstelstand — 소세지 테이크아웃 · 광장 야외 취식 €4~5',
+        places:[{name:'슈피텔라우 소각장',lat:48.2317,lng:16.3577,q:'Spittelau Incinerator Vienna'},{name:'Glacis Beisl',lat:48.2004,lng:16.3598,q:'Glacis Beisl Vienna MuseumsQuartier'}]
+      },
+      { time:'13:30', title:'다뉴브 타워 (Danube Tower)', color:'#2c6dbf',
+        badges:[{t:'🗼 전망대',c:'b-vi'}],
+        admission:'10:00~23:30 · €17 · 회전 레스토랑 포함',
+        route:{ time:'약 25분', km:'약 10 km', mode:'🚇 U4→U1' },
+        details:['Glacis Beisl → U4 → U1 Alte Donau · <strong>회전 전망대 €17</strong>','비엔나+다뉴브+도나우시티 파노라마 · 약 1시간 코스'],
+        places:[{name:'Glacis Beisl',lat:48.2004,lng:16.3598,q:'Glacis Beisl Vienna MuseumsQuartier'},{name:'다뉴브 타워',lat:48.2407,lng:16.4127,q:'Danube Tower Vienna Donauturm'}]
+      },
+      { time:'15:00', title:'🛍️ 쇼핑 — Westfield Donau Zentrum + Manner + Swarovski', color:'#5b3fa0',
+        badges:[{t:'🛍️ 쇼핑',c:'b-fl'}],
+        route:{ time:'약 10분', km:'약 2 km', mode:'🚇 U1' },
+        details:['<strong>Westfield Donau Zentrum</strong> — 호텔 인근 대형 쇼핑몰','<strong>Manner 과자</strong> (웨이퍼 초콜릿 · 비엔나 대표 기념품) 🍫','<strong>Swarovski</strong> 크리스털 · <strong>dm 드로게리</strong> 화장품 쇼핑'],
+        note:'Manner 과자는 비엔나 최고 기념품! 박스 포장으로 선물용 구매 추천.',
+        places:[{name:'Westfield Donau Zentrum',lat:48.2370,lng:16.4350,q:'Westfield Donau Zentrum Vienna'},{name:'Swarovski Donau Zentrum',lat:48.2370,lng:16.4350,q:'Swarovski Donau Zentrum Vienna'}]
+      },
+      { time:'17:00', title:'호텔 복귀 · 휴식 · Das LOFT 예약 확인', color:'#888888',
+        badges:[{t:'🏨 준비',c:'b-go'}],
+        route:{ time:'약 5분', km:'약 1 km', mode:'🚇 U1' },
+        details:['Das LOFT 예약 재확인 · 스마트 캐주얼 준비'],
+        places:[{name:'Westfield Donau Zentrum',lat:48.2370,lng:16.4350,q:'Westfield Donau Zentrum Vienna'},PH_VIENNA]
+      },
+      { time:'18:30', title:'저녁 — Das LOFT 뷰맛집 🌆 (슈니첼 포함)', color:'#2c6dbf',
+        badges:[{t:'🌆 뷰맛집 1위',c:'b-vi'},{t:'⚠️ 예약필수',c:'b-wr'}],
+        route:{ time:'약 20분', km:'약 6 km', mode:'🚇 U1' },
+        details:['<strong>Das LOFT</strong> — Sofitel Vienna Stephansdom 18층','비엔나 360° 전경 + 슈테판 대성당 야경 뷰','<strong>슈니첼 + 와인</strong> 페어링 추천 🥩🍷','반드시 사전 예약 — dasloftwien.at'],
+        alt:'근처 대안: Figlmüller Wollzeile (슈니첼, 슈테판 도보 3분) / Griechenbeisl (1447년 창업, 도보 5분) / Zum weißen Rauchfangkehrer (슈니첼 전문, 구시가)',
+        note:'비엔나에서 가장 뷰가 좋은 레스토랑! 슈니첼 먹으면서 야경 보는 경험은 여기서만.',
+        places:[PH_VIENNA,{name:'Das LOFT',lat:48.2126,lng:16.3797,q:'Das LOFT Vienna Sofitel Stephansdom'}]
+      },
+      { time:'21:00', title:'🌙 야경 — 슈테판 광장 → 그라벤 야간 산책', color:'#2c6dbf',
+        badges:[{t:'🌙 야경',c:'b-vi'}],
+        route:{ time:'도보 코스', km:'약 1 km', mode:'🚶' },
+        details:['Das LOFT 후 자연스럽게 슈테판 광장 야경','그라벤 거리 야간 조명 · 도보 복귀 or 지하철'],
+        places:[{name:'Das LOFT',lat:48.2126,lng:16.3797,q:'Das LOFT Vienna Sofitel Stephansdom'},{name:'슈테판 대성당',lat:48.2085,lng:16.3726,q:'Stephansdom Vienna night'},{name:'그라벤 거리',lat:48.2089,lng:16.3697,q:'Graben Vienna night'}]
+      }
+    ]
+  },
+  {
+    date:'5월 8일 금요일', flag:'🇦🇹', label:'당일치기 — A: 할슈타트 🏔️ / B: 바하우 계곡 🛶',
+    hotel: 'vienna',
+    travel:{ total:'약 09:00~21:00', km:'약 580 km (A) / 약 160 km (B)', walk:'도보 약 5 km' },
+    events:[
+      { time:'08:30', title:'🔀 선택: A 할슈타트 or B 바하우 계곡', color:'#1f8a80',
+        badges:[{t:'🏔️ 옵션A 할슈타트',c:'b-mt'},{t:'🛶 옵션B 바하우',c:'b-go'}],
+        route:{ time:'Wien Westbahnhof 출발 기준', km:'—', mode:'🚂 ÖBB' },
+        details:['<strong>옵션 A — 할슈타트:</strong> 오전 09:30 Westbahnhof 출발 · 소금광산 · 스카이워크 · 페리 · €25~35 왕복','<strong>옵션 B — 바하우 계곡:</strong> 09:30 Westbahnhof 출발 · 멜크 수도원 + 도나우 크루즈 + 뒤른슈타인 · ÖBB Wachau-Ticket €85 (열차+수도원+크루즈 포함)'],
+        note:'둘 다 평일 금요일 → 주말보다 인파 적음. 미리 선택 후 티켓 예매 필수!',
+        places:[PH_VIENNA,{name:'Wien Westbahnhof',lat:48.1962,lng:16.3380,q:'Wien Westbahnhof'}]
+      },
+      { time:'09:00', title:'호텔 → Wien Westbahnhof 출발', color:'#1f8a80',
+        badges:[{t:'🚇 U1→U3',c:'b-mt'}],
+        route:{ time:'약 25분', km:'약 10 km', mode:'🚇 U1→U3' },
+        details:['호텔 → Südtiroler Platz U1 → Westbahnhof U3 환승 · 약 25분','<strong>09:30 열차</strong> 탑승 목표 (어느 옵션이든 동일 출발역)'],
+        places:[PH_VIENNA,{name:'Wien Westbahnhof',lat:48.1962,lng:16.3380,q:'Wien Westbahnhof'}]
+      },
+      { time:'09:30', title:'[옵션 A] Westbahnhof → 할슈타트 출발', color:'#1f8a80',
+        badges:[{t:'🏔️ 옵션 A',c:'b-mt'},{t:'🚂 ÖBB',c:'b-go'}],
+        route:{ time:'약 3시간 30분', km:'290 km', mode:'🚂 + ⛴️ 페리' },
+        details:['Wien Westbahnhof → Attnang-Puchheim 환승 → Hallstatt Bahnhof · 약 3시간 30분','역에서 <strong>페리(Fähre) €4</strong> 타고 마을 진입 (5분)','<strong>소금광산(Salzwelten)</strong> 투어 — hallstatt.net 사전 예약 필수','<strong>스카이워크 전망대</strong> — 360° 절경 포토스팟','호수·마을 골목 산책 · 호숫가 레스토랑 점심 (송어 요리 추천 🐟)'],
+        alt:'할슈타트 Seehotel Grüner Baum 테라스 — 호수뷰 테이크아웃 커피+케이크 야외 취식',
+        note:'늦으면 종일 인파 속! 소금광산 사전 예약 필수.',
+        places:[{name:'Wien Westbahnhof',lat:48.1962,lng:16.3380,q:'Wien Westbahnhof'},{name:'할슈타트 마을',lat:47.5622,lng:13.6493,q:'Hallstatt village Austria'},{name:'소금광산',lat:47.5578,lng:13.6456,q:'Hallstatt Salt Mine'},{name:'스카이워크',lat:47.5578,lng:13.6423,q:'Hallstatt Skywalk'}]
+      },
+      { time:'09:30', title:'[옵션 B] Westbahnhof → 멜크 출발 (바하우 콤비티켓)', color:'#0c447c',
+        badges:[{t:'🛶 옵션 B',c:'b-vi'},{t:'🎫 Wachau-Ticket €85',c:'b-go'}],
+        route:{ time:'약 1시간 20분', km:'약 95 km', mode:'🚂 ÖBB (St.Pölten 환승)' },
+        details:['<strong>ÖBB Wachau-Ticket €85</strong> — 열차 왕복 + 멜크 수도원 입장 + 도나우 크루즈 포함','구매: ÖBB 앱 / railtours.oebb.at / Westbahnhof 창구','Wien Westbahnhof → St.Pölten 환승 → Melk · 약 1시간 20분','<strong>멜크 수도원(Stift Melk)</strong> — 바로크 걸작 · 대리석 홀·도서관·도나우 전망','13:45~13:50 선착장 출발 → 도나우 크루즈 · 갑판 자리 선점!','<strong>뒤른슈타인</strong> 하선 — 파란 탑 성당 · 사자왕 리처드 감금 성 유적 등반 · 살구 와인 시음 🍑','버스 715 → 크렘스 기차역 → 비엔나 복귀'],
+        alt:'멜크 Stiftsrestaurant — 수도원 옆 테라스 · 굴라시 수프+사과 슈트루델 야외 취식',
+        note:'뒤른슈타인에서 Richard Löwenherz Hotel 테라스 살구 덤플링(Marillenknödel) 필수! 🍑',
+        places:[{name:'Wien Westbahnhof',lat:48.1962,lng:16.3380,q:'Wien Westbahnhof'},{name:'멜크 수도원',lat:48.2284,lng:15.3316,q:'Stift Melk Abbey Austria'},{name:'뒤른슈타인',lat:48.3988,lng:15.5227,q:'Dürnstein Wachau Austria'},{name:'크렘스',lat:48.4097,lng:15.6147,q:'Krems an der Donau Austria'}]
+      },
+      { time:'17:00', title:'복귀 — 할슈타트 또는 크렘스 출발', color:'#1f8a80',
+        badges:[{t:'🚂 귀환',c:'b-mt'}],
+        route:{ time:'약 3~4시간', km:'160~290 km', mode:'🚂 + ⛴️' },
+        details:['<strong>A 할슈타트:</strong> 페리 → Hallstatt Bahnhof → Wien Westbahnhof 도착 약 20:30','<strong>B 바하우:</strong> 크렘스 18:51 열차 → Wien Franz-Josefs-Bahnhof 약 20:00 (콤비티켓 포함)','Westbahnhof/Franz-Josefs → 호텔 약 25~30분'],
+        alt:'귀환 후 호텔 근처 Pizza Bizi 테이크아웃 — 피로 회복용 가볍게',
+        places:[{name:'할슈타트 선착장',lat:47.5614,lng:13.6500,q:'Hallstatt ferry pier Austria'},{name:'크렘스 기차역',lat:48.4097,lng:15.6147,q:'Krems Bahnhof Austria'},PH_VIENNA]
+      }
+    ]
+  },
+  {
+    date:'5월 9일 토요일', flag:'🇦🇹', label:'비엔나 쇼핑 데이 🛍️ 10:00~20:00',
+    hotel: 'vienna',
+    travel:{ total:'약 10:00~20:00', km:'약 10 km', walk:'도보 약 5 km' },
+    events:[
+      { time:'10:00', title:'출발 → 마리아힐퍼 거리 + 노이바우 쇼핑 시작', color:'#5b3fa0',
+        badges:[{t:'🛍️ 쇼핑 데이',c:'b-fl'}],
+        route:{ time:'약 25분', km:'약 8 km', mode:'🚇 U1→U3' },
+        details:['호텔 → Südtiroler Platz U1 → Zieglergasse (U3) · 약 25분','<strong>마리아힐퍼 거리</strong> — 비엔나 최대 쇼핑 거리 · C&A·Foot Locker·TK Maxx','<strong>Kaufhaus Gerngross</strong> — 백화점 · Swarovski 입점'],
+        alt:'마리아힐퍼 거리 빵집 Joseph Brot — 테이크아웃 아침 샌드위치 야외 취식',
+        places:[PH_VIENNA,{name:'마리아힐퍼 거리',lat:48.1963,lng:16.3460,q:'Mariahilfer Strasse Vienna'},{name:'Kaufhaus Gerngross',lat:48.1967,lng:16.3490,q:'Kaufhaus Gerngross Vienna'}]
+      },
+      { time:'11:30', title:'노이바우가세 → 지벤슈테른가세 빈티지·편집숍', color:'#5b3fa0',
+        badges:[{t:'🎒 빈티지',c:'b-fl'}],
+        route:{ time:'도보 5분', km:'0.4 km', mode:'🚶' },
+        details:['<strong>Neubaugasse</strong> — 개성있는 편집숍·빈티지','<strong>Bootik 54</strong> · <strong>HUMANA Vintage</strong> · <strong>Burggasse 24</strong>','<strong>FREITAG Vienna Store</strong> — 재활용 가방 · 비엔나 대표 기념품','<strong>Carhartt WIP Store</strong> · <strong>Urban Outfitters</strong>'],
+        places:[{name:'노이바우가세',lat:48.1982,lng:16.3493,q:'Neubaugasse Vienna'},{name:'FREITAG Vienna',lat:48.1978,lng:16.3497,q:'FREITAG Vienna Store Neubaugasse'}]
+      },
+      { time:'14:00', title:'점심 — 나슈마르크트 런치', color:'#2c6dbf',
+        badges:[{t:'🥙 나슈마르크트',c:'b-vi'}],
+        route:{ time:'U3→U4', km:'약 2 km', mode:'🚇' },
+        details:['U4 Kettenbrückengasse · 비엔나 최대 야외 시장','<strong>NENI am Naschmarkt</strong> or 현지 케밥·팔라펠 스탠드','야외 테이블에서 비엔나 현지 시장 분위기 만끽'],
+        alt:'나슈마르크트 내 케밥·팔라펠 스탠드 — 야외 취식 €5~8',
+        places:[{name:'나슈마르크트',lat:48.1984,lng:16.3664,q:'Naschmarkt Vienna'}]
+      },
+      { time:'14:30', title:'율리어스 마이늘 암 그라벤 + 그라벤 거리 기념품', color:'#5b3fa0',
+        badges:[{t:'🎁 기념품',c:'b-fl'}],
+        route:{ time:'U4→U1', km:'약 2 km', mode:'🚇' },
+        details:['<strong>율리어스 마이늘 암 그라벤</strong> — 고급 식료품 기념품 · 커피·잼·초콜릿','<strong>Manner 과자</strong> (슈테판 대성당 옆 Manner Shop) 🍫','<strong>FREYWILLE</strong> 에나멜 주얼리 · <strong>Swarovski</strong> 크리스털'],
+        places:[{name:'율리어스 마이늘 암 그라벤',lat:48.2094,lng:16.3693,q:'Julius Meinl am Graben Vienna'},{name:'Manner Shop 슈테판',lat:48.2085,lng:16.3726,q:'Manner Shop Stephansplatz Vienna'},{name:'Swarovski Stephansplatz',lat:48.2085,lng:16.3726,q:'Swarovski Stephansplatz Vienna'}]
+      },
+      { time:'16:00', title:'카페 자허 — 마지막 자허 토르테 🎂', color:'#2c6dbf',
+        badges:[{t:'☕ 작별 케이크',c:'b-vi'}],
+        route:{ time:'도보 5분', km:'0.3 km', mode:'🚶' },
+        details:['<strong>카페 자허(Café Sacher Wien)</strong> — 오리지널 자허 토르테 + 아인슈패너','비엔나 마지막 카페 타임 ☕'],
+        note:'자허 토르테 선물용 박스 포장 구매 추천! 기내 반입 가능.',
+        places:[{name:'카페 자허',lat:48.2031,lng:16.3694,q:'Café Sacher Wien'}]
+      },
+      { time:'17:00', title:'dm 드로게리 + BILLA 마트 — 마지막 장보기', color:'#5b3fa0',
+        badges:[{t:'🧴 마트 쇼핑',c:'b-fl'}],
+        route:{ time:'도보 10분', km:'0.7 km', mode:'🚶' },
+        details:['<strong>dm drogerie markt</strong> — 화장품·비타민·세면도구 기념품','<strong>BILLA 마트</strong> — 와인·소세지·현지 식품 기념품','비엔나 와인(Grüner Veltliner) 한 병 추천 🍷'],
+        alt:'Leberkas-Pepi — 레버캐세 테이크아웃 · 길거리 취식 €3~4',
+        places:[{name:'dm drogerie markt',lat:48.2070,lng:16.3700,q:'dm drogerie markt Vienna Stephansplatz'},{name:'BILLA Wien',lat:48.2060,lng:16.3710,q:'BILLA Supermarket Vienna center'}]
+      },
+      { time:'18:30', title:'저녁 — Griechenbeisl (1447년 창업 역사와 전통) 🍽️', color:'#2c6dbf',
+        badges:[{t:'🏰 역사와 전통',c:'b-vi'}],
+        route:{ time:'도보 5분', km:'0.4 km', mode:'🚶' },
+        details:['<strong>Griechenbeisl</strong> — 1447년 창업 · 비엔나 최고 역사 레스토랑','슈니첼·굴라시·타펠슈피츠 · 베토벤·슈베르트·마크 트웨인이 단골','비엔나 마지막 저녁식사로 완벽한 마무리'],
+        note:'비엔나에서 가장 오래된 레스토랑! 마지막 저녁은 여기서 역사와 함께.',
+        places:[{name:'Griechenbeisl',lat:48.2119,lng:16.3773,q:'Griechenbeisl Vienna'}]
+      },
+      { time:'20:00', title:'호텔 복귀 · 짐 최종 정리', color:'#888888',
+        badges:[{t:'🏨 귀환',c:'b-go'}],
+        route:{ time:'약 25분', km:'약 8 km', mode:'🚇 U1' },
+        details:['Stephansplatz U1 → Südtiroler Platz · 약 20분','짐 최종 정리 · 내일 공항 이동 준비 · 이른 취침'],
+        places:[PH_VIENNA]
+      }
+    ]
+  },
+  {
+    date:'5월 10일 일요일', flag:'🇦🇹', label:'귀국 ✈️ — 오전 산책 후 공항',
+    hotel: 'vienna',
+    travel:{ total:'약 12시간', km:'약 9,200 km', walk:'도보 약 3 km' },
+    events:[
+      { time:'08:30', title:'기상 · 짐 프런트 맡기기 · 가벼운 아침', color:'#888888',
+        badges:[{t:'🇦🇹 오스트리아',c:'b-vi'}],
+        route:{ time:'호텔 내', km:'—', mode:'🏨' },
+        details:['짐 벨데스크에 맡기기 · 체크아웃은 12시','가벼운 호텔 조식 or 근처 카페'],
+        places:[PH_VIENNA]
+      },
+      { time:'09:00', title:'도나우 공원 (Donaupark) 아침 산책', color:'#2c6dbf',
+        badges:[{t:'🌳 도나우 공원',c:'b-vi'}],
+        route:{ time:'도보 약 15분', km:'약 1 km', mode:'🚶 도보' },
+        details:['호텔에서 도보 15분 거리 · 비엔나 최대 공원 중 하나','다뉴브 타워 조망 · 아침 산책·조깅하는 현지인들','공원 카페에서 마지막 비엔나 커피 ☕'],
+        alt:'공원 내 키오스크 — 커피·빵 테이크아웃 야외 취식',
+        places:[{name:'도나우 공원',lat:48.2390,lng:16.4060,q:'Donaupark Vienna'},{name:'다뉴브 타워',lat:48.2407,lng:16.4127,q:'Danube Tower Vienna'}]
+      },
+      { time:'10:00', title:'다뉴브 강변 산책 — Copa Cagrana', color:'#2c6dbf',
+        badges:[{t:'🌊 다뉴브',c:'b-vi'}],
+        route:{ time:'도보 약 20분', km:'약 1.5 km', mode:'🚶 도보' },
+        details:['<strong>Copa Cagrana</strong> — 다뉴브 강변 워터프론트 · 레스토랑·카페 밀집','비엔나 현지인들의 강변 나들이 명소','도나우시티(UN 빌딩군) 스카이라인 감상 📸'],
+        places:[{name:'Copa Cagrana',lat:48.2296,lng:16.4160,q:'Copa Cagrana Vienna Donau'},{name:'도나우시티',lat:48.2360,lng:16.4130,q:'Donau City Vienna UN buildings'}]
+      },
+      { time:'11:00', title:'Alte Donau (구 다뉴브) 호수 산책', color:'#2c6dbf',
+        badges:[{t:'🏞️ 구 다뉴브',c:'b-vi'}],
+        route:{ time:'도보 약 10분', km:'약 0.8 km', mode:'🚶 도보' },
+        details:['<strong>Alte Donau</strong> — 다뉴브에서 분리된 호수 · 5월 맑은 수면','호수 주변 산책로 · 보트 대여 (선택)','U1 Alte Donau역 인접 · 귀환 편리'],
+        alt:'호수변 키오스크 Würstelstand — 소세지+맥주 야외 취식',
+        places:[{name:'Alte Donau',lat:48.2295,lng:16.4350,q:'Alte Donau Vienna lake'},{name:'U1 Alte Donau역',lat:48.2310,lng:16.4310,q:'Alte Donau U-Bahn Vienna'}]
+      },
+      { time:'14:00', title:'점심 — 강변 레스토랑 or 테이크아웃', color:'#2c6dbf',
+        badges:[{t:'🍽️ 마지막 점심',c:'b-vi'}],
+        route:{ time:'도보 5분', km:'0.3 km', mode:'🚶' },
+        details:['Copa Cagrana 강변 레스토랑 중 선택','비엔나 마지막 식사 — 굴라시 or 슈니첼 추천 · <strong>Copa Cagrana 레스토랑 영업: 11:00~22:00</strong>'],
+        alt:'강변 Würstelstand 소세지 스탠드 — 야외 테이블 취식 €5~7',
+        places:[{name:'Copa Cagrana 레스토랑',lat:48.2296,lng:16.4160,q:'Copa Cagrana restaurant Vienna'}]
+      },
+      { time:'13:00', title:'호텔 복귀 · 체크아웃 · 짐 픽업', color:'#888888',
+        badges:[{t:'🏨 체크아웃',c:'b-go'}],
+        route:{ time:'약 15분', km:'약 1.5 km', mode:'🚶 or 🚇' },
+        details:['호텔 최종 체크아웃 · 짐 픽업','VIE 공항 이동 준비'],
+        places:[PH_VIENNA]
+      },
+      { time:'13:20', title:'Wien Mitte → CAT 열차 → VIE 공항', color:'#5b3fa0',
+        badges:[{t:'VIE→ICN 18:30',c:'b-fl'},{t:'CAT 16분',c:'b-go'}],
+        route:{ time:'16분', km:'19 km', mode:'🚆 CAT 열차' },
+        details:['호텔 → Wien Mitte U3 → <strong>CAT 열차</strong> → VIE T3 (16분, €14.90)','또는 U3 Erdberg → S7 (25분, 더 저렴)'],
+        note:'15:30 공항 도착 목표 (출발 3시간 전). T3 출발 확인 필수!',
+        places:[{name:'Wien Mitte',lat:48.2048,lng:16.3822,q:'Wien Mitte Bahnhof'},{name:'비엔나 국제공항 VIE',lat:48.1103,lng:16.5697,q:'Vienna International Airport'}]
+      },
+      { time:'15:30', title:'VIE 공항 도착 · 체크인 · 면세 쇼핑 🛍️', color:'#5b3fa0',
+        badges:[{t:'✈️ 귀국',c:'b-fl'}],
+        route:{ time:'면세 쇼핑 약 1시간', km:'—', mode:'✈️' },
+        details:['체크인 · 보안검색 완료 후 면세 쇼핑','마지막 오스트리아 기념품 · Manner · 와인 · Swarovski','18:30 출발 → 인천 도착 (약 11~12시간)'],
+        note:'면세점 마감 시간 확인! 탑승 30분 전 게이트 도착 필수.',
+        places:[{name:'비엔나 국제공항 VIE T3',lat:48.1103,lng:16.5697,q:'Vienna International Airport Terminal 3'}]
+      }
+    ]
+  },
+  {
+    date:'5월 11일 월요일', flag:'🇰🇷', label:'인천 귀국 도착 🏠',
+    hotel: null,
+    travel:{ total:'약 11~12시간 비행', km:'약 9,200 km', walk:'도보 약 1 km' },
+    events:[
+      { time:'12:30', title:'인천국제공항 T1 도착 🛬', color:'#3d7a50',
+        badges:[{t:'🇰🇷 귀국',c:'b-na'},{t:'ICN 도착',c:'b-go'}],
+        route:{ time:'입국 심사 약 30~60분', km:'—', mode:'🛬 착륙 후' },
+        details:['<strong>인천국제공항 T1 도착</strong> — 입국 심사 · 수하물 수취','세관 신고 (해외 구매품 $800 초과 시 신고 필수)','<strong>공항리무진 탑승</strong> → 귀가'],
+        note:'긴 여행 수고 많으셨습니다! 집까지 안전하게 🏠',
+        places:[{name:'인천국제공항 T1',lat:37.4492,lng:126.4506,q:'인천국제공항 제1여객터미널'}]
+      }
+    ]
+  }
+];
+
+/* ══════════════════════════
+   TODO DATA
+══════════════════════════ */
+const TODO = {
+  ur:[
+    {text:'공항리무진 예매 — 인천행 (4.30 08:00 이전 출발)',sub:'KAL리무진 / 공항버스 예약 · kalbusco.co.kr 또는 airportlimousine.co.kr · 출발지→인천T1',tag:'ur'},
+    {text:'공항리무진 예매 — 귀국 후 (5.11 14:30 이후 출발)',sub:'KAL리무진 / 공항버스 예약 · 인천T1→목적지 · 도착 12:30 기준 수하물 수취 후 탑승',tag:'ur'},
+    {text:'FCO → VIE 항공권 예약 (OS556, 5.3 13:40)',sub:'Austrian Airlines / Google Flights — 지금 바로 예매!',tag:'ur'},
+    {text:'바티칸 미술관 + 시스티나 성당 예약 [로마 2일차 5.3]',sub:'museivaticani.va · €30 · 오전 07:30 타임 지정 · Roma Pass 적용 불가',tag:'ur'},
+    {text:'콜로세움 + 포로 로마노 예약 [로마 1일차 5.2]',sub:'coopculture.it · Roma Pass 48h 첫 사이트 무료 적용 가능',tag:'ur'},
+    {text:'여행자 보험 가입',sub:'질병·상해·휴행손 포함',tag:'ur'},
+  ],
+  tt:[
+    {text:'Domus Australia 호텔 예약 확인 (4.30~5.2)',sub:'Via Cernaia 14/B, Roma — 4.30 체크인 / 5.2 체크아웃',tag:'bk'},
+    {text:'ibis Wien Hauptbahnhof 예약 확인 (5.2~5.3)',sub:'Wien Hauptbahnhof 도보 5분 — 5.2 체크인 / 5.3 이동',tag:'bk'},
+    {text:'FCO 도착 / 출발 Leonardo Express 티켓',sub:'Termini ↔ FCO · 32분 · €14 · Trenitalia 앱 사전 구매 추천',tag:'bk'},
+    {text:'5.2 항공권 — FCO→VIE 11:50 출발 편 예매',sub:'VIE 도착 12:20 · Austrian Airlines or Ryanair 확인',tag:'bk'},
+    {text:'비엔나 Vienna City Card 구입',sub:'24/48/72h 대중교통 무제한',tag:'in'},
+    {text:'VIE → ibis Wien Hauptbahnhof 루트 확인',sub:'S7 → Wien Hauptbahnhof 직행 (약 25분) · 호텔이 역 바로 앞!',tag:'in'},
+  ],
+  tl:[
+    {text:'로마 야경 투어 예약 [4.30 밤 or 5.1 밤]',sub:'viator.com or getyourguide — "Rome Night Tour" 검색 · €20~35 · 트레비·나보나·산탄젤로 코스',tag:'bk'},
+    {text:'판테온 입장 예약 [로마 1일차 5.2]',sub:'pantheonroma.com · €5 · 사전 예약 권장',tag:'bk'},
+    {text:'산탄젤로 성 입장 [로마 2일차 5.3]',sub:'Roma Pass 할인 적용 ~€13 · 사전 예약 권장',tag:'bk'},
+    {text:'빌라 파르네시나 휴무 확인 [5.3 일요일]',sub:'villafarnesina.it · 일요일 휴무 가능 — 사전 확인 필수',tag:'in'},
+    {text:'피글뮐러 (Figlmüller) 슈니첼 예약',sub:'Wollzeile점 — 온라인 예약',tag:'bk'},
+    {text:'할슈타트 소금광산 투어 예약',sub:'hallstatt.net — 성수기 필수',tag:'bk'},
+    {text:'쇤브룬 궁전 입장권 예약',sub:'schoenbrunn.at',tag:'bk'},
+    {text:'벨베데레 궁전 사전 예매',sub:'belvedere.at — €16.50',tag:'bk'},
+  ],
+  tm:[
+    {text:'🧳 여행용 캐리어 구매',sub:'로마·비엔나 약 11박 — 28인치 이상 추천 / 4륜 하드케이스',tag:'pk'},
+    {text:'유로 환전 €200~300 현금',sub:'소액권 포함',tag:'in'},
+    {text:'해외 결제 수수료 없는 카드 확인',sub:'트래블월렛 / 신한 SOL / 토스',tag:'in'},
+    {text:'Type C 유럽 어댑터 준비',sub:'이탈리아·오스트리아 공통 2핀',tag:'pk'},
+    {text:'해외 로밍 요금제 변경',sub:'출발 전 통신사 앱에서 변경 — KT·SKT·LG 해외 데이터 요금제',tag:'in'},
+    {text:'구글맵 오프라인 지도 다운로드',sub:'로마·비엔나·할슈타트 (Wi-Fi에서)',tag:'in'},
+    {text:'넷플릭스 다운로드',sub:'기내 시청용 — 여행 전 Wi-Fi에서 다운로드',tag:'pk'},
+  ],
+  tw:[
+    {text:'소매치기 주의 — 로마 (트레비·나보나·콜로세움)',sub:'가방 앞으로, 귀중품 분산 보관',tag:'wn'},
+    {text:'이탈리아 열차 탑승 전 개찰 필수',sub:'노란 박스 삽입 — 미이행 벌금 €50',tag:'wn'},
+    {text:'노동절(5.1) 박물관 휴무 가능',sub:'사전 확인 필수',tag:'wn'},
+    {text:'오페라 공연 중 사진 촬영 금지',sub:'핸드폰 무음 / 코트는 클락룸 · 좌석 예약 완료',tag:'wn'},
+    {text:'비엔나 대중교통 무임승차 단속',sub:'불시 검표 — 벌금 €105',tag:'wn'},
+    {text:'해외 카드 해외사용 허용 설정',sub:'은행 앱에서 미리 활성화',tag:'wn'},
+    {text:'한국 대사관 긴급 연락처 메모',sub:'로마 +39 06 802461 / 비엔나 +43 1 478 1991',tag:'wn'},
+    {text:'Das LOFT 사전 예약',sub:'dasloftwien.at · 5.7 저녁 · 뷰맛집 인기',tag:'bk'},
+    {text:'Figlmüller 슈니첼 사전 예약',sub:'figlmueller.at · 5.4 점심',tag:'bk'},
+    {text:'[5.8 선택A] 할슈타트 소금광산 투어 예약',sub:'hallstatt.net · 성수기 매진 필수 사전 예약',tag:'bk'},
+    {text:'[5.8 선택B] ÖBB Wachau-Ticket 콤비티켓 구매',sub:'railtours.oebb.at / ÖBB 앱 · 성인 €85 · 열차+수도원+크루즈 포함',tag:'bk'},
+    {text:'[5.8 선택A] ÖBB 할슈타트 기차표 예매',sub:'oebb.at · Wien Westbahnhof 09:30 출발 목표 · €25~35 왕복',tag:'bk'},
+    {text:'공항버스 예매 (귀국편)',sub:'VIE 공항 → 비엔나 시내 or CAT 열차 예매 확인',tag:'bk'},
+  ]
+};
+
+const CHECK = {
+  cd:[
+    {text:'여권',sub:'귀국일 기준 6개월 이상 유효기간',tag:'ur'},
+    {text:'여권 사본 + 사진 2장',sub:'분실 대비 — 숙소 체크인용',tag:'ur'},
+    {text:'항공권 e-ticket',sub:'ICN, FCO→VIE 각각 저장·출력',tag:'ur'},
+    {text:'호텔 바우처',sub:'Domus Australia (로마) + ibis Wien Hauptbahnhof (비엔나)',tag:'bk'},
+    {text:'여행자 보험 증명서',sub:'긴급 연락처 별도 메모',tag:'ur'},
+    {text:'🧳 여행용 캐리어 구매 확인',sub:'28인치 이상 하드케이스 4륜 추천 / 약 11박 여행',tag:'pk'},
+    {text:'신용카드 2장 이상',sub:'마스터+비자 다른 카드사',tag:'pk'},
+    {text:'유로 현금 €200~300',sub:'소액권 포함',tag:'pk'},
+    {text:'인천 출발 48시간 전 온라인 체크인',sub:'항공사 앱 or 웹사이트에서 사전 체크인',tag:'ur'},
+    {text:'비엔나 출발 48시간 전 온라인 체크인 (귀국편)',sub:'항공사 앱 or 웹사이트에서 사전 체크인 (5.8)',tag:'ur'},
+  ],
+  ch:[
+    {text:'상비약 (진통제·소화제·지사제)',sub:'타이레놀·판크레아틴·스멕타',tag:'pk'},
+    {text:'피부 연고',sub:'알레르기·벌레물림·상처 대비 (코르티손/항생제 연고)',tag:'pk'},
+    {text:'멀미약',sub:'할슈타트 페리·버스 대비',tag:'pk'},
+    {text:'안경 + 여분 렌즈',sub:'렌즈 분실 대비 안경 필수',tag:'pk'},
+    {text:'렌즈 세척액 (100ml 이하)',sub:'기내 반입 가능',tag:'pk'},
+    {text:'선크림 SPF50+',sub:'5월 유럽 자외선 강함',tag:'pk'},
+    {text:'개인 처방약',sub:'영문 처방전 + 충분한 수량',tag:'ur'},
+  ],
+  cc:[
+    {text:'스마트 캐주얼 상의 (오페라용)',sub:'5.6 Salome — 셔츠/블라우스 이상',tag:'pk'},
+    {text:'가벼운 재킷 또는 가디건',sub:'5월 유럽 저녁 15°C 이하',tag:'pk'},
+    {text:'편한 워킹화',sub:'로마 돌바닥 + 할슈타트 언덕',tag:'pk'},
+    {text:'신발 여분 1켤레',sub:'장거리 도보 교체용',tag:'pk'},
+    {text:'우산 or 접이식 우비',sub:'5월 비엔나 소나기 가능',tag:'pk'},
+    {text:'작은 배낭 or 크로스백',sub:'당일치기용 — 앞으로 메기',tag:'pk'},
+    {text:'수면 안대 + 목베개',sub:'장거리 비행 대비',tag:'pk'},
+  ],
+  ct:[
+    {text:'스마트폰 충전기 + 보조배터리',sub:'보조배터리 기내 반입 (위탁 금지)',tag:'pk'},
+    {text:'아이패드 + 충전기',sub:'기내 영상·독서·지도 활용 · Apple Pencil 필요 시 함께',tag:'pk'},
+    {text:'애플워치 충전기',sub:'자기 충전 케이블 · 유럽 어댑터 함께 챙기기',tag:'pk'},
+    {text:'유럽형 어댑터 (Type C 2핀)',sub:'이탈리아·오스트리아 공통',tag:'pk'},
+    {text:'이어폰',sub:'기내 + 오페라 자막 청취용',tag:'pk'},
+    {text:'카메라 + 여분 배터리·메모리',sub:'할슈타트 절경 대비',tag:'pk'},
+    {text:'Google Translate 오프라인 다운로드',sub:'이탈리아어·독일어',tag:'in'},
+    {text:'구글맵 오프라인 지도 다운로드',sub:'로마·비엔나·할슈타트 (Wi-Fi 있는 곳에서)',tag:'in'},
+    {text:'넷플릭스 다운로드 완료 확인',sub:'기내 시청용 콘텐츠 — Wi-Fi 있는 곳에서',tag:'pk'},
+  ]
+};
+
+/* ══ STATE — JSONBin.io 동기화 ══ */
+const JB_BIN_ID  = '69d3ac65aaba882197cc7e2e';
+const JB_API_KEY = '$2a$10$3ps8Ki2tG1c60wIeT89cruIO6MTR8zNltfLjqNKhX1N6skA.Z2Nhm';
+const JB_URL     = `https://api.jsonbin.io/v3/b/${JB_BIN_ID}`;
+
+let ST = {};
+let _saving = false;
+let _pendingSave = false;
+
+/* ── 동기화 상태 표시 ── */
+function showSyncStatus(state){
+  let el=document.getElementById('sync-status');
+  if(!el){
+    el=document.createElement('div');
+    el.id='sync-status';
+    el.style.cssText='position:fixed;bottom:calc(var(--safe)+70px);right:14px;font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;z-index:998;transition:opacity .6s;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,.1)';
+    document.body.appendChild(el);
+  }
+  el.style.opacity='1';
+  const map={
+    loading: ['⏳ 불러오는 중…', '#f0eefb', '#5b3fa0'],
+    saving:  ['☁️ 저장 중…',    'var(--goldbg)', 'var(--gold)'],
+    ok:      ['✓ 저장됨',        'var(--sagebg)', 'var(--sage)'],
+    err:     ['⚠️ 저장 실패',    'var(--rosebg)', 'var(--rose)'],
+    offline: ['📴 오프라인',      'var(--bg2)',    'var(--muted)']
+  };
+  const [txt,bg,color]=map[state]||map.ok;
+  el.style.background=bg; el.style.color=color; el.textContent=txt;
+  if(state!=='loading'&&state!=='saving') setTimeout(()=>{el.style.opacity='0';},2500);
+}
+
+/* ── JSONBin에서 불러오기 ── */
+async function ldST(){
+  // 로컬 캐시 먼저 표시 (빠른 초기 렌더)
+  try{
+    const cached=localStorage.getItem('vt26c_v2')||localStorage.getItem('vt26c');
+    if(cached){ ST=JSON.parse(cached); }
+  }catch(e){}
+  buildSched(); renderAll();
+
+  // 설정 전이면 로컬 모드
+  if(JB_BIN_ID==='JSONBIN_BIN_ID'){ return; }
+
+  showSyncStatus('loading');
+  try{
+    const res=await fetch(JB_URL+'/latest',{
+      headers:{
+        'X-Master-Key': JB_API_KEY,
+        'X-Bin-Meta':   'false'
+      }
+    });
+    if(!res.ok) throw new Error('fetch '+res.status);
+    const remote=await res.json();
+    if(remote && typeof remote==='object'){
+      ST=remote;
+      try{localStorage.setItem('vt26c_v2',JSON.stringify(ST));}catch(e){}
+      renderAll();
+    }
+    showSyncStatus('ok');
+  }catch(e){
+    console.warn('JSONBin load failed:',e);
+    showSyncStatus('offline');
+  }
+}
+
+/* ── JSONBin에 저장 (디바운스 400ms) ── */
+let _debTimer=null;
+function svST(){
+  // 로컬 즉시 백업
+  try{localStorage.setItem('vt26c_v2',JSON.stringify(ST));}catch(e){}
+  // 설정 전이면 로컬만
+  if(JB_BIN_ID==='JSONBIN_BIN_ID') return;
+  // 디바운스
+  clearTimeout(_debTimer);
+  _debTimer=setTimeout(_doSave, 400);
+}
+
+async function _doSave(){
+  if(_saving){ _pendingSave=true; return; }
+  _saving=true; _pendingSave=false;
+  showSyncStatus('saving');
+  try{
+    const res=await fetch(JB_URL,{
+      method:'PUT',
+      headers:{
+        'Content-Type':  'application/json',
+        'X-Master-Key':  JB_API_KEY
+      },
+      body: JSON.stringify(ST)
+    });
+    if(!res.ok) throw new Error('save '+res.status);
+    showSyncStatus('ok');
+  }catch(e){
+    console.warn('JSONBin save failed:',e);
+    showSyncStatus('err');
+  }
+  _saving=false;
+  if(_pendingSave){ _pendingSave=false; _doSave(); }
+}
+
+/* ══ MAP ══ */
+function parseKm(s){if(!s)return 999;const m=(s+'').match(/[\d.]+/);return m?parseFloat(m[0]):999;}
+function buildMapUrl(places,route){
+  if(!places||!places.length)return null;
+  if(places.length===1)return `https://www.google.com/maps/embed/v1/place?key=${GMAP_KEY}&q=${encodeURIComponent(places[0].q)}&zoom=17&language=ko`;
+  const o=encodeURIComponent(places[0].q),d=encodeURIComponent(places[places.length-1].q);
+  const km=parseKm(route&&route.km);
+  const isWalk=route&&(route.mode||'').includes('도보')&&km<=1.5;
+  const travelMode=isWalk?'walking':'transit';
+  let url=`https://www.google.com/maps/embed/v1/directions?key=${GMAP_KEY}&origin=${o}&destination=${d}&language=ko&mode=${travelMode}&zoom=15`;
+  if(places.length>2){url+=`&waypoints=${places.slice(1,-1).map(p=>encodeURIComponent(p.q)).join('|')}`;}
+  return url;
+}
+function openGMap(places){
+  if(!places||!places.length)return;
+  if(places.length===1){window.open(`https://www.google.com/maps/search/${encodeURIComponent(places[0].q)}`,'_blank');return;}
+  window.open(`https://www.google.com/maps/dir/${places.map(p=>encodeURIComponent(p.q)).join('/')}`,'_blank');
+}
+function openNav(place){window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(place.q)}&travelmode=transit`,'_blank');}
+
+/* ══ COUNTRY LABEL ══ */
+const COUNTRY_MAP={
+  '🇰🇷':{label:'🇰🇷 대한민국',bg:'#fff0f0',color:'#cc0000'},
+  '🇮🇹':{label:'🇮🇹 이탈리아',bg:'#fff7e6',color:'#c86400'},
+  '🏖️':{label:'🇮🇹 이탈리아 · 로마',bg:'#fff7e6',color:'#c86400'},
+  '✈️':{label:'✈️ 이동일',bg:'#f0eefb',color:'#5b3fa0'},
+  '🇦🇹':{label:'🇦🇹 오스트리아',bg:'#fdeef3',color:'#b54060'},
+};
+
+/* ══ SCHEDULE RENDER ══ */
+function buildSched(){
+  const root=document.getElementById('sched-root');
+  root.innerHTML='';
+  DAYS.forEach((day,di)=>{
+    const grp=document.createElement('div');
+    grp.className='day-group';
+
+    // Day header: date / flag-pill + bold label / travel chips
+    const hdr=document.createElement('div');
+    hdr.className='day-hdr';
+    const dateEl=document.createElement('div');
+    dateEl.className='day-date';
+    dateEl.textContent=day.flag+' '+day.date;
+    // Flag pill + bold label row
+    const labelRow=document.createElement('div');
+    labelRow.className='day-label-row';
+    const labelEl=document.createElement('span');
+    labelEl.className='day-label';
+    labelEl.textContent=day.label;
+    labelRow.appendChild(labelEl);
+    // Travel chips
+    const trvEl=document.createElement('div');
+    trvEl.className='day-travel';
+    if(day.travel){
+      [{icon:'⏱️',val:day.travel.total},{icon:'📍',val:day.travel.km},{icon:'🚶',val:day.travel.walk}].forEach(c=>{
+        const chip=document.createElement('span');
+        chip.className='travel-chip';
+        chip.textContent=c.icon+' '+c.val;
+        trvEl.appendChild(chip);
+      });
+    }
+    hdr.appendChild(dateEl);
+    hdr.appendChild(labelRow);
+    hdr.appendChild(trvEl);
+    grp.appendChild(hdr);
+
+    // Divider (no hotel chip)
+    const divider=document.createElement('div');
+    divider.className='day-divider';
+    grp.appendChild(divider);
+
+    day.events.forEach((ev,ei)=>grp.appendChild(buildCard(ev,di,ei)));
+    root.appendChild(grp);
+  });
+}
+
+function buildCard(ev,di,ei){
+  const id=`c${di}_${ei}`;
+  const el=document.createElement('div');
+  el.className='sc-card'; el.id=id;
+
+  /* ── 단축 필드 지원 (새 카드는 짧게 작성 가능) ──────────────────
+     b  → badges    d  → details    rt → route
+     p  → places    n  → note       a  → admission    a2 → alt
+     기존 긴 필드명도 그대로 동작함
+  ──────────────────────────────────────────────────────────────── */
+  const badges = ev.badges||ev.b||[];
+  const details = ev.details||ev.d||[];
+  const route   = ev.route||ev.rt;
+  const places  = ev.places||ev.p||[];
+  const note    = ev.note||ev.n;
+  const admis   = ev.admission||ev.a;
+  const alt     = ev.alt||ev.a2;
+
+  const bHtml=badges.map(b=>`<span class="b ${b.c}">${b.t}</span>`).join('');
+  const dHtml=details.map(d=>`<li>${d}</li>`).join('');
+  const mapUrl=buildMapUrl(places,route);
+
+  const routeHtml=route?`<div class="route-summary">
+    <span class="route-chip">${route.mode}</span>
+    <span class="route-chip">⏱️ ${route.time}</span>
+    <span class="route-chip">📍 ${route.km}</span>
+  </div>`:'';
+
+  const admHtml=admis?`<div style="display:flex;align-items:center;gap:6px;padding:7px 10px;background:#fdeef3;border:1px solid rgba(181,64,96,.2);border-radius:8px;margin:8px 0 4px;font-size:12px;color:#b54060;font-weight:600">⏰ 입장 제한: ${admis}</div>`:'';
+
+  const altHtml=alt?`<div style="display:flex;align-items:flex-start;gap:6px;padding:7px 10px;background:#e6f6f4;border:1px solid rgba(31,138,128,.2);border-radius:8px;margin:8px 0 2px;font-size:11px;color:#0f6e56"><span style="font-size:13px;flex-shrink:0">🥡</span><span><strong>Street Food 대안:</strong> ${alt}</span></div>`:'';
+
+  const mapHtml=mapUrl?`<div class="map-embed"><div class="map-loading">지도 로딩 중...</div>
+    <iframe src="${mapUrl}" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      onload="this.previousElementSibling.style.display='none'"
+      onerror="this.parentElement.innerHTML='<div class=map-loading style=text-align:center;padding:1rem>지도를 불러올 수 없습니다</div>'">
+    </iframe></div>`:'';
+
+  const confHtml=ev.confirmed?`<div class="confirmed-box"><span style="font-size:16px">🎟️</span>
+    <div><div class="confirmed-text">예약 완료 — 예약번호 ${ev.confirmed.no}</div>
+    <div class="confirmed-sub">공연 시간: ${ev.confirmed.time} · 빈 국립오페라극장</div></div></div>`:'';
+
+  let btnHtml='';
+  if(places.length){
+    const pj=JSON.stringify(places).replace(/"/g,'&quot;');
+    const lastP=JSON.stringify(places[places.length-1]).replace(/"/g,'&quot;');
+    btnHtml=`<div class="map-btns">
+      <button class="mb mb-map" onclick='openGMap(${pj})'>📍 구글맵 열기</button>
+      <button class="mb mb-dir" onclick='openNav(${lastP})'>🧭 목적지 길찾기</button>
+      ${places.length>1?`<button class="mb mb-route" onclick='openGMap(${pj})'>🗺️ 경로 보기</button>`:''}
+    </div>`;
+  }
+
+  el.innerHTML=`
+    <div class="sc-head" onclick="toggleCard('${id}')">
+      <div class="sc-stripe" style="background:${ev.color}"></div>
+      <div class="sc-main">
+        <div class="sc-time">${ev.time}</div>
+        <div class="sc-title">${ev.title}</div>
+        <div class="sc-badges">${bHtml}</div>
+      </div>
+      <div class="sc-arr">›</div>
+    </div>
+    <div class="sc-body"><div class="sc-inner">
+      ${routeHtml}${admHtml}${mapHtml}${confHtml}${btnHtml}
+      <div class="sc-details"><ul>${dHtml}</ul></div>
+      ${altHtml}
+      ${note?`<div class="sc-note">💡 ${note}</div>`:''}
+    </div></div>`;
+  return el;
+}
+
+function toggleCard(id){document.getElementById(id).classList.toggle('open');}
+
+/* ══ LIST RENDER ══ */
+const TCLS={ur:'t-ur',bk:'t-bk',in:'t-in',pk:'t-pk',wn:'t-wn'};
+const TLBL={ur:'긴급',bk:'예약',in:'정보',pk:'챙기기',wn:'주의'};
+function chkSvg(){return`<svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 3.5L4 6.5L10 1" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`;}
+
+function renderList(lid,items,sk){
+  const el=document.getElementById('l-'+lid);
+  if(!el)return;
+  if(!ST[sk])ST[sk]={};
+  el.innerHTML='';
+  let done=0;
+  items.forEach((item,i)=>{
+    const isDone=ST[sk][i]??false;
+    if(isDone)done++;
+    const d=document.createElement('div');
+    d.className='item'+(isDone?' done':'');
+    const tc=TCLS[item.tag]||'t-in',tl=TLBL[item.tag]||'정보';
+    d.innerHTML=`<div class="ichk">${chkSvg()}</div><div class="ibody"><div class="itxt">${esc(item.text)}</div>${item.sub?`<div class="isub">${esc(item.sub)}</div>`:''}</div><span class="itag ${tc}">${tl}</span>`;
+    d.addEventListener('click',()=>{ST[sk][i]=!isDone;svST();renderAll();});
+    el.appendChild(d);
+  });
+  const cnt=document.getElementById('c-'+lid);
+  if(cnt)cnt.textContent=done+'/'+items.length;
+  return{done,total:items.length};
+}
+
+// Custom items map: listId → array of items
+function getCxList(listId){return ST['cxl_'+listId]||[];}
+function renderCxList(listId){
+  const el=document.getElementById('l-'+listId);
+  if(!el)return;
+  getCxList(listId).forEach((item,i)=>{
+    const d=document.createElement('div');
+    d.className='item'+(item.done?' done':'');
+    const tc=TCLS[item.tag||'pk']||'t-pk',tl=TLBL[item.tag||'pk']||'챙기기';
+    d.innerHTML=`<div class="ichk">${chkSvg()}</div><div class="ibody"><div class="itxt">${esc(item.text)}</div></div><span class="itag ${tc}">${tl}</span><button class="idel" onclick="delCxList('${listId}',${i},event)">×</button>`;
+    d.addEventListener('click',e=>{if(e.target.classList.contains('idel'))return;ST['cxl_'+listId][i].done=!item.done;svST();renderAll();});
+    el.appendChild(d);
+  });
+}
+function delCxList(listId,i,e){e.stopPropagation();ST['cxl_'+listId].splice(i,1);svST();renderAll();}
+
+// Category map for add-item
+const TODO_CAT_TO_LIST={ur:'ur',tt:'tt',tl:'tl',tm:'tm',tw:'tw'};
+const CHECK_CAT_TO_LIST={cd:'cd',ch:'ch',cc:'cc',ct:'ct'};
+
+function renderAll(){
+  renderList('ur',TODO.ur,'ur'); renderList('tt',TODO.tt,'tt');
+  renderList('tl',TODO.tl,'tl'); renderList('tm',TODO.tm,'tm');
+  renderList('tw',TODO.tw,'tw');
+  ['ur','tt','tl','tm','tw'].forEach(l=>renderCxList(l));
+
+  renderList('cd',CHECK.cd,'cd'); renderList('ch',CHECK.ch,'ch');
+  renderList('cc',CHECK.cc,'cc'); renderList('ct',CHECK.ct,'ct');
+  ['cd','ch','cc','ct'].forEach(l=>renderCxList(l));
+
+  updateProg();
+}
+
+function updateProg(){
+  let td=0,tt=0,cd=0,ct=0;
+  [['ur',TODO.ur],['tt',TODO.tt],['tl',TODO.tl],['tm',TODO.tm],['tw',TODO.tw]].forEach(([sk,arr])=>arr.forEach((_,i)=>{tt++;if(ST[sk]&&ST[sk][i])td++;}));
+  ['ur','tt','tl','tm','tw'].forEach(l=>getCxList(l).forEach(it=>{tt++;if(it.done)td++;}));
+
+  [['cd',CHECK.cd],['ch',CHECK.ch],['cc',CHECK.cc],['ct',CHECK.ct]].forEach(([sk,arr])=>arr.forEach((_,i)=>{ct++;if(ST[sk]&&ST[sk][i])cd++;}));
+  ['cd','ch','cc','ct'].forEach(l=>getCxList(l).forEach(it=>{ct++;if(it.done)cd++;}));
+
+  const tp=tt?Math.round(td/tt*100):0,cp=ct?Math.round(cd/ct*100):0;
+  document.getElementById('tp-f').style.width=tp+'%';
+  document.getElementById('tp-n').textContent=td+'/'+tt;
+  document.getElementById('cp-f').style.width=cp+'%';
+  document.getElementById('cp-n').textContent=cd+'/'+ct;
+  document.getElementById('tbdg').textContent=tt-td;
+  document.getElementById('cbdg').textContent=ct-cd;
+}
+
+/* ══ ADD ITEM ══ */
+function addIt(mode){
+  if(mode==='t'){
+    const txt=document.getElementById('ti').value.trim();
+    if(!txt)return;
+    const cat=document.getElementById('todo-cat').value;
+    const tag=document.getElementById('todo-tag').value;
+    const listId=TODO_CAT_TO_LIST[cat]||'tm';
+    if(!ST['cxl_'+listId])ST['cxl_'+listId]=[];
+    ST['cxl_'+listId].push({text:txt,tag,done:false});
+    svST(); document.getElementById('ti').value=''; renderAll();
+  } else {
+    const txt=document.getElementById('ci').value.trim();
+    if(!txt)return;
+    const cat=document.getElementById('check-cat').value;
+    const tag=document.getElementById('check-tag').value;
+    const listId=CHECK_CAT_TO_LIST[cat]||'ct';
+    if(!ST['cxl_'+listId])ST['cxl_'+listId]=[];
+    ST['cxl_'+listId].push({text:txt,tag,done:false});
+    svST(); document.getElementById('ci').value=''; renderAll();
+  }
+}
+document.getElementById('ti').addEventListener('keydown',e=>{if(e.key==='Enter')addIt('t');});
+document.getElementById('ci').addEventListener('keydown',e=>{if(e.key==='Enter')addIt('c');});
+
+/* ══ TAB ══ */
+function switchTab(tab){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+tab).classList.add('active');
+  document.querySelectorAll('.tnav').forEach(b=>b.classList.remove('active'));
+  document.getElementById('bt-'+tab).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ══ UTIL ══ */
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+/* ══ INIT ══ */
+ldST();
+</script>
+</body>
+</html>
